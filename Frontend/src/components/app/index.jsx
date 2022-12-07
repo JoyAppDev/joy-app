@@ -10,7 +10,7 @@ function App() {
             inputId={"name"}
             isRequired={true}
             label={"Name"}
-            defaultValue={"yourname@gmail.com"}
+            placeholder={"yourname@gmail.com"}
             type={"text"}
         />
       </div>
