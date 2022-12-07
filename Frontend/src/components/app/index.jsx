@@ -13,6 +13,13 @@ function App() {
             placeholder={"yourname@gmail.com"}
             type={"text"}
         />
+          <CustomInput
+              inputId={"password"}
+              isRequired={false}
+              label={"Password"}
+              placeholder={""}
+              type={"password"}
+          />
       </div>
 
   );
