@@ -26,6 +26,7 @@ const grey = {
 const StyledInputElement = styled('input')(
     ({ theme }) => `
   width: 460px;
+  min-height: 56px;
   font-family: IBM Plex Sans, sans-serif;
   font-size: 0.875rem;
   font-weight: 400;
