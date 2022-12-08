@@ -18,7 +18,7 @@ export function Header() {
                     fontSize: 24,
                     fontWeight: 400,
                     lineHeight: 1.33,
-                    color: "rgba(0, 0, 0, 0.87)"
+                    color: "theme.palette.custom.greyDark",
                 }}
             >Enjoy our family</Typography>
         </Stack>
