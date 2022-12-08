@@ -1,9 +1,13 @@
 import React from 'react';
 import { CustomButton } from './../../components/button/index';
+import ControlledCheckbox from './../checkbox';
 import { CustomInput } from './../../components/input/index';
 
 function App() {
   return (
+    <>
+      <CustomButton onClick={() => console.log('click!')}>LOG IN</CustomButton>
+      <ControlledCheckbox />
       <div>
         <CustomButton onClick={() => console.log('click!')}>LOG IN</CustomButton>
         <CustomInput
@@ -13,14 +17,16 @@ function App() {
             placeholder={"yourname@gmail.com"}
             type={"text"}
         />
-          <CustomInput
-              inputId={"password"}
-              isRequired={false}
-              label={"Password"}
-              placeholder={""}
-              type={"password"}
-          />
+        <CustomInput
+            inputId={"password"}
+            isRequired={false}
+            label={"Password"}
+            placeholder={""}
+            type={"password"}
+        />
       </div>
+    </>
+
 
   );
 }
