@@ -7,8 +7,6 @@ function App() {
   return (
     <>
       <CustomButton onClick={() => console.log('click!')}>LOG IN</CustomButton>
-      <ControlledCheckbox />
-      <div>
         <CustomButton onClick={() => console.log('click!')}>LOG IN</CustomButton>
         <CustomInput
             inputId={"name"}
@@ -24,7 +22,7 @@ function App() {
             placeholder={""}
             type={"password"}
         />
-      </div>
+        <ControlledCheckbox />
     </>
 
 
