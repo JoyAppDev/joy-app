@@ -4,7 +4,7 @@ import './index.css';
 import './styles/index.scss';
 import { ThemeProvider } from "@mui/material";
 import App from './components/app';
-import { theme } from "./utils/theme";
+import { theme } from "./styles/theme";
 import { BrowserRouter } from 'react-router-dom';
 
 const root = ReactDOM.createRoot(
