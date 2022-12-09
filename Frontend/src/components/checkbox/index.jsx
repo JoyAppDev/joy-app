@@ -8,58 +8,56 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 
 export default function ControlledCheckbox() {
-  const [checked, setChecked] = React.useState(true);
+  const [checked, setChecked] = React.useState(false);
 
   const handleChange = event => {
     setChecked(event.target.checked);
   };
 
   return (
-    <form>
-      <FormControl>
-        <FormControlLabel
-          control={
-            <Checkbox
+    <FormControl>
+      <FormControlLabel
+        control={
+          <Checkbox
+            sx={{
+              borderColor: 'rgba(0, 0, 0, 0.6)',
+            }}
+            checked={checked}
+            onChange={handleChange}
+            required
+          />
+        }
+        label={
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            <Typography ml={1.5}>I agree with </Typography>
+            <Link
               sx={{
-                borderColor: 'rgba(0, 0, 0, 0.6)',
+                textDecoration: 'none',
+                color: 'custom.greyDark',
+                marginLeft: '4px',
               }}
-              checked={checked}
-              onChange={handleChange}
-              required
-            />
-          }
-          label={
-            <Box
-              sx={{
-                display: 'flex',
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
+              component={RouterLink}
+              to="/"
             >
-              <Typography ml={1.5}>I agree with </Typography>
-              <Link
-                sx={{
-                  textDecoration: 'none',
-                  color: 'custom.greyDark',
-                  marginLeft: '4px',
-                }}
-                component={RouterLink}
-                to="/"
-              >
-                Terms of service
-              </Link>
-            </Box>
-          }
-          sx={{
-            '.MuiSvgIcon-root': {
-              width: '18px',
-              height: '18px',
-              padding: 0,
-            },
-          }}
-        />
-      </FormControl>
-    </form>
+              Terms of service
+            </Link>
+          </Box>
+        }
+        sx={{
+          '.MuiSvgIcon-root': {
+            width: '18px',
+            height: '18px',
+            padding: 0,
+          },
+        }}
+      />
+    </FormControl>
   );
 }

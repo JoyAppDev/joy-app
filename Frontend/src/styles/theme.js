@@ -1,5 +1,4 @@
 import { createTheme } from '@mui/material';
-import { checkboxClasses } from '@mui/material/Checkbox';
 
 export const theme = createTheme({
   palette: {
