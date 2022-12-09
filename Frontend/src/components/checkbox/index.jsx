@@ -4,6 +4,8 @@ import Link from '@mui/material/Link';
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import { FormControl } from '@mui/material';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
 
 export default function ControlledCheckbox() {
   const [checked, setChecked] = React.useState(true);
@@ -27,23 +29,29 @@ export default function ControlledCheckbox() {
             />
           }
           label={
-            <div>
-              <span>I agree with </span>
-              <Link component={RouterLink} to="/">
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              <Typography ml={1.5}>I agree with </Typography>
+              <Link
+                sx={{
+                  textDecoration: 'none',
+                  color: 'custom.greyDark',
+                  marginLeft: '4px',
+                }}
+                component={RouterLink}
+                to="/"
+              >
                 Terms of service
               </Link>
-            </div>
+            </Box>
           }
           sx={{
-            mr: 3,
-            '.MuiFormControlLabel-label': {
-              color: 'rgba(0, 0, 0, 0.87)',
-              letterSpacing: '0.15px',
-              lineHeight: '150%',
-            },
-            '.MuiFormControlLabel-root': {
-              margin: 0,
-            },
             '.MuiSvgIcon-root': {
               width: '18px',
               height: '18px',
