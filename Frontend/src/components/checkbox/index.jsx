@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
-import Link from '@mui/joy/Link';
+import Link from '@mui/material/Link';
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import { FormControl } from '@mui/material';
