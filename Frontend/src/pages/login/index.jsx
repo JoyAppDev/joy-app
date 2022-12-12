@@ -44,8 +44,8 @@ function Login() {
             If you have no account, you can
             <Link
               sx={{
-                textDecoration: 'none',
-                color: 'custom.greyDark',
+                textDecorationColor: 'rgba(55, 103, 226, 1)',
+                color: 'rgba(55, 103, 226, 1)',
                 marginLeft: '4px',
               }}
               component={RouterLink}

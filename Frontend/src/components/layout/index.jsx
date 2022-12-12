@@ -45,7 +45,8 @@ function Layout({ children }) {
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'flex-start',
-            height: '100vh',
+            mt: 27,
+            ml: 11,
           }}
         >
           <Header />
