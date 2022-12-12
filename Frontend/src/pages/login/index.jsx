@@ -6,6 +6,7 @@ import Layout from '../../components/layout';
 import Typography from '@mui/material/Typography';
 import { Link as RouterLink } from 'react-router-dom';
 import Link from '@mui/material/Link';
+import { Stack } from '@mui/material';
 
 function Login() {
   return (
@@ -19,14 +20,15 @@ function Login() {
           width: '100%',
         }}
       >
-        <CustomInput
-          inputId={'name'}
-          isRequired={true}
-          label={'Name'}
-          placeholder={'yourname@gmail.com'}
-          type={'text'}
-        />
-        <Box sx={{ mt: 2, mb: 4 }}>
+        <Stack spacing={2}>
+          <CustomInput
+            inputId={'name'}
+            isRequired={true}
+            label={'Name'}
+            placeholder={'yourname@gmail.com'}
+            type={'text'}
+          />
+
           <CustomInput
             inputId={'password'}
             isRequired={false}
@@ -34,12 +36,13 @@ function Login() {
             placeholder={''}
             type={'password'}
           />
-        </Box>
+        </Stack>
 
-        <CustomButton onClick={() => console.log('click!')} disabled>
-          LOG IN
-        </CustomButton>
-        <Box sx={{ mt: 2 }}>
+        <Stack spacing={2} mt={4}>
+          <CustomButton onClick={() => console.log('click!')} disabled>
+            LOG IN
+          </CustomButton>
+
           <Typography>
             If you have no account, you can
             <Link
@@ -54,7 +57,7 @@ function Login() {
               SIGN UP.
             </Link>
           </Typography>
-        </Box>
+        </Stack>
       </Box>
     </Layout>
   );

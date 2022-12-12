@@ -46,10 +46,15 @@ export const theme = createTheme({
         },
       },
     },
-    MuiFormControlLabel: {
+
+    MuiButton: {
       styleOverrides: {
         root: {
-          margin: 0,
+          boxShadow:
+            '12px 6px 20px -2px rgba(154, 154, 154, 0.2), 0px 2px 2px rgba(0, 0, 0, 0.14), 0px 1px 5px rgba(0, 0, 0, 0.12)',
+          '&.Mui-disabled': {
+            backgroundColor: 'rgba(0, 0, 0, 0.4)',
+          },
         },
       },
     },
