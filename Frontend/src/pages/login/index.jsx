@@ -1,67 +1,58 @@
 import React from 'react';
-import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import { Header } from '../../components/header';
 import { CustomButton } from '../../components/button';
 import { CustomInput } from '../../components/input';
-import ControlledCheckbox from '../../components/checkbox';
-import star from './../../assets/star.svg';
+import Layout from '../../components/layout';
+import Typography from '@mui/material/Typography';
+import { Link as RouterLink } from 'react-router-dom';
+import Link from '@mui/material/Link';
 
 function Login() {
   return (
-    <Grid container component="main" sx={{ height: '100vh' }}>
-      <Grid
-        item
-        xs={false}
-        sm={4}
-        md={7}
-        sx={{
-          backgroundImage: star,
-          backgroundRepeat: 'no-repeat',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          width: '25px',
-          height: '25px',
-        }}
-      />
-      <Grid item xs={12} sm={8} md={5}>
-        <Box
-          sx={{
-            my: 8,
-            mx: 4,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-          }}
-        >
-          <Header />
-
-          <Box component="form" noValidate sx={{ mt: 1 }}>
-            <CustomButton onClick={() => console.log('click!')}>
-              LOG IN
-            </CustomButton>
-            <CustomButton onClick={() => console.log('click!')}>
-              LOG IN
-            </CustomButton>
-            <CustomInput
-              inputId={'name'}
-              isRequired={true}
-              label={'Name'}
-              placeholder={'yourname@gmail.com'}
-              type={'text'}
-            />
-            <CustomInput
-              inputId={'password'}
-              isRequired={false}
-              label={'Password'}
-              placeholder={''}
-              type={'password'}
-            />
-            <ControlledCheckbox />
-          </Box>
+    <Layout>
+      <Box
+        component="form"
+        noValidate
+        sx={{ mt: 4.4, minWidth: '458px', width: '100%' }}
+      >
+        <CustomInput
+          inputId={'name'}
+          isRequired={true}
+          label={'Name'}
+          placeholder={'yourname@gmail.com'}
+          type={'text'}
+        />
+        <Box sx={{ mt: 2, mb: 4 }}>
+          <CustomInput
+            inputId={'password'}
+            isRequired={false}
+            label={'Password'}
+            placeholder={''}
+            type={'password'}
+          />
         </Box>
-      </Grid>
-    </Grid>
+
+        <CustomButton onClick={() => console.log('click!')} disabled>
+          LOG IN
+        </CustomButton>
+        <Box sx={{ mt: 2, mb: 27 }}>
+          <Typography>
+            If you have no account, you can
+            <Link
+              sx={{
+                textDecoration: 'none',
+                color: 'custom.greyDark',
+                marginLeft: '4px',
+              }}
+              component={RouterLink}
+              to="/signup"
+            >
+              SIGN UP.
+            </Link>
+          </Typography>
+        </Box>
+      </Box>
+    </Layout>
   );
 }
 
