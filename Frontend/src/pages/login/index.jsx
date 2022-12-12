@@ -13,7 +13,11 @@ function Login() {
       <Box
         component="form"
         noValidate
-        sx={{ mt: 4.4, minWidth: '458px', width: '100%' }}
+        sx={{
+          mt: 4.4,
+          minWidth: '458px',
+          width: '100%',
+        }}
       >
         <CustomInput
           inputId={'name'}
@@ -35,7 +39,7 @@ function Login() {
         <CustomButton onClick={() => console.log('click!')} disabled>
           LOG IN
         </CustomButton>
-        <Box sx={{ mt: 2, mb: 27 }}>
+        <Box sx={{ mt: 2 }}>
           <Typography>
             If you have no account, you can
             <Link
