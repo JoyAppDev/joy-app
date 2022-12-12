@@ -4,54 +4,60 @@ import Link from '@mui/material/Link';
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import { FormControl } from '@mui/material';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
 
 export default function ControlledCheckbox() {
-  const [checked, setChecked] = React.useState(true);
+  const [checked, setChecked] = React.useState(false);
 
   const handleChange = event => {
     setChecked(event.target.checked);
   };
 
   return (
-    <form>
-      <FormControl>
-        <FormControlLabel
-          control={
-            <Checkbox
+    <FormControl>
+      <FormControlLabel
+        control={
+          <Checkbox
+            sx={{
+              borderColor: 'rgba(0, 0, 0, 0.6)',
+            }}
+            checked={checked}
+            onChange={handleChange}
+            required
+          />
+        }
+        label={
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            <Typography ml={1.5}>I agree with </Typography>
+            <Link
               sx={{
-                borderColor: 'rgba(0, 0, 0, 0.6)',
+                textDecoration: 'none',
+                color: 'custom.greyDark',
+                marginLeft: '4px',
               }}
-              checked={checked}
-              onChange={handleChange}
-              required
-            />
-          }
-          label={
-            <div>
-              <span>I agree with </span>
-              <Link component={RouterLink} to="/">
-                Terms of service
-              </Link>
-            </div>
-          }
-          sx={{
-            mr: 3,
-            '.MuiFormControlLabel-label': {
-              color: 'rgba(0, 0, 0, 0.87)',
-              letterSpacing: '0.15px',
-              lineHeight: '150%',
-            },
-            '.MuiFormControlLabel-root': {
-              margin: 0,
-            },
-            '.MuiSvgIcon-root': {
-              width: '18px',
-              height: '18px',
-              padding: 0,
-            },
-          }}
-        />
-      </FormControl>
-    </form>
+              component={RouterLink}
+              to="/"
+            >
+              Terms of service
+            </Link>
+          </Box>
+        }
+        sx={{
+          '.MuiSvgIcon-root': {
+            width: '18px',
+            height: '18px',
+            padding: 0,
+          },
+        }}
+      />
+    </FormControl>
   );
 }
