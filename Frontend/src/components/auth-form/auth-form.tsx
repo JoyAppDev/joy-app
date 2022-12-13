@@ -32,7 +32,7 @@ export const AuthForm = () => {
                             className="auth-form__input"
                             fullWidth={true}
                             onChange={(e) => onChange(e)}
-                            value={value}
+                            value={value || ''}
                             error={!!errors.login?.message}
                             helperText={errors.login?.message}
                         />
@@ -54,7 +54,7 @@ export const AuthForm = () => {
                             className="auth-form__input"
                             fullWidth={true}
                             onChange={(e) => onChange(e)}
-                            value={value}
+                            value={value || ''}
                             error={!!errors.password?.message}
                             helperText={errors.password?.message}
                         />
