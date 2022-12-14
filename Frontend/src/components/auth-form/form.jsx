@@ -3,10 +3,10 @@ import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import { TextField, Button, Checkbox } from "@mui/material";
 import Layout from "../../components/layout/index";
 import { CustomInput } from "../../components/input/index";
-import {loginValidation, passwordValidation} from "./../../utils/validation";
+import { passwordValidator } from "./../../utils/validator";
 
 export const AuthFormJ = () => {
-    const { handleSubmit, control, formState: { errors }, reset } = useForm({
+    const { handleSubmit, control, formState: { errors, isValid }, reset } = useForm({
         mode: "onBlur"
     });
     const onSubmit = (data) => {
@@ -16,33 +16,22 @@ export const AuthFormJ = () => {
 
     return (
         <Layout>
-            <form onSubmit={handleSubmit(onSubmit)}>
-                <Controller
-                    name="checkbox"
-                    control={control}
-                    rules={{ required: true }}
-                    render={({ field }) => <Checkbox {...field} />}
-                />
-                <input type="submit" />
-            </form>
             <form className="auth-form__form" onSubmit={handleSubmit(onSubmit)}>
                 <Controller
                     control={control}
-                    name="login"
-                    rules={ loginValidation }
+                    name="e-mail"
+                    rules={{ required: true }}
                     render={({
                                  field: { onChange, value },
                              }) => (
-                        <TextField
-                            label="login"
-                            size="small"
-                            margin="normal"
-                            className="auth-form__input"
-                            fullWidth={true}
+                        <CustomInput
+                            label={'Email address'}
+                            type={'text'}
                             onChange={(e) => onChange(e)}
                             value={value || ''}
-                            error={!!errors.login?.message}
-                            helperText={errors.login?.message}
+                            error={!!errors.email?.message}
+                            helperText={errors.email?.message}
+                            placeholder={'yourname@gmail.com'}
                         />
 
                     )}
@@ -50,21 +39,18 @@ export const AuthFormJ = () => {
                 <Controller
                     control={control}
                     name="password"
-                    rules={ passwordValidation }
+                    rules={ passwordValidator }
                     render={({
                                  field: { onChange, value },
                              }) => (
-                        <TextField
-                            label="password"
-                            type="password"
-                            size="small"
-                            margin="normal"
-                            className="auth-form__input"
-                            fullWidth={true}
+                        <CustomInput
+                            label={"Password"}
+                            type={"password"}
                             onChange={(e) => onChange(e)}
                             value={value || ''}
                             error={!!errors.password?.message}
                             helperText={errors.password?.message}
+                            placeholder={''}
                         />
 
                     )}
@@ -72,6 +58,7 @@ export const AuthFormJ = () => {
                 <Button
                     type="submit"
                     variant="contained"
+                    disabled={!isValid}
                     fullWidth={true}
                     disableElevation={true}
                     sx={{

@@ -10,7 +10,7 @@ interface IForm {
 }
 
 export const AuthForm = () => {
-    const { handleSubmit, control, formState: { errors } } = useForm<IForm>({
+    const { handleSubmit, control, formState: { errors, isValid } } = useForm<IForm>({
         mode: "onBlur"
     });
     const onSubmit: SubmitHandler<IForm> = data => console.log(data);
@@ -64,6 +64,7 @@ export const AuthForm = () => {
                 <Button
                     type="submit"
                     variant="contained"
+                    disabled={!isValid}
                     fullWidth={true}
                     disableElevation={true}
                     sx={{
