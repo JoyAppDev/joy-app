@@ -1,3 +1,5 @@
+// данный файл содержит форму логина, написанную с typescript
+
 import React from 'react';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import { TextField, Button } from "@mui/material";
