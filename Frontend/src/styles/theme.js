@@ -28,7 +28,8 @@ export const theme = createTheme({
           letterSpacing: 0.15,
           borderRadius: 4,
           border: '1px solid rgba(0, 0, 0, 0.23)',
-          minWidth: 460,
+          maxWidth: 460,
+
           minHeight: 56,
           marginTop: 0,
         },
