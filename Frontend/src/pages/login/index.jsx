@@ -1,18 +1,33 @@
 import React from 'react';
-import Box from '@mui/material/Box';
-import { CustomButton } from '../../components/button';
-import { CustomInput } from '../../components/input';
-import Layout from '../../components/layout';
-import Typography from '@mui/material/Typography';
+import { useForm, Controller } from 'react-hook-form';
 import { Link as RouterLink } from 'react-router-dom';
+
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+
 import Link from '@mui/material/Link';
 import { Stack } from '@mui/material';
 
+import { CustomButton } from '../../components/button';
+import { CustomInput } from '../../components/input';
+import Layout from '../../components/layout';
+import { passwordValidator } from "./../../utils/validator";
+
 function Login() {
+    const { handleSubmit, control, formState: { errors, isValid }, reset } = useForm({
+        mode: "onBlur"
+    });
+
+    const onSubmit = (data) => {
+        console.log(data);
+        reset();
+    }
+
   return (
     <Layout>
       <Box
         component="form"
+        onSubmit={handleSubmit(onSubmit)}
         noValidate
         sx={{
           mt: 4.4,
@@ -21,25 +36,50 @@ function Login() {
         }}
       >
         <Stack spacing={2}>
-          <CustomInput
-            inputId={'name'}
-            isRequired={true}
-            label={'Name'}
-            placeholder={'yourname@gmail.com'}
-            type={'text'}
-          />
+            <Controller
+                control={control}
+                name="e-mail"
+                rules={{ required: true }}
+                render={({
+                             field: { onChange, value },
+                         }) => (
+                    <CustomInput
+                        label={'Email address'}
+                        type={'text'}
+                        onChange={(e) => onChange(e)}
+                        value={value || ''}
+                        error={!!errors.email?.message}
+                        helperText={errors.email?.message}
+                        placeholder={'yourname@gmail.com'}
+                    />
 
-          <CustomInput
-            inputId={'password'}
-            isRequired={false}
-            label={'Password'}
-            placeholder={''}
-            type={'password'}
-          />
+                )}
+            />
+            <Controller
+                control={control}
+                name="password"
+                rules={ passwordValidator }
+                render={({
+                             field: { onChange, value },
+                         }) => (
+                    <CustomInput
+                        label={"Password"}
+                        type={"password"}
+                        onChange={(e) => onChange(e)}
+                        value={value || ''}
+                        error={!!errors.password?.message}
+                        helperText={errors.password?.message}
+                        placeholder={''}
+                    />
+
+                )}
+            />
         </Stack>
 
         <Stack spacing={2} mt={4}>
-          <CustomButton onClick={() => console.log('click!')} disabled>
+          <CustomButton
+              type="submit"
+              disabled={!isValid}>
             LOG IN
           </CustomButton>
 

@@ -1,9 +1,9 @@
 import React from 'react';
-import { useForm, SubmitHandler, Controller } from 'react-hook-form';
-import { TextField, Button, Checkbox } from "@mui/material";
+import { useForm, Controller } from 'react-hook-form';
 import Layout from "../../components/layout/index";
 import { CustomInput } from "../../components/input/index";
 import { passwordValidator } from "./../../utils/validator";
+import {CustomButton} from "../button";
 
 export const AuthFormJ = () => {
     const { handleSubmit, control, formState: { errors, isValid }, reset } = useForm({
@@ -55,18 +55,12 @@ export const AuthFormJ = () => {
 
                     )}
                 />
-                <Button
+                <CustomButton
                     type="submit"
-                    variant="contained"
                     disabled={!isValid}
-                    fullWidth={true}
-                    disableElevation={true}
-                    sx={{
-                        marginTop: 2
-                    }}
-                >
-                    Log in
-                </Button>
+                    >
+                    LOG IN
+                </CustomButton>
             </form>
         </Layout>
     )
