@@ -26,3 +26,11 @@ class License(models.Model):
     additional_info = models.CharField(max_length=300)
     content = models.FileField()
     upload_date = models.DateTimeField(auto_now_add=True)
+    
+    class Meta:
+        verbose_name = 'License'
+        verbose_name_plural = 'Licenses'
+        ordering = ('creator',)
+
+    def __str__(self):
+        return self.new_deal
