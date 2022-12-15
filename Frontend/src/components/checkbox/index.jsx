@@ -7,7 +7,7 @@ import { FormControl } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 
-export default function ControlledCheckbox() {
+export default function ControlledCheckbox({register, required}) {
   const [checked, setChecked] = React.useState(false);
 
   const handleChange = event => {
@@ -24,7 +24,9 @@ export default function ControlledCheckbox() {
             }}
             checked={checked}
             onChange={handleChange}
-            required
+            register={register}
+
+            required={required}
           />
         }
         label={
