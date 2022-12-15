@@ -1,4 +1,5 @@
 from django.db import models
+from django.conf import settings
 from users.models import Creator, Brand
 
 
@@ -11,10 +12,9 @@ class License(models.Model):
 
     new_deal = models.CharField(max_length=100)
     creator = models.ForeignKey(
-        Creator,
+        settings.AUTH_USER_MODEL, verbose_name='creator',
         on_delete=models.CASCADE,
-        related_name='creator_licenses',
-        verbose_name='licences')
+        related_name='creator_licenses')
     brand = models.ForeignKey(Brand, on_delete=models.CASCADE, verbose_name='brand', related_name='brand_licenses')
     license_type = models.CharField(max_length=25, choices=CHOICES)
     validity = models.DateField(verbose_name='validity', auto_now_add=False)

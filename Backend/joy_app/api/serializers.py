@@ -14,3 +14,9 @@ class CustomUserSerializer(serializers.ModelSerializer):
     """
     Сериализатор для получения креаторов.
     """
+    
+    
+class BrandSerializer(serializers.ModelSerializer):
+    """
+    Сериализатор для получения брендов.
+    """
