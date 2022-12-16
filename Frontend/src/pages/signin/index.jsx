@@ -20,7 +20,7 @@ function SignIn() {
         mode: "onBlur"
     }, {
         defaultValues: {
-            checkbox: false,
+            termsOfService: false,
         }
     });
 
@@ -44,33 +44,49 @@ function SignIn() {
                 }}
             >
 
-                <AuthenticationInputs
-                    control={control}
-                    errors={errors}
-                />
-
-                <Controller
-                    name="termsOfService"
-                    control={control}
-                    rules={{ required: true }}
-                    render={({ field }) => <Checkbox {...field}/>}
-                />
-
-
-                    <Typography ml={1.5}>I agree with </Typography>
-                    <Link
-                        sx={{
-                            textDecoration: 'none',
-                            color: 'custom.greyDark',
-                            marginLeft: '4px',
-                        }}
-                        component={RouterLink}
-                        to="/"
-                    >
-                        Terms of service
-                    </Link>
-
                 <Stack spacing={2} mt={4}>
+
+                    <AuthenticationInputs
+                        control={control}
+                        errors={errors}
+                    />
+
+                    <Box
+                        sx={{
+                            display: 'flex',
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                            justifyContent: 'start',
+                            paddingLeft: '12px'
+                        }}
+                    >
+                        <Controller
+                            name="termsOfService"
+                            control={control}
+                            rules={{ required: true }}
+                            render={({ field }) => (
+                                <Checkbox
+                                    sx={{
+                                        borderColor: 'rgba(0, 0, 0, 0.6)',
+                                    }}
+                                    {...field}
+                                />
+                            )}
+                        />
+                        <Typography ml={1.5}>I agree with </Typography>
+                        <Link
+                            sx={{
+                                textDecoration: 'none',
+                                color: 'custom.greyDark',
+                                marginLeft: '4px',
+                            }}
+                            component={RouterLink}
+                            to="/"
+                        >
+                            Terms of service
+                        </Link>
+                    </Box>
+
                     <CustomButton
                         type="submit"
                         disabled={!isValid}>
