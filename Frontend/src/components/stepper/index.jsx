@@ -6,13 +6,14 @@ import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import SignInForm from "../signin-form";
 
 const steps = ['Step 1', 'Final step'];
 
 function getStepContent(step) {
   switch (step) {
     case 0:
-      return 'Registration Page 1';
+      return <SignInForm />;
     case 1:
       return 'Registration Page 2';
     default:
