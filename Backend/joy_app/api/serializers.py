@@ -10,13 +10,12 @@ class LicenseSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = License
-        fields = ('new_deal', 'creator_licenses',
+        fields = ('new_deal', 'creator',
                   'license_type', 'validity',
                   'territory', 'ways_to_use',
                   'price', 'service_fee',
                   'additional_info',
-                  'upload_date',
-                  'brand_licenses',)
+                  'brand',)
 
 class CreatorSerializer(serializers.ModelSerializer):
     """

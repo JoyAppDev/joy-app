@@ -1,5 +1,4 @@
 from django.db import models
-
 from users.models import Creator, Brand
 
 
@@ -27,8 +26,9 @@ class License(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2)
     service_fee = models.DecimalField(max_digits=10, decimal_places=2)
     additional_info = models.CharField(max_length=300)
+    
     # content = models.FileField()
-    upload_date = models.DateTimeField(auto_now_add=True)
+    
     
     
 
