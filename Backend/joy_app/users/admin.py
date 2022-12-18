@@ -7,8 +7,8 @@ class CreatorAdmin(admin.ModelAdmin):
     list_display = (
         'name_surname', 'address',
         'id_number', 'payment_info',)
-    search_fields = ('email', 'name_surname', 'id_number')
-    list_filter = ('name_surname', 'email', 'id_number')
+    search_fields = ('name_surname', 'id_number')
+    list_filter = ('name_surname', 'id_number')
     empty_value_display = '-empty-'
 
 

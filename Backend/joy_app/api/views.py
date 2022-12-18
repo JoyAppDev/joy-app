@@ -1,7 +1,7 @@
 from rest_framework import viewsets
 from license.models import License
 from users.models import Creator, Brand
-from .serializers import LicenseSerializer, CustomUserSerializer, BrandSerializer
+from .serializers import LicenseSerializer, CreatorSerializer, BrandSerializer
 from djoser.views import UserViewSet
 
 
@@ -12,13 +12,13 @@ class LicenseViewSet(viewsets.ModelViewSet):
     serializer_class = LicenseSerializer
 
 
-class CustomUserViewSet(UserViewSet):
+class CustomUserViewSet(viewsets.ModelViewSet):
 
     """
     Creators
     """
     queryset = Creator.objects.all()
-    serializer_class = CustomUserSerializer
+    serializer_class = CreatorSerializer
     
 class BrandViewSet(viewsets.ModelViewSet):
     
