@@ -1,11 +1,10 @@
 import * as React from 'react';
-import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import {Stack} from "@mui/material";
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
-import Button from '@mui/material/Button';
+//import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import SignInForm from "../signin-form";
 import {useState} from "react";
@@ -27,12 +26,16 @@ const steps = ['Step 1', 'Final step'];
 export default function Checkout() {
   const [activeStep, setActiveStep] = React.useState(0);
   const [data, setData] = useState(INITIAL_DATA);
-  const [isValidForm, setIsValidForm] = useState(false);
+  // const [isValidForm, setIsValidForm] = useState(false);
 
   function getStepContent(step) {
     switch (step) {
       case 0:
-        return <SignInForm {...data} updateFields={updateFields} setIsValidForm={setIsValidForm} />;
+        return <SignInForm
+            {...data}
+            updateFields={updateFields}
+            //setIsValidForm={setIsValidForm}
+        />;
       case 1:
         return 'Registration Page 2';
       default:
@@ -50,9 +53,9 @@ export default function Checkout() {
     setActiveStep(activeStep + 1);
   };
 
-  const handleBack = () => {
-    setActiveStep(activeStep - 1);
-  };
+  //const handleBack = () => {
+  //  setActiveStep(activeStep - 1);
+  //};
 
   const handle = () => {
     if(activeStep !== steps.length - 1) return handleNext();
