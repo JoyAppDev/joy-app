@@ -23,15 +23,14 @@ export const theme = createTheme({
       styleOverrides: {
         // Name of the slot
         root: {
-          fontSize: 16,
-          lineHeight: 24,
-          letterSpacing: 0.15,
-          borderRadius: 4,
-          border: '1px solid rgba(0, 0, 0, 0.23)',
-          maxWidth: 460,
-
-          minHeight: 56,
-          marginTop: 0,
+          // fontSize: 16,
+          // lineHeight: 24,
+          // letterSpacing: 0.15,
+          // borderRadius: 4,
+          // border: '1px solid rgba(0, 0, 0, 0.23)',
+          // width: 460,
+          // height: 56,
+          // marginTop: 0,
         },
       },
     },
@@ -47,7 +46,6 @@ export const theme = createTheme({
         },
       },
     },
-
     MuiButton: {
       styleOverrides: {
         root: {
@@ -59,5 +57,13 @@ export const theme = createTheme({
         },
       },
     },
+
+    // MuiPaper: {
+    //   styleOverrides: {
+    //     root: {
+    //       left: 0,
+    //     },
+    //   },
+    // },
   },
 });

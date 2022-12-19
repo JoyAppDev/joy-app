@@ -16,8 +16,6 @@ function Layout({ children }) {
           backgroundImage: `url(${Star})`,
           backgroundRepeat: 'no-repeat',
           backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          height: '100vh',
         }}
       />
       <Grid
@@ -29,12 +27,10 @@ function Layout({ children }) {
           backgroundImage: `url(${Girl})`,
           backgroundRepeat: 'no-repeat',
           backgroundSize: 'contain',
-          backgroundPosition: 'center',
           width: '548px',
           position: 'absolute',
-          top: '22%',
+          top: '18%',
           bottom: 0,
-          left: -18,
           zIndex: 'modal',
           height: '100vh',
         }}
