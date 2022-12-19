@@ -10,9 +10,9 @@ import { Stack } from '@mui/material';
 
 import { CustomButton } from '../button';
 import Layout from '../layout';
-import AuthenticationInputs from "../authentication-form";
+import AuthenticationInputs from "../authentication-inputs";
 
-function SignInForm() {
+function SignInForm({ email, password, updateFields, setIsValidForm  }) {
     //const [account, setAccount] = React.useState({});
     //const [isChecked, setIsChecked] = React.useState(false);
 
@@ -24,8 +24,10 @@ function SignInForm() {
         }
     });
 
-    const onSubmit = (data) => {
-        alert(JSON.stringify(data));
+    const onSubmit = (fields) => {
+        updateFields(fields);
+        setIsValidForm(isValid);
+        alert(JSON.stringify(fields));
         //setAccount(data);
         //setIsChecked(event.target.checked);
         reset();
@@ -46,8 +48,11 @@ function SignInForm() {
             <Stack spacing={2} mt={4}>
 
                 <AuthenticationInputs
+                    email={email}
+                    password={password}
                     control={control}
                     errors={errors}
+                    updateFields={updateFields}
                 />
 
                 <Box
@@ -86,26 +91,7 @@ function SignInForm() {
                     </Link>
                 </Box>
 
-                <CustomButton
-                    type="submit"
-                    disabled={!isValid}>
-                    SIGN IN
-                </CustomButton>
 
-                <Typography>
-                    If you already have an account, you can
-                    <Link
-                        sx={{
-                            textDecorationColor: 'rgba(55, 103, 226, 1)',
-                            color: 'rgba(55, 103, 226, 1)',
-                            marginLeft: '4px',
-                        }}
-                        component={RouterLink}
-                        to="/signup"
-                    >
-                        LOG IN.
-                    </Link>
-                </Typography>
             </Stack>
         </Box>
     );

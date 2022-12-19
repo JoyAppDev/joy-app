@@ -7,7 +7,7 @@ import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
 import { Stack } from '@mui/material';
 
-import AuthenticationInputs from "../../components/authentication-form";
+import AuthenticationInputs from "../../components/authentication-inputs";
 import { CustomButton } from '../../components/button';
 import Layout from '../../components/layout';
 
