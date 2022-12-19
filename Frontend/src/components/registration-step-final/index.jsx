@@ -36,6 +36,7 @@ function RegistrationStepFinal() {
       sx={{
         mt: 4.4,
         width: '458px',
+        '&.MuiPaper-root': { left: 0 },
       }}
     >
       <Stack spacing={2}>
@@ -69,7 +70,7 @@ function RegistrationStepFinal() {
         />
         <Controller
           control={control}
-          name="address"
+          name="id-number"
           rules={{ required: false }}
           render={({ field: { onChange, value } }) => (
             <CustomInput
@@ -82,7 +83,7 @@ function RegistrationStepFinal() {
           )}
         />
 
-        <FormControl variant="outlined">
+        <FormControl>
           <InputLabel htmlFor="payment_type">Payment type</InputLabel>
           <Controller
             name="payment"
@@ -93,10 +94,24 @@ function RegistrationStepFinal() {
                 value={value}
                 onChange={onChange}
                 label="Payment Type"
-                labelId="payment_type"
+                id="payment_type"
+                sx={{
+                  // '&.Mui-focused .MuiOutlinedInput-notchedOutline .': {
+                  //   border: '1px solid rgba(0, 0, 0, 0.23)',
+                  // },
+                  // '&:hover .MuiOutlinedInput-notchedOutline': {
+                  //   border: '1px solid rgba(0, 0, 0, 0.87)',
+                  // },
+                  '& .MuiOutlinedInput-notchedOutline': {
+                    borderColor: 'rgba(0, 0, 0, 0.23)',
+                  },
+                  '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                    borderColor: 'rgba(0, 0, 0, 0.23)',
+                  },
+                }}
               >
-                <MenuItem value="credit-card">Credit card</MenuItem>
                 <MenuItem value="paypal">PayPal</MenuItem>
+                <MenuItem value="credit-card">Credit card</MenuItem>
               </Select>
             )}
             defaultValue="paypal"

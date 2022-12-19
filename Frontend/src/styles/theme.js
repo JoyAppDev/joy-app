@@ -1,4 +1,5 @@
 import { createTheme } from '@mui/material';
+import { red } from '@mui/material/colors';
 
 export const theme = createTheme({
   palette: {
@@ -19,17 +20,15 @@ export const theme = createTheme({
   },
   components: {
     // Name of the component
-    MuiOutlinedInput: {
+    MuiInpMuiOutlinedInput: {
       styleOverrides: {
         // Name of the slot
         root: {
-          // fontSize: 16,
           // lineHeight: 24,
           // letterSpacing: 0.15,
           // borderRadius: 4,
-          // border: '1px solid rgba(0, 0, 0, 0.23)',
           // width: 460,
-          // height: 56,
+          // minHeight: 56,
           // marginTop: 0,
         },
       },
@@ -57,13 +56,5 @@ export const theme = createTheme({
         },
       },
     },
-
-    // MuiPaper: {
-    //   styleOverrides: {
-    //     root: {
-    //       left: 0,
-    //     },
-    //   },
-    // },
   },
 });
