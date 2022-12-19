@@ -8,6 +8,8 @@ class LicenseSerializer(serializers.ModelSerializer):
     """
     Сериализатор для получения лицензий.
     """
+    brand = serializers.StringRelatedField(read_only=True)
+    creator = serializers.StringRelatedField(read_only=True)
     class Meta:
         model = License
         fields = ('new_deal', 'creator',
@@ -22,26 +24,22 @@ class CreatorSerializer(serializers.ModelSerializer):
     Сериализатор для получения креаторов.
     """
     creator_licenses = serializers.StringRelatedField(many=True, read_only=True)
-    brand_licenses = serializers.StringRelatedField(many=True, read_only=True)
+
     class Meta:
         model = Creator
         fields = ('name_surname',
                   'address', 'id_number',
-                  'payment_info', 'creator_licenses',
-                  'brand_licenses'
+                  'payment_info', 'creator_licenses'
                   )
-    
+
 class BrandSerializer(serializers.ModelSerializer):
     """
     Сериализатор для получения брендов.
     """
+    brand_licenses = serializers.StringRelatedField(read_only=True)
     class Meta:
         model = Brand
         fields = ('email', 'organization_name',
                   'official_address', 'state_number',
                   'representative_name', 'job_title',
                   'mobile_phone', 'brand_licenses')
-                  
-                  
-                  
-        
