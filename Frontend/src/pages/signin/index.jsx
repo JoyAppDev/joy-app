@@ -6,7 +6,10 @@ import {Stack} from "@mui/material";
 function SignIn() {
     return (
         <Layout>
-            <Stack>
+            <Stack sx={{
+                marginLeft: 0,
+                padding: 0
+            }}>
                 <HorizontalStepper />
             </Stack>
         </Layout>

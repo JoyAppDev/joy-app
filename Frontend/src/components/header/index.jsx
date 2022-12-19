@@ -25,7 +25,7 @@ export function Header() {
                 }}
             >
                 {location.pathname === '/' && 'Enjoy our family'}
-                {location.pathname === '/sign-in' && 'Join to JOY'}
+                {location.pathname === '/register' && 'Join to JOY'}
             </Typography>
 
         </Stack>

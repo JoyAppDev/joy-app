@@ -63,7 +63,7 @@ export default function Checkout() {
   }
 
   return (
-    <Container component="main" maxWidth="sm" sx={{ mb: 4 }}>
+    <Container component="main" maxWidth="sm" sx={{ mb: 4, ml: 0 }}>
       <Stepper activeStep={activeStep} sx={{ pt: 3, pb: 5 }}>
         {steps.map(label => (
           <Step key={label}>
