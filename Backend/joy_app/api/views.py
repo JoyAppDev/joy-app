@@ -1,6 +1,6 @@
 from rest_framework import viewsets
-from license.models import License
-from users.models import Creator, Brand
+from license.models import License, Brand
+from users.models import Creator
 from .serializers import LicenseSerializer, CreatorSerializer, BrandSerializer
 from djoser.views import UserViewSet
 

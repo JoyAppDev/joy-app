@@ -1,7 +1,7 @@
 
 from rest_framework import serializers
-from license.models import License
-from users.models import Creator, Brand
+from license.models import License, Brand
+from users.models import Creator
 
 
 class LicenseSerializer(serializers.ModelSerializer):
@@ -21,11 +21,14 @@ class CreatorSerializer(serializers.ModelSerializer):
     """
     Сериализатор для получения креаторов.
     """
+    creator_licenses = serializers.StringRelatedField(many=True, read_only=True)
+    brand_licenses = serializers.StringRelatedField(many=True, read_only=True)
     class Meta:
         model = Creator
         fields = ('name_surname',
                   'address', 'id_number',
                   'payment_info', 'creator_licenses',
+                  'brand_licenses'
                   )
     
 class BrandSerializer(serializers.ModelSerializer):
