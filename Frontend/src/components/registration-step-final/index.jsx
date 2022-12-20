@@ -1,17 +1,13 @@
 import React from 'react';
 import { useForm, Controller } from 'react-hook-form';
-import { Link as RouterLink } from 'react-router-dom';
 
 import Box from '@mui/material/Box';
 import { Stack } from '@mui/material';
-import Typography from '@mui/material/Typography';
-import Link from '@mui/material/Link';
 import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
-import { CustomButton } from '../../components/button';
 import { CustomInput } from '../../components/input';
 
 function RegistrationStepFinal() {
@@ -83,7 +79,7 @@ function RegistrationStepFinal() {
           )}
         />
 
-        <FormControl>
+        <FormControl variant="outlined">
           <InputLabel htmlFor="payment_type">Payment type</InputLabel>
           <Controller
             name="payment"
@@ -95,23 +91,13 @@ function RegistrationStepFinal() {
                 onChange={onChange}
                 label="Payment Type"
                 id="payment_type"
-                sx={{
-                  // '&.Mui-focused .MuiOutlinedInput-notchedOutline .': {
-                  //   border: '1px solid rgba(0, 0, 0, 0.23)',
-                  // },
-                  // '&:hover .MuiOutlinedInput-notchedOutline': {
-                  //   border: '1px solid rgba(0, 0, 0, 0.87)',
-                  // },
-                  '& .MuiOutlinedInput-notchedOutline': {
-                    borderColor: 'rgba(0, 0, 0, 0.23)',
-                  },
-                  '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                    borderColor: 'rgba(0, 0, 0, 0.23)',
-                  },
-                }}
               >
-                <MenuItem value="paypal">PayPal</MenuItem>
-                <MenuItem value="credit-card">Credit card</MenuItem>
+                <MenuItem value="paypal" label="PayPal">
+                  PayPal
+                </MenuItem>
+                <MenuItem value="credit-card" label="Credit card">
+                  Credit card
+                </MenuItem>
               </Select>
             )}
             defaultValue="paypal"
@@ -132,25 +118,6 @@ function RegistrationStepFinal() {
             />
           )}
         />
-      </Stack>
-
-      <Stack spacing={2} mt={4}>
-        <CustomButton type="submit">COMPLETE ACCOUNT</CustomButton>
-
-        <Typography>
-          If you already have an account, you can
-          <Link
-            sx={{
-              textDecorationColor: 'rgba(55, 103, 226, 1)',
-              color: 'rgba(55, 103, 226, 1)',
-              marginLeft: '4px',
-            }}
-            component={RouterLink}
-            to="/signin"
-          >
-            LOG IN.
-          </Link>
-        </Typography>
       </Stack>
     </Box>
   );

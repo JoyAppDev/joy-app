@@ -4,7 +4,7 @@ import { red } from '@mui/material/colors';
 export const theme = createTheme({
   palette: {
     primary: {
-      main: '#FF8A00',
+      main: 'rgba(0, 0, 0, 0.4)',
       disabled: 'rgba(0, 0, 0, 0.4)',
     },
     secondary: {
