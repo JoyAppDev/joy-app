@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "./static/css/main.d850309d.css",
+    "main.js": "./static/js/main.fa7b9903.js",
+    "static/media/girl.svg": "./static/media/girl.de3b169fe8bf67111be6f9f63a91bd76.svg",
+    "static/media/joy-logo.svg": "./static/media/joy-logo.e32e0c78363bfd1139f7d8d28d631500.svg",
+    "static/media/star.svg": "./static/media/star.b68359bedc9ed6dc904b1044d02cba68.svg",
+    "index.html": "./index.html",
+    "main.d850309d.css.map": "./static/css/main.d850309d.css.map",
+    "main.fa7b9903.js.map": "./static/js/main.fa7b9903.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.d850309d.css",
+    "static/js/main.fa7b9903.js"
+  ]
+}
