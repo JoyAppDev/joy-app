@@ -32,6 +32,12 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+    ),
+}
+
 ROOT_URLCONF = 'joy_app.urls'
 
 TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
@@ -91,6 +97,7 @@ USE_L10N = True
 USE_TZ = True
 
 STATIC_URL = '/static/'
+
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 AUTH_USER_MODEL = 'users.Creator'
