@@ -1,6 +1,5 @@
 import * as React from 'react';
-import Container from '@mui/material/Container';
-import {Stack} from "@mui/material";
+import {Box, Stack} from "@mui/material";
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
@@ -67,8 +66,22 @@ export default function Checkout() {
   }
 
   return (
-    <Container component="main" maxWidth="sm" sx={{ mb: 4, ml: 0 }}>
-      <Stepper activeStep={activeStep} sx={{ pt: 3, pb: 5 }}>
+    <Box
+        component="main"
+        maxWidth="sm"
+        sx={{
+          mb: 4,
+          ml: 0,
+          padding: 0,
+        }}
+    >
+      <Stepper
+          activeStep={activeStep}
+          sx={{
+            pt: 3,
+            pb: 5
+      }}
+      >
         {steps.map(label => (
           <Step key={label}
                 sx={{
@@ -139,6 +152,6 @@ export default function Checkout() {
 
         </React.Fragment>
       )}
-    </Container>
+    </Box>
   );
 }
