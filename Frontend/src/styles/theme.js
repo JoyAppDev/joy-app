@@ -1,5 +1,4 @@
 import { createTheme } from '@mui/material';
-import { red } from '@mui/material/colors';
 
 export const theme = createTheme({
   palette: {
@@ -24,12 +23,12 @@ export const theme = createTheme({
       styleOverrides: {
         // Name of the slot
         root: {
-          // lineHeight: 24,
-          // letterSpacing: 0.15,
-          // borderRadius: 4,
-          // width: 460,
-          // minHeight: 56,
-          // marginTop: 0,
+           lineHeight: 24,
+           letterSpacing: 0.15,
+           borderRadius: 4,
+           width: 460,
+           minHeight: 56,
+           marginTop: 0,
         },
       },
     },

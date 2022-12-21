@@ -3,7 +3,6 @@ import { Routes, Route } from 'react-router-dom';
 import Login from '../../pages/login';
 import HorizontalStepper from '../stepper';
 import SignIn from '../../pages/signin';
-import { AuthForm } from '../auth-form';
 import RegistrationFinalStep from '../registration-step-final';
 
 function App() {
@@ -13,6 +12,7 @@ function App() {
       <Route path="stepper" element={<HorizontalStepper />} />{' '}
       {/* subsidiary */}
       <Route path="register" element={<SignIn />} />
+        <Route path="final" element={<RegistrationFinalStep />} />
     </Routes>
   );
 }

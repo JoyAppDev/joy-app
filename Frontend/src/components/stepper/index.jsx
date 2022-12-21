@@ -66,7 +66,16 @@ export default function Checkout() {
     <Container component="main" maxWidth="sm" sx={{ mb: 4, ml: 0 }}>
       <Stepper activeStep={activeStep} sx={{ pt: 3, pb: 5 }}>
         {steps.map(label => (
-          <Step key={label}>
+          <Step key={label}
+                sx={{
+                  "& .MuiStepIcon-root.Mui-active": {
+                    color: "#FF8A00"
+                  },
+                  "& .MuiStepIcon-root.Mui-completed": {
+                    color: "#FF8A00"
+                  }
+                }}
+          >
             <StepLabel>{label}</StepLabel>
           </Step>
         ))}
