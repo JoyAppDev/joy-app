@@ -91,7 +91,7 @@ function Login() {
                                 marginLeft: '4px',
                             }}
                             component={RouterLink}
-                            to="/signup"
+                            to="/register"
                         >
                             SIGN UP.
                         </Link>

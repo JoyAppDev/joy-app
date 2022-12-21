@@ -73,13 +73,16 @@ export default function Checkout() {
           mb: 4,
           ml: 0,
           padding: 0,
+          maxWidth: '458px',
+          width: '100%',
         }}
     >
       <Stepper
           activeStep={activeStep}
           sx={{
             pt: 3,
-            pb: 5
+            pb: 5,
+            maxWidth: '252px',
       }}
       >
         {steps.map(label => (
@@ -131,7 +134,7 @@ export default function Checkout() {
                 onClick={handle}
                 //disabled={!isValidForm}
             >
-              {activeStep === steps.length - 1 ? 'Complete account' : 'SIGN IN'}
+              {activeStep === steps.length - 1 ? 'COMPLETE ACCOUNT' : 'SIGN IN'}
             </CustomButton>
 
             <Typography>
@@ -143,7 +146,7 @@ export default function Checkout() {
                     marginLeft: '4px',
                   }}
                   component={RouterLink}
-                  to="/signup"
+                  to="/"
               >
                 LOG IN.
               </Link>
