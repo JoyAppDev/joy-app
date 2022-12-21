@@ -19,6 +19,7 @@ const INITIAL_DATA = {
   address: "",
   idNumber: "",
   paymentInfo: "",
+  payPal: "",
 }
 
 const steps = ['Step 1', 'Final step'];

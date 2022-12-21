@@ -10,7 +10,7 @@ import Select from '@mui/material/Select';
 
 import { CustomInput } from '../../components/input';
 
-function RegistrationStepFinal({ name, address, updateFields, idNumber, paymentInfo, setIsValidForm }) {
+function RegistrationStepFinal({ name, address, updateFields, idNumber, paymentInfo, payPal, setIsValidForm }) {
   const {
     handleSubmit,
     control,
@@ -90,7 +90,8 @@ function RegistrationStepFinal({ name, address, updateFields, idNumber, paymentI
             render={({ field: { onChange, value } }) => (
               <Select
                 value={value}
-                onChange={onChange}
+                //onChange={onChange}
+                onChange={e => updateFields({paymentInfo: e.target.value})}
                 label="Payment Type"
                 id="payment_type"
               >
@@ -102,24 +103,28 @@ function RegistrationStepFinal({ name, address, updateFields, idNumber, paymentI
                 </MenuItem>
               </Select>
             )}
-            defaultValue="paypal"
+            //defaultValue="paypal"
           />
         </FormControl>
 
-        <Controller
-          control={control}
-          name="paypal"
-          rules={{ required: false }}
-          render={({ field: { onChange, value } }) => (
-            <CustomInput
-              label={'PayPal'}
-              type={'text'}
-              onChange={e => updateFields({paymentInfo: e.target.value})}
-              value={paymentInfo || ''}
-              placeholder={''}
+        {paymentInfo === 'paypal' && (
+            <Controller
+                control={control}
+                name="paypal"
+                rules={{ required: false }}
+                render={({ field: { onChange, value } }) => (
+                    <CustomInput
+                        label={'PayPal'}
+                        type={'text'}
+                        onChange={e => updateFields({payPal: e.target.value})}
+                        value={payPal || ''}
+                        placeholder={''}
+                    />
+                )}
             />
-          )}
-        />
+        )}
+
+
       </Stack>
     </Box>
   );
