@@ -11,11 +11,12 @@ import {useState} from "react";
 import {CustomButton} from "../button";
 import Link from "@mui/material/Link";
 import {Link as RouterLink} from "react-router-dom";
+import RegistrationStepFinal from "../registration-step-final";
 
 const INITIAL_DATA = {
   email: "",
   password: "",
-  nameSurname: "",
+  name: "",
   address: "",
   idNumber: "",
   paymentInfo: "",
@@ -37,7 +38,10 @@ export default function Checkout() {
             //setIsValidForm={setIsValidForm}
         />;
       case 1:
-        return 'Registration Page 2';
+        return <RegistrationStepFinal
+            {...data}
+            updateFields={updateFields}
+        />
       default:
         throw new Error('Unknown step');
     }

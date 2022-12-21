@@ -10,7 +10,7 @@ import Select from '@mui/material/Select';
 
 import { CustomInput } from '../../components/input';
 
-function RegistrationStepFinal() {
+function RegistrationStepFinal({ name, address, updateFields, idNumber, paymentInfo, setIsValidForm }) {
   const {
     handleSubmit,
     control,
@@ -21,6 +21,8 @@ function RegistrationStepFinal() {
   });
 
   const onSubmit = data => {
+    updateFields(data);
+    alert(JSON.stringify(data));
     console.log(data);
     reset();
   };
@@ -44,8 +46,8 @@ function RegistrationStepFinal() {
             <CustomInput
               label={'Name / Surname'}
               type={'text'}
-              onChange={e => onChange(e)}
-              value={value || ''}
+              onChange={e => updateFields({name: e.target.value})}
+              value={name || ''}
               placeholder={'John Dow'}
             />
           )}
@@ -58,8 +60,8 @@ function RegistrationStepFinal() {
             <CustomInput
               label={'Address'}
               type={'text'}
-              onChange={e => onChange(e)}
-              value={value || ''}
+              onChange={e => updateFields({address: e.target.value})}
+              value={address || ''}
               placeholder={'NY, 123 madisson av.'}
             />
           )}
@@ -72,8 +74,8 @@ function RegistrationStepFinal() {
             <CustomInput
               label={'ID number'}
               type={'text'}
-              onChange={e => onChange(e)}
-              value={value || ''}
+              onChange={e => updateFields({idNumber: e.target.value})}
+              value={idNumber || ''}
               placeholder={'123-456-789'}
             />
           )}
@@ -112,8 +114,8 @@ function RegistrationStepFinal() {
             <CustomInput
               label={'PayPal'}
               type={'text'}
-              onChange={e => onChange(e)}
-              value={value || ''}
+              onChange={e => updateFields({paymentInfo: e.target.value})}
+              value={paymentInfo || ''}
               placeholder={''}
             />
           )}

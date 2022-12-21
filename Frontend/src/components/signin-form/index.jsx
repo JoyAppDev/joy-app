@@ -10,7 +10,7 @@ import { Stack } from '@mui/material';
 
 import AuthenticationInputs from "../authentication-inputs";
 
-function SignInForm({ email, password, updateFields, setIsValidForm  }) {
+function SignInForm({ email, password, updateFields, setIsValidForm }) {
     //const [account, setAccount] = React.useState({});
     //const [isChecked, setIsChecked] = React.useState(false);
 
