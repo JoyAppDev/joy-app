@@ -26,7 +26,7 @@ export const theme = createTheme({
            lineHeight: 24,
            letterSpacing: 0.15,
            borderRadius: 4,
-           width: 460,
+           width: '100%',
            minHeight: 56,
            marginTop: 0,
         },
