@@ -22,7 +22,6 @@ function RegistrationStepFinal({ name, address, updateFields, idNumber, paymentI
   const onSubmit = data => {
     updateFields(data);
     alert(JSON.stringify(data));
-    console.log(data);
     reset();
   };
   return (
@@ -72,7 +71,7 @@ function RegistrationStepFinal({ name, address, updateFields, idNumber, paymentI
           render={() => (
             <CustomInput
               label={'ID number'}
-              type={'text'}
+              type={'number'}
               onChange={e => updateFields({idNumber: e.target.value})}
               value={idNumber || ''}
               placeholder={'123-456-789'}
