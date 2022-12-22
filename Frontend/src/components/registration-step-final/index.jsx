@@ -10,11 +10,10 @@ import Select from '@mui/material/Select';
 
 import { CustomInput } from '../../components/input';
 
-function RegistrationStepFinal({ name, address, updateFields, idNumber, paymentInfo, payPal, setIsValidForm }) {
+function RegistrationStepFinal({ name, address, updateFields, idNumber, paymentInfo, payPal }) {
   const {
     handleSubmit,
     control,
-    formState: { errors, isValid },
     reset,
   } = useForm({
     mode: 'onBlur',
@@ -42,7 +41,7 @@ function RegistrationStepFinal({ name, address, updateFields, idNumber, paymentI
           control={control}
           name="name"
           rules={{ required: true }}
-          render={({ field: { onChange, value } }) => (
+          render={() => (
             <CustomInput
               label={'Name / Surname'}
               type={'text'}
@@ -56,7 +55,7 @@ function RegistrationStepFinal({ name, address, updateFields, idNumber, paymentI
           control={control}
           name="address"
           rules={{ required: true }}
-          render={({ field: { onChange, value } }) => (
+          render={() => (
             <CustomInput
               label={'Address'}
               type={'text'}
@@ -70,7 +69,7 @@ function RegistrationStepFinal({ name, address, updateFields, idNumber, paymentI
           control={control}
           name="id-number"
           rules={{ required: false }}
-          render={({ field: { onChange, value } }) => (
+          render={() => (
             <CustomInput
               label={'ID number'}
               type={'text'}
@@ -87,7 +86,7 @@ function RegistrationStepFinal({ name, address, updateFields, idNumber, paymentI
             name="payment"
             control={control}
             rules={{ required: false }}
-            render={({ field: { onChange, value } }) => (
+            render={({ field: { value } }) => (
               <Select
                 value={value}
                 //onChange={onChange}
@@ -112,7 +111,7 @@ function RegistrationStepFinal({ name, address, updateFields, idNumber, paymentI
                 control={control}
                 name="paypal"
                 rules={{ required: false }}
-                render={({ field: { onChange, value } }) => (
+                render={() => (
                     <CustomInput
                         label={'PayPal'}
                         type={'text'}

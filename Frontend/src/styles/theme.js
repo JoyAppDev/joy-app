@@ -15,6 +15,7 @@ export const theme = createTheme({
       greyDark: 'rgba(0, 0, 0, 0.87)',
       blue: '#3767e2',
       blueLight: '#1976d2',
+      orange: '#FF8A00',
     },
   },
   components: {

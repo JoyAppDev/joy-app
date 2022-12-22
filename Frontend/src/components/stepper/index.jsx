@@ -3,7 +3,6 @@ import {Box, Stack} from "@mui/material";
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
-//import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import SignInForm from "../signin-form";
 import {useState} from "react";
@@ -11,6 +10,7 @@ import {CustomButton} from "../button";
 import Link from "@mui/material/Link";
 import {Link as RouterLink} from "react-router-dom";
 import RegistrationStepFinal from "../registration-step-final";
+import {theme} from "../../styles/theme";
 
 const INITIAL_DATA = {
   email: "",
@@ -27,7 +27,6 @@ const steps = ['Step 1', 'Final step'];
 export default function Checkout() {
   const [activeStep, setActiveStep] = React.useState(0);
   const [data, setData] = useState(INITIAL_DATA);
-  // const [isValidForm, setIsValidForm] = useState(false);
 
   function getStepContent(step) {
     switch (step) {
@@ -35,7 +34,6 @@ export default function Checkout() {
         return <SignInForm
             {...data}
             updateFields={updateFields}
-            //setIsValidForm={setIsValidForm}
         />;
       case 1:
         return <RegistrationStepFinal
@@ -56,10 +54,6 @@ export default function Checkout() {
   const handleNext = () => {
     setActiveStep(activeStep + 1);
   };
-
-  //const handleBack = () => {
-  //  setActiveStep(activeStep - 1);
-  //};
 
   const handle = () => {
     if(activeStep !== steps.length - 1) return handleNext();
@@ -90,10 +84,10 @@ export default function Checkout() {
           <Step key={label}
                 sx={{
                   "& .MuiStepIcon-root.Mui-active": {
-                    color: "#FF8A00"
+                    color: theme.palette.custom.orange
                   },
                   "& .MuiStepIcon-root.Mui-completed": {
-                    color: "#FF8A00"
+                    color: theme.palette.custom.orange
                   }
                 }}
           >
@@ -111,29 +105,10 @@ export default function Checkout() {
         <React.Fragment>
           {getStepContent(activeStep)}
 
-
-            {/* <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-            {activeStep !== 0 && (
-              <Button onClick={handleBack} sx={{ mt: 3, ml: 1 }}>
-                Back
-              </Button>
-            )}
-
-            <Button
-              variant="contained"
-              onClick={handle}
-              sx={{ mt: 3, ml: 1 }}
-            >
-                {activeStep === steps.length - 1 ? 'Complete account' : 'SIGN IN'}
-            </Button>
-             </Box>
-             */}
-
           <Stack spacing={2} mt={4}>
             <CustomButton
                 type="submit"
                 onClick={handle}
-                //disabled={!isValidForm}
             >
               {activeStep === steps.length - 1 ? 'COMPLETE ACCOUNT' : 'SIGN IN'}
             </CustomButton>
