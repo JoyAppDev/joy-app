@@ -10,18 +10,18 @@ import Select from '@mui/material/Select';
 
 import { CustomInput } from '../../components/input';
 
-function RegistrationStepFinal() {
+function RegistrationStepFinal({ name, address, updateFields, idNumber, paymentInfo, payPal }) {
   const {
     handleSubmit,
     control,
-    formState: { errors, isValid },
     reset,
   } = useForm({
     mode: 'onBlur',
   });
 
   const onSubmit = data => {
-    console.log(data);
+    updateFields(data);
+    alert(JSON.stringify(data));
     reset();
   };
   return (
@@ -40,12 +40,12 @@ function RegistrationStepFinal() {
           control={control}
           name="name"
           rules={{ required: true }}
-          render={({ field: { onChange, value } }) => (
+          render={() => (
             <CustomInput
               label={'Name / Surname'}
               type={'text'}
-              onChange={e => onChange(e)}
-              value={value || ''}
+              onChange={e => updateFields({name: e.target.value})}
+              value={name || ''}
               placeholder={'John Dow'}
             />
           )}
@@ -54,12 +54,12 @@ function RegistrationStepFinal() {
           control={control}
           name="address"
           rules={{ required: true }}
-          render={({ field: { onChange, value } }) => (
+          render={() => (
             <CustomInput
               label={'Address'}
               type={'text'}
-              onChange={e => onChange(e)}
-              value={value || ''}
+              onChange={e => updateFields({address: e.target.value})}
+              value={address || ''}
               placeholder={'NY, 123 madisson av.'}
             />
           )}
@@ -68,12 +68,12 @@ function RegistrationStepFinal() {
           control={control}
           name="id-number"
           rules={{ required: false }}
-          render={({ field: { onChange, value } }) => (
+          render={() => (
             <CustomInput
               label={'ID number'}
-              type={'text'}
-              onChange={e => onChange(e)}
-              value={value || ''}
+              type={'number'}
+              onChange={e => updateFields({idNumber: e.target.value})}
+              value={idNumber || ''}
               placeholder={'123-456-789'}
             />
           )}
@@ -85,10 +85,11 @@ function RegistrationStepFinal() {
             name="payment"
             control={control}
             rules={{ required: false }}
-            render={({ field: { onChange, value } }) => (
+            render={({ field: { value } }) => (
               <Select
                 value={value}
-                onChange={onChange}
+                //onChange={onChange}
+                onChange={e => updateFields({paymentInfo: e.target.value})}
                 label="Payment Type"
                 id="payment_type"
               >
@@ -100,24 +101,28 @@ function RegistrationStepFinal() {
                 </MenuItem>
               </Select>
             )}
-            defaultValue="paypal"
+            //defaultValue="paypal"
           />
         </FormControl>
 
-        <Controller
-          control={control}
-          name="paypal"
-          rules={{ required: false }}
-          render={({ field: { onChange, value } }) => (
-            <CustomInput
-              label={'PayPal'}
-              type={'text'}
-              onChange={e => onChange(e)}
-              value={value || ''}
-              placeholder={''}
+        {paymentInfo === 'paypal' && (
+            <Controller
+                control={control}
+                name="paypal"
+                rules={{ required: false }}
+                render={() => (
+                    <CustomInput
+                        label={'PayPal'}
+                        type={'text'}
+                        onChange={e => updateFields({payPal: e.target.value})}
+                        value={payPal || ''}
+                        placeholder={''}
+                    />
+                )}
             />
-          )}
-        />
+        )}
+
+
       </Stack>
     </Box>
   );

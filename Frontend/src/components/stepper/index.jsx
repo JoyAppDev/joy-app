@@ -1,24 +1,25 @@
 import * as React from 'react';
-import Container from '@mui/material/Container';
-import {Stack} from "@mui/material";
+import {Box, Stack} from "@mui/material";
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
-//import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import SignInForm from "../signin-form";
 import {useState} from "react";
 import {CustomButton} from "../button";
 import Link from "@mui/material/Link";
 import {Link as RouterLink} from "react-router-dom";
+import RegistrationStepFinal from "../registration-step-final";
+import {theme} from "../../styles/theme";
 
 const INITIAL_DATA = {
   email: "",
   password: "",
-  nameSurname: "",
+  name: "",
   address: "",
   idNumber: "",
   paymentInfo: "",
+  payPal: "",
 }
 
 const steps = ['Step 1', 'Final step'];
@@ -26,7 +27,6 @@ const steps = ['Step 1', 'Final step'];
 export default function Checkout() {
   const [activeStep, setActiveStep] = React.useState(0);
   const [data, setData] = useState(INITIAL_DATA);
-  // const [isValidForm, setIsValidForm] = useState(false);
 
   function getStepContent(step) {
     switch (step) {
@@ -34,10 +34,12 @@ export default function Checkout() {
         return <SignInForm
             {...data}
             updateFields={updateFields}
-            //setIsValidForm={setIsValidForm}
         />;
       case 1:
-        return 'Registration Page 2';
+        return <RegistrationStepFinal
+            {...data}
+            updateFields={updateFields}
+        />
       default:
         throw new Error('Unknown step');
     }
@@ -53,20 +55,42 @@ export default function Checkout() {
     setActiveStep(activeStep + 1);
   };
 
-  //const handleBack = () => {
-  //  setActiveStep(activeStep - 1);
-  //};
-
   const handle = () => {
     if(activeStep !== steps.length - 1) return handleNext();
     alert(JSON.stringify(data));
   }
 
   return (
-    <Container component="main" maxWidth="sm" sx={{ mb: 4, ml: 0 }}>
-      <Stepper activeStep={activeStep} sx={{ pt: 3, pb: 5 }}>
+    <Box
+        component="main"
+        maxWidth="sm"
+        sx={{
+          mb: 4,
+          ml: 0,
+          padding: 0,
+          maxWidth: '458px',
+          width: '100%',
+        }}
+    >
+      <Stepper
+          activeStep={activeStep}
+          sx={{
+            pt: 3,
+            pb: 5,
+            maxWidth: '252px',
+      }}
+      >
         {steps.map(label => (
-          <Step key={label}>
+          <Step key={label}
+                sx={{
+                  "& .MuiStepIcon-root.Mui-active": {
+                    color: theme.palette.custom.orange
+                  },
+                  "& .MuiStepIcon-root.Mui-completed": {
+                    color: theme.palette.custom.orange
+                  }
+                }}
+          >
             <StepLabel>{label}</StepLabel>
           </Step>
         ))}
@@ -81,31 +105,12 @@ export default function Checkout() {
         <React.Fragment>
           {getStepContent(activeStep)}
 
-
-            {/* <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-            {activeStep !== 0 && (
-              <Button onClick={handleBack} sx={{ mt: 3, ml: 1 }}>
-                Back
-              </Button>
-            )}
-
-            <Button
-              variant="contained"
-              onClick={handle}
-              sx={{ mt: 3, ml: 1 }}
-            >
-                {activeStep === steps.length - 1 ? 'Complete account' : 'SIGN IN'}
-            </Button>
-             </Box>
-             */}
-
           <Stack spacing={2} mt={4}>
             <CustomButton
                 type="submit"
                 onClick={handle}
-                //disabled={!isValidForm}
             >
-              {activeStep === steps.length - 1 ? 'Complete account' : 'SIGN IN'}
+              {activeStep === steps.length - 1 ? 'COMPLETE ACCOUNT' : 'SIGN IN'}
             </CustomButton>
 
             <Typography>
@@ -117,7 +122,7 @@ export default function Checkout() {
                     marginLeft: '4px',
                   }}
                   component={RouterLink}
-                  to="/signup"
+                  to="/"
               >
                 LOG IN.
               </Link>
@@ -126,6 +131,6 @@ export default function Checkout() {
 
         </React.Fragment>
       )}
-    </Container>
+    </Box>
   );
 }

@@ -8,7 +8,7 @@ function SignIn() {
         <Layout>
             <Stack sx={{
                 marginLeft: 0,
-                padding: 0
+                paddingLeft: 0
             }}>
                 <HorizontalStepper />
             </Stack>

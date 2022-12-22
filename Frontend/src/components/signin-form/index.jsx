@@ -10,9 +10,7 @@ import { Stack } from '@mui/material';
 
 import AuthenticationInputs from "../authentication-inputs";
 
-function SignInForm({ email, password, updateFields, setIsValidForm  }) {
-    //const [account, setAccount] = React.useState({});
-    //const [isChecked, setIsChecked] = React.useState(false);
+function SignInForm({ email, password, updateFields, setIsValidForm }) {
 
     const { handleSubmit, control, formState: { errors, isValid }, reset } = useForm({
         mode: "onBlur"
@@ -26,8 +24,6 @@ function SignInForm({ email, password, updateFields, setIsValidForm  }) {
         updateFields(fields);
         setIsValidForm(isValid);
         alert(JSON.stringify(fields));
-        //setAccount(data);
-        //setIsChecked(event.target.checked);
         reset();
     }
 
