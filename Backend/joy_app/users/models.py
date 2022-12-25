@@ -29,7 +29,11 @@ class Creator(AbstractUser):
         max_length=150)
 
     USERNAME_FIELD = "name_surname"
-    REQUIRED_FIELDS = ['username']
+
+    REQUIRED_FIELDS = ['username', 'email', 'address',
+                       'id_number', 'payment_info']
+
+    FIELDS_TO_UPDATE = ['email', 'address', 'id_number', 'payment_info']
 
     class Meta:
         verbose_name = 'Creator'

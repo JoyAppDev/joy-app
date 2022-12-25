@@ -11,6 +11,9 @@ class LicenseViewSet(viewsets.ModelViewSet):
     queryset = License.objects.all()
     serializer_class = LicenseSerializer
 
+    def perform_create(self, serializer):
+        serializer.save(creator=self.request.user)
+
 
 class CustomUserViewSet(viewsets.ModelViewSet):
 
@@ -19,10 +22,10 @@ class CustomUserViewSet(viewsets.ModelViewSet):
     """
     queryset = Creator.objects.all()
     serializer_class = CreatorSerializer
-    
+
+
 class BrandViewSet(viewsets.ModelViewSet):
-    
+
     """Brands"""
     queryset = Brand.objects.all()
     serializer_class = BrandSerializer
-    

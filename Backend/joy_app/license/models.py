@@ -1,6 +1,8 @@
 from django.db import models
-from users.models import Creator
+from django.contrib.auth import get_user_model
 from phonenumber_field.modelfields import PhoneNumberField
+
+User = get_user_model()
 
 
 CHOICES = (
@@ -12,10 +14,9 @@ class License(models.Model):
 
     new_deal = models.CharField(max_length=100)
     creator = models.ForeignKey(
-        Creator, verbose_name='creator',
+        User, verbose_name='creator',
         on_delete=models.CASCADE,
-        related_name='licenses',
-        null=True)
+        related_name='licenses')
     # brand = models.ForeignKey("Brand", verbose_name='brand',
     #                           on_delete=models.CASCADE,
     #                           related_name='brand_licenses',
@@ -35,17 +36,25 @@ class License(models.Model):
         verbose_name_plural = 'licenses'
         ordering = ('creator',)
 
+        constraints = [
+            models.UniqueConstraint(
+                fields=['new_deal', 'creator'],
+                name='unique_name_owner'
+            )
+        ]
+
     def __str__(self):
         return self.new_deal
 
-# В этой модели будут связаны id котика и id его достижения
+
+# В этой модели будут связаны id brand и id его license
 class LicenseBrand(models.Model):
     brand = models.ForeignKey('Brand', on_delete=models.CASCADE)
     license = models.ForeignKey(License, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f'{self.brand} {self.license}' 
-    
+        return f'{self.brand} {self.license}'
+
 
 class Brand(models.Model):
     email = models.EmailField(
@@ -69,7 +78,6 @@ class Brand(models.Model):
         'job_title',
         max_length=150, unique=False)
     mobile_phone = PhoneNumberField(null=False, blank=False, unique=False)
-
 
     class Meta:
         verbose_name = 'Brand'

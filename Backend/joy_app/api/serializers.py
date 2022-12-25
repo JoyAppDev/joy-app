@@ -1,5 +1,7 @@
 
 from rest_framework import serializers
+from rest_framework.validators import UniqueTogetherValidator
+
 from license.models import License, Brand, LicenseBrand
 from users.models import Creator
 
@@ -21,15 +23,24 @@ class LicenseSerializer(serializers.ModelSerializer):
     Сериализатор для получения лицензий.
     """
     brands = BrandSerializer(many=True, required=False)
+    creator = serializers.PrimaryKeyRelatedField(
+        read_only=True, default=serializers.CurrentUserDefault())
 
     class Meta:
         model = License
-        fields = ('new_deal', 'creator',
+        fields = ('id', 'new_deal', 'creator',
                   'license_type', 'validity',
                   'territory', 'ways_to_use',
                   'price', 'service_fee',
                   'additional_info',
                   'brands',)
+
+        validators = [
+            UniqueTogetherValidator(
+                queryset=License.objects.all(),
+                fields=('new_deal', 'creator')
+            )
+        ]
 
     def create(self, validated_data):
         if 'brands' not in self.initial_data:
