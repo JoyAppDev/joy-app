@@ -17,10 +17,10 @@ class License(models.Model):
         User, verbose_name='creator',
         on_delete=models.CASCADE,
         related_name='licenses')
-    # brand = models.ForeignKey("Brand", verbose_name='brand',
-    #                           on_delete=models.CASCADE,
-    #                           related_name='brand_licenses',
-    #                           null=True)
+    brand = models.ForeignKey("Brand", verbose_name='brand',
+                              on_delete=models.CASCADE,
+                              related_name='brand_licenses',
+                              null=True)
     license_type = models.CharField(max_length=25, choices=CHOICES)
     validity = models.DateField(verbose_name='validity', auto_now_add=False)
     territory = models.CharField(max_length=100)
@@ -28,8 +28,7 @@ class License(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2)
     service_fee = models.DecimalField(max_digits=10, decimal_places=2)
     additional_info = models.CharField(max_length=300)
-    # content = models.FileField()
-    brands = models.ManyToManyField('Brand', through='LicenseBrand')
+    content = models.FileField()
 
     class Meta:
         verbose_name = 'license'
@@ -45,15 +44,6 @@ class License(models.Model):
 
     def __str__(self):
         return self.new_deal
-
-
-# В этой модели будут связаны id brand и id его license
-class LicenseBrand(models.Model):
-    brand = models.ForeignKey('Brand', on_delete=models.CASCADE)
-    license = models.ForeignKey(License, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return f'{self.brand} {self.license}'
 
 
 class Brand(models.Model):

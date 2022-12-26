@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from license.models import License, Brand, LicenseBrand
+from license.models import License, Brand
 
 
 class LicenseAdmin(admin.ModelAdmin):
@@ -12,10 +12,10 @@ class LicenseAdmin(admin.ModelAdmin):
         'service_fee', 'additional_info',
         )
     search_fields = ('new_deal', 'creator',
-                     'brands', 'price',
+                     'brand', 'price',
                      'license_type')
     list_filter = ('new_deal', 'creator',
-                   'price', 'brands',
+                   'price', 'brand',
                    'license_type')
     empty_value_display = '-empty-'
 
@@ -38,4 +38,3 @@ class LicenseBrandAdmin(admin.ModelAdmin):
 
 admin.site.register(License, LicenseAdmin)
 admin.site.register(Brand, BrandAdmin)
-admin.site.register(LicenseBrand, LicenseBrandAdmin)

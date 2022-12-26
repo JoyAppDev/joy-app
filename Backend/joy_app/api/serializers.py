@@ -1,8 +1,7 @@
-
 from rest_framework import serializers
 from rest_framework.validators import UniqueTogetherValidator
 
-from license.models import License, Brand, LicenseBrand
+from license.models import License, Brand
 from users.models import Creator
 
 
@@ -12,7 +11,7 @@ class BrandSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = Brand
-        fields = ('email', 'organization_name',
+        fields = ('id', 'email', 'organization_name',
                   'official_address', 'state_number',
                   'representative_name', 'job_title',
                   'mobile_phone')
@@ -22,7 +21,9 @@ class LicenseSerializer(serializers.ModelSerializer):
     """
     Сериализатор для получения лицензий.
     """
-    brands = BrandSerializer(many=True, required=False)
+    brand = serializers.SlugRelatedField(
+        slug_field='organization_name', queryset=Brand.objects.all(),
+    )
     creator = serializers.PrimaryKeyRelatedField(
         read_only=True, default=serializers.CurrentUserDefault())
 
@@ -33,7 +34,7 @@ class LicenseSerializer(serializers.ModelSerializer):
                   'territory', 'ways_to_use',
                   'price', 'service_fee',
                   'additional_info',
-                  'brands',)
+                  'brand',)
 
         validators = [
             UniqueTogetherValidator(
@@ -41,17 +42,6 @@ class LicenseSerializer(serializers.ModelSerializer):
                 fields=('new_deal', 'creator')
             )
         ]
-
-    def create(self, validated_data):
-        if 'brands' not in self.initial_data:
-            license = License.objects.create(**validated_data)
-            return license
-        brands = validated_data.pop('brands')
-        license = License.objects.create(**validated_data)
-        for brand in brands:
-            current_brand, status = License.objects.get_or_create(**brand)
-            LicenseBrand.objects.create(brand=current_brand, license=license)
-        return license
 
 
 class CreatorSerializer(serializers.ModelSerializer):
@@ -62,7 +52,7 @@ class CreatorSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Creator
-        fields = ('name_surname',
+        fields = ('id', 'name_surname',
                   'address', 'id_number',
                   'payment_info', 'licenses',
                   )

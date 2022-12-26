@@ -23,7 +23,7 @@ class Creator(AbstractUser):
         max_length=150,
         unique=False)
     id_number = models.DecimalField(max_digits=30, decimal_places=0,
-                                    unique=False, null=True)
+                                    unique=False)
     payment_info = models.CharField(
         'Payment_info',
         max_length=150)
