@@ -11,7 +11,12 @@ export default function HeaderTabs() {
     };
 
     return (
-        <Box sx={{ width: '100%' }}>
+        <Box sx={{
+            width: '100%',
+            '& .MuiBox-root': {
+                marginTop: '27'
+            }
+        }}>
             <Tabs
                 onChange={handleChange}
                 value={value}
