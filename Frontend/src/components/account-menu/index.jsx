@@ -32,7 +32,6 @@ export default function AccountMenu() {
                     sx={{
                         minWidth: 60,
                         fontSize: '20',
-                        marginRight: '12'
                 }}>
                     {amount}
                 </Typography>
@@ -44,7 +43,8 @@ export default function AccountMenu() {
                         color: '#FFFFFF',
                         padding: '4',
                         boxSizing: 'border-box',
-                        mr: 3
+                        mr: 3,
+                        ml: 2
                 }}>
                     Withdraw
                 </Button>
