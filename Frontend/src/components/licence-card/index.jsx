@@ -7,27 +7,65 @@ import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 
-export default function LicenceCard() {
+import placeholderImage from './../../assets/placeholderImage.png';
+import { theme } from "../../styles/theme";
+
+export default function LicenceCard({ author='John Doe', date='4 Feb 2022', heading='TikTok' }) {
+
     return (
-        <Card sx={{ maxWidth: 260 }}>
+        <Card sx={{ maxWidth: 260 }} variant="outlined">
             <CardMedia
                 component="img"
                 alt="licence preview"
                 height="200"
-                image="/static/src/assets/placeholderImage.png"
+                image={placeholderImage}
             />
             <CardContent>
-                <Typography gutterBottom variant="h5" component="div">
-                    Lizard
+                <Typography
+                    gutterBottom
+                    variant="subtitle2"
+                    component="div"
+                    sx={{
+                        fontSize: 14,
+                        fontWeight: 500,
+                        color: '#9D9D9D'
+                    }}
+                >
+                    {author} • {date}
                 </Typography>
-                <Typography variant="body2" color="text.secondary">
-                    Lizards are a widespread group of squamate reptiles, with over 6,000
-                    species, ranging across all continents except Antarctica
+                <Typography
+                    variant="h6"
+                    color={theme.palette.custom.greyDark}
+                >
+                    {heading}
                 </Typography>
             </CardContent>
-            <CardActions>
-                <Button size="small">Share</Button>
-                <Button size="small">Learn More</Button>
+            <CardActions sx={{
+                pt: 0,
+                pl: 2,
+                pr: 2,
+                pb: 2,
+            }}>
+                <Button
+                    sx={{
+                        width: 111,
+                        height: 32,
+                        borderRadius: '16px',
+                        pl: .5,
+                        pr: .5,
+                        backgroundColor: '#FF8A00',
+                        color: '#FFFFFF',
+                        padding: '4',
+                        boxSizing: 'border-box',
+                        textTransform: 'none',
+                        fontSize: 13,
+                        fontWeight: 400,
+                        '&:hover': {
+                            backgroundColor: '#FF8A00'
+                        },
+                    }}>
+                    Open licence
+                </Button>
             </CardActions>
         </Card>
     );
