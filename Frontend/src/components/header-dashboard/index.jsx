@@ -1,7 +1,7 @@
 import React from 'react';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
-import logo from "../../assets/joy-logo.svg";
+import logo from "../../assets/joy_logo.svg";
 import HeaderTabs from "../header-tabs";
 import AccountMenu from "../account-menu";
 

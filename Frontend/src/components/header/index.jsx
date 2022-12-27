@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Stack, Typography } from "@mui/material";
 
-import logo from '../../assets/joy-logo.svg';
+import logo from '../../assets/joy_logo.svg';
 import {useLocation} from "react-router-dom";
 
 export function Header() {
