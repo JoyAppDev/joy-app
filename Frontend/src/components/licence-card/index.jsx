@@ -22,12 +22,14 @@ const click = () => {
 }
     return (
         <Card sx={{ maxWidth: 260 }} variant="outlined">
-            <CardMedia
-                component="img"
-                alt="licence preview"
-                height="200"
-                image={image || placeholderImage}
-            />
+            <CardActions onClick={click} sx={{ p: 0 }}>
+                <CardMedia
+                    component="img"
+                    alt="licence preview"
+                    height="200"
+                    image={image || placeholderImage}
+                />
+            </CardActions>
             <CardContent>
                 <Typography
                     gutterBottom
