@@ -28,7 +28,7 @@ class License(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2)
     service_fee = models.DecimalField(max_digits=10, decimal_places=2)
     additional_info = models.CharField(max_length=300)
-    content = models.FileField()
+    # content = models.FileField()
 
     class Meta:
         verbose_name = 'license'
