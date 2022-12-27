@@ -27,7 +27,6 @@ function Layout({ children }) {
           backgroundRepeat: 'no-repeat',
           backgroundSize: 'cover',
           height: '100vh',
-          width: '100%',
         }}
       />
       <Grid
