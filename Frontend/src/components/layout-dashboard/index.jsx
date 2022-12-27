@@ -6,7 +6,7 @@ import starDashboard from './../../assets/star_dashboard_x1.png';
 import HeaderDashboard from '../header-dashboard';
 
 
-function LayoutDashboard() {
+function LayoutDashboard({ children }) {
     return (
         <>
             <HeaderDashboard />
@@ -27,7 +27,7 @@ function LayoutDashboard() {
                     gap={5}
                     sx={{ pt: 9 }}
                 >
-                    {/* здесь будут карточки */}
+                    {children}
                 </Box>
             </Box>
         </>
