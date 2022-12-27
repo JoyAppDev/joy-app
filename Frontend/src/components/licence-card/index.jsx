@@ -10,15 +10,23 @@ import Typography from '@mui/material/Typography';
 import placeholderImage from './../../assets/placeholderImage.png';
 import { theme } from "../../styles/theme";
 
-export default function LicenceCard({ author='John Doe', date='4 Feb 2022', heading='TikTok' }) {
-
+export default function LicenceCard({
+                                        image,
+                                        author='John Doe',
+                                        date='Now',
+                                        heading='Create new license?',
+                                        button='Create license'
+                                    }) {
+const click = () => {
+    alert("Create");
+}
     return (
         <Card sx={{ maxWidth: 260 }} variant="outlined">
             <CardMedia
                 component="img"
                 alt="licence preview"
                 height="200"
-                image={placeholderImage}
+                image={image || placeholderImage}
             />
             <CardContent>
                 <Typography
@@ -63,8 +71,10 @@ export default function LicenceCard({ author='John Doe', date='4 Feb 2022', head
                         '&:hover': {
                             backgroundColor: '#FF8A00'
                         },
-                    }}>
-                    Open licence
+                    }}
+                    onClick={click}
+                >
+                    {button}
                 </Button>
             </CardActions>
         </Card>
