@@ -12,16 +12,21 @@ function LayoutDashboard() {
             <HeaderDashboard />
             <Box sx={{
                 width: '100%',
-                height: '100vh',
-                mt: 9,
+                height: 'calc(100vh - 75px)',
                 backgroundImage: `url(${starDashboard})`,
                 backgroundPosition: 'bottom right',
                 backgroundRepeat: 'no-repeat',
                 pl: 15,
                 pr: 15,
                 boxSizing: 'border-box',
+                m: 0,
             }}>
-                <Box display="grid" gridTemplateColumns="repeat(4, 1fr)" gap={5}>
+                <Box
+                    display="grid"
+                    gridTemplateColumns="repeat(4, 1fr)"
+                    gap={5}
+                    sx={{ pt: 9 }}
+                >
                     {/* здесь будут карточки */}
                 </Box>
             </Box>

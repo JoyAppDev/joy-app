@@ -8,14 +8,15 @@ import AccountMenu from "../account-menu";
 function HeaderDashboard() {
     return (
         <Box sx={{
-            height: '75',
+            height: 75,
             width: '100%',
             pl: 15,
             pr: 15,
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
-            boxShadow: '0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px rgba(0, 0, 0, 0.14), 0px 1px 3px rgba(0, 0, 0, 0.12)'
+            boxShadow: '0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px rgba(0, 0, 0, 0.14), 0px 1px 3px rgba(0, 0, 0, 0.12)',
+            boxSizing: 'border-box'
         }}>
             <Stack direction="row" spacing={5}>
                 <img
