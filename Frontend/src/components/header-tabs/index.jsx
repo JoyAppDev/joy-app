@@ -12,10 +12,7 @@ export default function HeaderTabs() {
 
     return (
         <Box sx={{
-            width: '100%',
-            '& .MuiBox-root': {
-                marginTop: '27'
-            }
+            width: '100%'
         }}>
             <Tabs
                 onChange={handleChange}
@@ -26,7 +23,8 @@ export default function HeaderTabs() {
                 selectionFollowsFocus
                 sx={{
                     '& .MuiButtonBase-root.MuiTab-root': {
-                        color: theme.palette.custom.blueLight
+                        color: theme.palette.custom.blueLight,
+                        marginTop: 3
                     },
                     '& .MuiTabs-indicator': {
                         backgroundColor: theme.palette.custom.blueLight

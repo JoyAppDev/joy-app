@@ -44,7 +44,11 @@ export default function AccountMenu() {
                         padding: '4',
                         boxSizing: 'border-box',
                         mr: 3,
-                        ml: 2
+                        ml: 2,
+                        '&:hover': {
+                            backgroundColor: '#FF8A00'
+                        }
+                        
                 }}>
                     Withdraw
                 </Button>

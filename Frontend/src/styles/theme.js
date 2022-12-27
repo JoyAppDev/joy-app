@@ -8,6 +8,7 @@ export const theme = createTheme({
     },
     secondary: {
       main: 'rgba(0, 0, 0, 0.4)',
+      darker: '#FF8A00'
     },
     custom: {
       white: '#ffffff',
