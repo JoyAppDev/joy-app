@@ -39,7 +39,7 @@ function Login() {
           width: { xs: '90%', md: '100%' },
         }}
       >
-        <Stack spacing={2}></Stack>
+        <Stack spacing={2}>
           <Controller
             control={control}
             name="e-mail"
