@@ -10,96 +10,93 @@ import { Stack } from '@mui/material';
 import { CustomButton } from '../../components/button';
 import { CustomInput } from '../../components/input';
 import Layout from '../../components/layout';
-import { passwordValidator } from "./../../utils/validator";
+import { passwordValidator } from './../../utils/validator';
 
 function Login() {
-    const { handleSubmit, control, formState: { errors, isValid }, reset } = useForm({
-        mode: "onBlur"
-    });
+  const {
+    handleSubmit,
+    control,
+    formState: { errors, isValid },
+    reset,
+  } = useForm({
+    mode: 'onBlur',
+  });
 
-    const onSubmit = (data) => {
-        alert(JSON.stringify(data));
-        reset();
-    }
+  const onSubmit = data => {
+    alert(JSON.stringify(data));
+    reset();
+  };
 
-    return (
-        <Layout>
-            <Box
-                component="form"
-                onSubmit={handleSubmit(onSubmit)}
-                noValidate
-                sx={{
-                    mt: 4.4,
-                    maxWidth: '458px',
-                    width: '100%',
-                }}
+  return (
+    <Layout>
+      <Box
+        component="form"
+        onSubmit={handleSubmit(onSubmit)}
+        noValidate
+        sx={{
+          mt: 4.4,
+          maxWidth: '458px',
+          width: { xs: '90%', md: '100%' },
+        }}
+      >
+        <Stack spacing={2}>
+          <Controller
+            control={control}
+            name="e-mail"
+            rules={{ required: true }}
+            render={({ field: { onChange, value } }) => (
+              <CustomInput
+                label={'Email address'}
+                type={'text'}
+                onChange={e => onChange(e)}
+                value={value || ''}
+                error={!!errors.email?.message}
+                helperText={errors.email?.message}
+                placeholder={'yourname@gmail.com'}
+              />
+            )}
+          />
+          <Controller
+            control={control}
+            name="password"
+            rules={passwordValidator}
+            render={({ field: { onChange, value } }) => (
+              <CustomInput
+                label={'Password'}
+                type={'password'}
+                onChange={e => onChange(e)}
+                value={value || ''}
+                error={!!errors.password?.message}
+                helperText={errors.password?.message}
+                placeholder={''}
+              />
+            )}
+          />
+        </Stack>
+
+        <Stack spacing={2} mt={4}>
+          <CustomButton type="submit" disabled={!isValid}>
+            LOG IN
+          </CustomButton>
+
+          <Typography>
+            If you have no account, you can
+            <Link
+              sx={{
+                textDecorationColor: 'rgba(55, 103, 226, 1)',
+                color: 'rgba(55, 103, 226, 1)',
+                marginLeft: '4px',
+              }}
+              component={RouterLink}
+              to="/register"
             >
-                <Stack spacing={2}>
-                    <Controller
-                        control={control}
-                        name="e-mail"
-                        rules={{ required: true }}
-                        render={({
-                                     field: { onChange, value },
-                                 }) => (
-                            <CustomInput
-                                label={'Email address'}
-                                type={'text'}
-                                onChange={(e) => onChange(e)}
-                                value={value || ''}
-                                error={!!errors.email?.message}
-                                helperText={errors.email?.message}
-                                placeholder={'yourname@gmail.com'}
-                            />
-
-                        )}
-                    />
-                    <Controller
-                        control={control}
-                        name="password"
-                        rules={ passwordValidator }
-                        render={({
-                                     field: { onChange, value },
-                                 }) => (
-                            <CustomInput
-                                label={"Password"}
-                                type={"password"}
-                                onChange={(e) => onChange(e)}
-                                value={value || ''}
-                                error={!!errors.password?.message}
-                                helperText={errors.password?.message}
-                                placeholder={''}
-                            />
-
-                        )}
-                    />
-                </Stack>
-
-                <Stack spacing={2} mt={4}>
-                    <CustomButton
-                        type="submit"
-                        disabled={!isValid}>
-                        LOG IN
-                    </CustomButton>
-
-                    <Typography>
-                        If you have no account, you can
-                        <Link
-                            sx={{
-                                textDecorationColor: 'rgba(55, 103, 226, 1)',
-                                color: 'rgba(55, 103, 226, 1)',
-                                marginLeft: '4px',
-                            }}
-                            component={RouterLink}
-                            to="/register"
-                        >
-                            SIGN UP.
-                        </Link>
-                    </Typography>
-                </Stack>
-            </Box>
-        </Layout>
-    );
+              SIGN UP.
+            </Link>
+          </Typography>
+        </Stack>
+      </Box>
+    </Layout>
+  );
 }
 
 export default Login;

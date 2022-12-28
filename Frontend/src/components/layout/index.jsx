@@ -6,43 +6,57 @@ import Girl from './../../assets/girl.svg';
 
 function Layout({ children }) {
   return (
-    <Grid container component="main">
+    <Grid
+      container
+      spacing={10}
+      component="main"
+      padding="0"
+      flexDirection={{ xs: 'column', md: 'row' }}
+      sx={{ height: '100vh', width: '100vw', alignContent: { md: 'center' } }}
+    >
       <Grid
         item
         xs={false}
-        sm={4}
+        sm={false}
         md={6}
         sx={{
-          backgroundImage: `url(${Star})`,
+          position: 'relative',
+          backgroundImage: {
+            md: `url(${Star})`,
+          },
           backgroundRepeat: 'no-repeat',
           backgroundSize: 'cover',
+          height: '100vh',
         }}
       />
       <Grid
         item
         xs={false}
-        sm={4}
+        sm={false}
         md={6}
         sx={{
-          backgroundImage: `url(${Girl})`,
+          backgroundImage: {
+            md: `url(${Girl})`,
+          },
+          alignContent: { md: 'center' },
           backgroundRepeat: 'no-repeat',
           backgroundSize: 'contain',
-          width: '548px',
+          maxWidth: '548px',
+          width: '100vw',
           position: 'absolute',
-          top: '18%',
+          top: '26%',
           bottom: 0,
-          zIndex: 'modal',
-          height: '100vh',
+          left: 0,
         }}
       ></Grid>
-      <Grid item xs={12} sm={8} md={5}>
+      <Grid item xs={12} sm={12} md={6}>
         <Box
           sx={{
             display: 'flex',
             flexDirection: 'column',
-            justifyContent: 'flex-start',
-            mt: 27,
-            ml: 11,
+            alignItems: 'flex-start',
+            mt: '28%',
+            width: '100%',
           }}
         >
           <Header />
