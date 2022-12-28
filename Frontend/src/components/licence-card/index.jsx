@@ -22,7 +22,7 @@ const click = () => {
 }
     return (
         <Card sx={{ maxWidth: 260 }} variant="outlined">
-            <CardActions onClick={click} sx={{ p: 0 }}>
+            <CardActions onClick={click} sx={{ p: 0, cursor: 'pointer' }}>
                 <CardMedia
                     component="img"
                     alt="licence preview"
