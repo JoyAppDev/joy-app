@@ -1,0 +1,9 @@
+.layout__background {
+    width: 100%;
+    background-image: url("./../../assets/star_dashboard_x1.png");
+    background-position: bottom right;
+    background-repeat: no-repeat;
+    padding: 0 120px;
+    margin: 0;
+    box-sizing: border-box;
+}
