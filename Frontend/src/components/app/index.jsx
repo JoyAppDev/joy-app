@@ -6,11 +6,13 @@ import Dashboard from "../../pages/dashboard";
 
 function App() {
   return (
-    <Routes>
-      <Route exact path="/" element={<Login />} />
-      <Route path="register" element={<SignIn />} />
-      <Route path="dashboard" element={<Dashboard />} />
-    </Routes>
+      <div className='page'>
+          <Routes>
+              <Route exact path="/" element={<Login />} />
+              <Route path="register" element={<SignIn />} />
+              <Route path="dashboard" element={<Dashboard />} />
+          </Routes>
+      </div>
   );
 }
 
