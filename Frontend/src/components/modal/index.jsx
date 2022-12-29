@@ -7,7 +7,6 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import { Grid } from '@mui/material';
 import { theme } from '../../styles/theme';
-import { Stack } from '@mui/system';
 
 const style = {
   position: 'absolute',
@@ -20,7 +19,7 @@ const style = {
   pl: 7.5,
   pr: 7.5,
   pb: 9,
-  pt: 9,
+  pt: 3.5,
   height: '90%',
 };
 
