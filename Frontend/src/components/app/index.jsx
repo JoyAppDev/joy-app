@@ -3,6 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import Login from '../../pages/login';
 import SignIn from '../../pages/signin';
 import Dashboard from '../../pages/dashboard';
+import LayoutModal from '../layout-modal/index';
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
         <Route exact path="/" element={<Login />} />
         <Route path="register" element={<SignIn />} />
         <Route path="dashboard" element={<Dashboard />} />
+        <Route path="modal" element={<LayoutModal />} />
       </Routes>
     </div>
   );
