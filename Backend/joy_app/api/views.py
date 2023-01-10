@@ -15,13 +15,7 @@ class LicenseViewSet(viewsets.ModelViewSet):
     queryset = License.objects.all()
     serializer_class = LicenseSerializer
     permission_classes = (CreatorOrReadOnly,) 
-    # Указываем фильтрующий бэкенд DjangoFilterBackend
-    # Из библиотеки django-filter
     filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
-    # Временно отключим пагинацию на уровне вьюсета, 
-    # так будет удобнее настраивать фильтрацию
-    pagination_class = None
-    # Фильтровать будем по полям color и birth_year модели Cat
     filterset_fields = ('creator', 'brand', 'new_deal')
     search_fields = ('new_deal', 'brand__organization_name', 'creator__name_surname') 
     ordering_fields = ('price', 'brand', 'creator')
