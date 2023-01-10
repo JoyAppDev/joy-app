@@ -28,6 +28,7 @@ class LicenseSerializer(serializers.ModelSerializer):
         read_only=True, default=serializers.CurrentUserDefault())
 
     class Meta:
+        
         model = License
         fields = ('id', 'new_deal', 'creator',
                   'license_type', 'validity',
