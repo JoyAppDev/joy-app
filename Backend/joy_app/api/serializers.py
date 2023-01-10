@@ -26,7 +26,7 @@ class LicenseSerializer(serializers.ModelSerializer):
     )
     creator = serializers.PrimaryKeyRelatedField(
         read_only=True, default=serializers.CurrentUserDefault())
-
+    
     class Meta:
         
         model = License
@@ -43,6 +43,7 @@ class LicenseSerializer(serializers.ModelSerializer):
                 fields=('new_deal', 'creator')
             )
         ]
+  
 
 
 class CreatorSerializer(serializers.ModelSerializer):
