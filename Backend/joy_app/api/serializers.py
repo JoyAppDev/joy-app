@@ -26,6 +26,7 @@ class LicenseSerializer(serializers.ModelSerializer):
     )
     creator = serializers.PrimaryKeyRelatedField(
         read_only=True, default=serializers.CurrentUserDefault())
+    content = serializers.FileField()    
     
     class Meta:
         
@@ -35,7 +36,7 @@ class LicenseSerializer(serializers.ModelSerializer):
                   'territory', 'ways_to_use',
                   'price', 'service_fee',
                   'additional_info',
-                  'brand',)
+                  'brand', 'content')
 
         validators = [
             UniqueTogetherValidator(
@@ -43,7 +44,7 @@ class LicenseSerializer(serializers.ModelSerializer):
                 fields=('new_deal', 'creator')
             )
         ]
-  
+    
 
 
 class CreatorSerializer(serializers.ModelSerializer):
