@@ -19,7 +19,7 @@ const style = {
     boxShadow: 10,
     pl: 6.5,
     pr: 6.5,
-    pb: 3,
+    pb: 8,
     pt: 2,
 };
 

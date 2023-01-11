@@ -3,7 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import Login from '../../pages/login';
 import SignIn from '../../pages/signin';
 import Dashboard from "../../pages/dashboard";
-import MiniModal from "../small-modal";
+import SuccessPopup from "../success-popup";
 
 function App() {
   return (
@@ -12,7 +12,7 @@ function App() {
               <Route exact path="/" element={<Login />} />
               <Route path="register" element={<SignIn />} />
               <Route path="dashboard" element={<Dashboard />} />
-              <Route path="mini" element={<MiniModal />} />
+              <Route path="mini" element={<SuccessPopup />} />
           </Routes>
       </div>
   );
