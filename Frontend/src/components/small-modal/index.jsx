@@ -8,22 +8,9 @@ import CloseIcon from '@mui/icons-material/Close';
 import { Grid } from '@mui/material';
 import { theme } from '../../styles/theme';
 
-const style = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: '639px',
-    minHeight: '336px',
-    bgcolor: 'rgba(255, 255, 255, 1)',
-    boxShadow: 10,
-    pl: 6.5,
-    pr: 6.5,
-    pb: 8,
-    pt: 2,
-};
 
-function MiniModal({ children }) {
+
+function MiniModal({ children, style }) {
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);

@@ -6,13 +6,27 @@ import Stack from "@mui/material/Stack";
 import {CustomButton} from "../button";
 
 function SuccessPopup() {
+    const styleMiniModal = {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: '639px',
+        minHeight: '336px',
+        bgcolor: 'rgba(255, 255, 255, 1)',
+        boxShadow: 10,
+        pl: 6.5,
+        pr: 6.5,
+        pb: 8,
+        pt: 2,
+    };
 
     function handleClick() {
         alert('click')
     }
 
     return (
-        <MiniModal>
+        <MiniModal style={styleMiniModal}>
             <Stack
                 spacing={2}
                 sx={{
