@@ -19,20 +19,13 @@ import InsertPhotoOutlinedIcon from '@mui/icons-material/InsertPhotoOutlined';
 import { useForm, Controller } from 'react-hook-form';
 
 import { CustomInput } from './../input/index';
+import { useNavigate } from 'react-router-dom';
 
-const INITIAL_DATA = {
-  deal: '',
-  license: '',
-  validity: '',
-  territory: '',
-  waysToUse: '',
-  addInfo: '',
-  price: '',
-};
+import { CustomButton } from '../button';
 
 function ModalForm() {
-  const [data, setData] = useState(INITIAL_DATA);
   const [validityDate, setValidityDate] = useState(new Date());
+  let navigate = useNavigate();
 
   const {
     handleSubmit,
@@ -45,27 +38,22 @@ function ModalForm() {
     },
     {
       defaultValues: {
-        termsOfService: false,
+        deal: '',
+        license: '',
+        validity: '',
+        territory: '',
+        waysToUse: '',
+        addInfo: '',
+        price: '',
       },
     }
   );
 
-  function updateFields(fields) {
-    setData(prev => {
-      return { ...prev, ...fields };
-    });
-  }
-
   const onSubmit = fields => {
-    updateFields(fields);
-    // setIsValidForm(isValid);
     alert(JSON.stringify(fields));
+    navigate('/dashboard');
     reset();
   };
-
-  const [licenseType, setLicenseType] = React.useState('');
-  const [ways, setWays] = React.useState('');
-  const [date, setDate] = React.useState(null);
 
   return (
     <Grid container component="main">
@@ -105,7 +93,7 @@ function ModalForm() {
               Creating a new deal
             </Typography>
 
-            <Box component="form" noValidate onSubmit={handleSubmit}>
+            <Box component="form" noValidate onSubmit={handleSubmit(onSubmit)}>
               <Controller
                 control={control}
                 name="deal"
@@ -115,8 +103,8 @@ function ModalForm() {
                   <CustomInput
                     label={'New Deal'}
                     type={'text'}
-                    onChange={e => updateFields({ deal: e.target.value })}
-                    value={data.deal || ''}
+                    onChange={onChange}
+                    value={value || ''}
                     error={!!errors.deal?.message}
                     helperText={errors.deal?.message}
                     placeholder={'Your text'}
@@ -128,11 +116,11 @@ function ModalForm() {
                 <Controller
                   name="license"
                   control={control}
-                  rules={{ required: false }}
-                  render={({ field: { value } }) => (
+                  rules={{ required: true }}
+                  render={({ field: { onChange, value } }) => (
                     <Select
                       value={value || ''}
-                      onChange={e => updateFields({ license: e.target.value })}
+                      onChange={onChange}
                       label="License Type"
                       id="license-type"
                     >
@@ -146,26 +134,28 @@ function ModalForm() {
                   )}
                 />
               </FormControl>
-
-              <Controller
-                name="validityDate"
-                defaultValue={validityDate}
-                control={control}
-                render={({ field: { onChange, ...restField } }) => (
-                  <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <DesktopDatePicker
-                      label="Validity"
-                      onChange={event => {
-                        setValidityDate(event);
-                      }}
-                      renderInput={params => (
-                        <TextField {...params} fullWidth />
-                      )}
-                      {...restField}
-                    />
-                  </LocalizationProvider>
-                )}
-              />
+              <Stack spacing={2}>
+                <Controller
+                  name="validityDate"
+                  defaultValue={validityDate}
+                  control={control}
+                  rules={{ required: true }}
+                  render={({ field: { onChange, ...restField } }) => (
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                      <DesktopDatePicker
+                        label="Validity"
+                        onChange={event => {
+                          setValidityDate(event);
+                        }}
+                        renderInput={params => (
+                          <TextField {...params} fullWidth />
+                        )}
+                        {...restField}
+                      />
+                    </LocalizationProvider>
+                  )}
+                />
+              </Stack>
 
               <Controller
                 control={control}
@@ -176,8 +166,8 @@ function ModalForm() {
                   <CustomInput
                     label={'Territory'}
                     type={'text'}
-                    onChange={e => updateFields({ territory: e.target.value })}
-                    value={data.territory || ''}
+                    onChange={onChange}
+                    value={value || ''}
                     error={!!errors.territory?.message}
                     helperText={errors.territory?.message}
                     placeholder={'USA'}
@@ -188,16 +178,14 @@ function ModalForm() {
               <FormControl fullWidth sx={{ my: 2 }}>
                 <InputLabel id="ways-to-use-label">Ways to use</InputLabel>
                 <Controller
-                  name="ways-to-use"
+                  name="waysToUse"
                   control={control}
                   rules={{ required: false }}
-                  render={({ field: { value } }) => (
+                  render={({ field: { onChange, value } }) => (
                     <Select
                       labelId="ways-to-use-label"
                       value={value || ''}
-                      onChange={e =>
-                        updateFields({ waysToUse: e.target.value })
-                      }
+                      onChange={onChange}
                       label="ways-to-use"
                       id="ways-to-use"
                     >
@@ -214,15 +202,15 @@ function ModalForm() {
 
               <Controller
                 control={control}
-                name="territory"
+                name="addInfo"
                 fullWidth
                 rules={{ required: false }}
                 render={({ field: { onChange, value } }) => (
                   <CustomInput
                     label={'Additional info'}
                     type={'text'}
-                    onChange={e => updateFields({ addInfo: e.target.value })}
-                    value={data.addInfo || ''}
+                    onChange={onChange}
+                    value={value || ''}
                     error={!!errors.addInfo?.message}
                     helperText={errors.addInfo?.message}
                     placeholder={'Text'}
@@ -239,8 +227,8 @@ function ModalForm() {
                   <CustomInput
                     label={'Price'}
                     type={'number'}
-                    onChange={e => updateFields({ price: e.target.value })}
-                    value={data.price || ''}
+                    onChange={onChange}
+                    value={value || ''}
                     error={!!errors.price?.message}
                     helperText={errors.price?.message}
                     placeholder={'$2000'}
@@ -248,14 +236,15 @@ function ModalForm() {
                 )}
               />
 
-              <Button
+              <CustomButton
                 type="submit"
                 fullWidth
                 variant="contained"
+                disabled={!isValid}
                 sx={{ mt: 3, mb: 2 }}
               >
                 Sign In
-              </Button>
+              </CustomButton>
             </Box>
           </Stack>
         </Box>
