@@ -2,7 +2,7 @@ import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Login from '../../pages/login';
 import SignIn from '../../pages/signin';
-import Dashboard from "../../pages/dashboard";
+import Dashboard from '../../pages/dashboard';
 import SuccessPopup from "../success-popup";
 
 function App() {
