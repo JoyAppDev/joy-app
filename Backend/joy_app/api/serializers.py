@@ -25,8 +25,7 @@ class LicenseSerializer(serializers.ModelSerializer):
         slug_field='organization_name', queryset=Brand.objects.all(),
     )
     creator = serializers.PrimaryKeyRelatedField(
-        read_only=True, default=serializers.CurrentUserDefault())
-    content = serializers.FileField()    
+        read_only=True, default=serializers.CurrentUserDefault())  
     
     class Meta:
         
@@ -36,7 +35,7 @@ class LicenseSerializer(serializers.ModelSerializer):
                   'territory', 'ways_to_use',
                   'price', 'service_fee',
                   'additional_info',
-                  'brand', 'content')
+                  'brand')
 
         validators = [
             UniqueTogetherValidator(
