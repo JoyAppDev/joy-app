@@ -24,7 +24,6 @@ import { useNavigate } from 'react-router-dom';
 import { CustomButton } from '../button';
 
 function ModalForm() {
-  const [validityDate, setValidityDate] = useState(new Date());
   let navigate = useNavigate();
 
   const {
@@ -137,16 +136,15 @@ function ModalForm() {
               <Stack spacing={2}>
                 <Controller
                   name="validityDate"
-                  defaultValue={validityDate}
+                  defaultValue={new Date()}
                   control={control}
                   rules={{ required: true }}
-                  render={({ field: { onChange, ...restField } }) => (
+                  render={({ field: { onChange, value, ...restField } }) => (
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                       <DesktopDatePicker
                         label="Validity"
-                        onChange={event => {
-                          setValidityDate(event);
-                        }}
+                        value={value || ''}
+                        onChange={onChange}
                         renderInput={params => (
                           <TextField {...params} fullWidth />
                         )}
@@ -217,34 +215,35 @@ function ModalForm() {
                   />
                 )}
               />
+              <Stack spacing={2} mt={4}>
+                <Controller
+                  control={control}
+                  name="price"
+                  fullWidth
+                  rules={{ required: true }}
+                  render={({ field: { onChange, value } }) => (
+                    <CustomInput
+                      label={'Price'}
+                      type={'number'}
+                      onChange={onChange}
+                      value={value || ''}
+                      error={!!errors.price?.message}
+                      helperText={errors.price?.message}
+                      placeholder={'$2000'}
+                    />
+                  )}
+                />
 
-              <Controller
-                control={control}
-                name="price"
-                fullWidth
-                rules={{ required: true }}
-                render={({ field: { onChange, value } }) => (
-                  <CustomInput
-                    label={'Price'}
-                    type={'number'}
-                    onChange={onChange}
-                    value={value || ''}
-                    error={!!errors.price?.message}
-                    helperText={errors.price?.message}
-                    placeholder={'$2000'}
-                  />
-                )}
-              />
-
-              <CustomButton
-                type="submit"
-                fullWidth
-                variant="contained"
-                disabled={!isValid}
-                sx={{ mt: 3, mb: 2 }}
-              >
-                Sign In
-              </CustomButton>
+                <CustomButton
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  disabled={!isValid}
+                  sx={{ mt: 3, mb: 2 }}
+                >
+                  Sign In
+                </CustomButton>
+              </Stack>
             </Box>
           </Stack>
         </Box>

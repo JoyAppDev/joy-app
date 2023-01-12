@@ -41,9 +41,9 @@ function ModalDashboard() {
       <Dialog
         open={open}
         onClose={handleClose}
+        fullWidth
         maxWidth="lg"
-        // PaperProps={{ md: { width: '90%', height: '100%' } }}
-
+        // PaperProps={{ sx: { width: '90%', height: '70%' } }}
         slotProps={{ backdrop: { invisible: true } }}
       >
         <Box
