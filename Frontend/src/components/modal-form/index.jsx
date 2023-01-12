@@ -55,7 +55,7 @@ function ModalForm() {
   };
 
   return (
-    <Grid container component="main">
+    <Grid container component="main" spacing={12.5}>
       <Grid
         item
         xs={false}
@@ -63,14 +63,14 @@ function ModalForm() {
         md={6}
         sx={{
           display: 'flex',
-          alignIitems: 'center',
+          alignItems: 'center',
           justifyContent: 'center',
           backgroundColor: 'rgba(232, 232, 232, 1)',
         }}
       >
         <InsertPhotoOutlinedIcon
           sx={{
-            mt: '50%',
+
             height: '48px',
             width: '48px',
             color: 'grey',
@@ -80,7 +80,7 @@ function ModalForm() {
       <Grid item xs={12} sm={8} md={6} square="true">
         <Box
           sx={{
-            ml: 6,
+
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
@@ -88,7 +88,7 @@ function ModalForm() {
           }}
         >
           <Stack spacing={2}>
-            <Typography component="h1" variant="h5">
+            <Typography component="h1" variant="h5" mb={2}>
               Creating a new deal
             </Typography>
 
@@ -133,7 +133,7 @@ function ModalForm() {
                   )}
                 />
               </FormControl>
-              <Stack spacing={2}>
+              <Stack sx={{mb: 2}}>
                 <Controller
                   name="validityDate"
                   defaultValue={new Date()}
@@ -215,7 +215,7 @@ function ModalForm() {
                   />
                 )}
               />
-              <Stack spacing={2} mt={4}>
+              <Stack spacing={2} mt={2} sx={{alignItems: 'center' }}>
                 <Controller
                   control={control}
                   name="price"
@@ -239,9 +239,9 @@ function ModalForm() {
                   fullWidth
                   variant="contained"
                   disabled={!isValid}
-                  sx={{ mt: 3, mb: 2 }}
+                  sx={{ mt: 3, mb: 2, fontSize: '15px', fontWeight: '500'}}
                 >
-                  Sign In
+                    CREATE A NEW DEAL
                 </CustomButton>
               </Stack>
             </Box>
