@@ -8,7 +8,7 @@ export const theme = createTheme({
     },
     secondary: {
       main: 'rgba(0, 0, 0, 0.4)',
-      darker: '#FF8A00'
+      darker: '#FF8A00',
     },
     custom: {
       white: '#ffffff',
@@ -25,12 +25,12 @@ export const theme = createTheme({
       styleOverrides: {
         // Name of the slot
         root: {
-           lineHeight: 24,
-           letterSpacing: 0.15,
-           borderRadius: 4,
-           width: '100%',
-           minHeight: 56,
-           marginTop: 0,
+          lineHeight: 24,
+          letterSpacing: 0.15,
+          borderRadius: 4,
+          width: '100%',
+          minHeight: 56,
+          marginTop: 0,
         },
       },
     },
