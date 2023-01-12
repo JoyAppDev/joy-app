@@ -1,18 +1,18 @@
 {
   "files": {
-    "main.css": "./static/css/main.47fbbed1.css",
-    "main.js": "./static/js/main.c28ea0e1.js",
-    "static/media/girl.svg": "./static/media/girl.de3b169fe8bf67111be6f9f63a91bd76.svg",
-    "static/media/star_dashboard_x1.png": "./static/media/star_dashboard_x1.e1b69c854fe825d0044d.png",
-    "static/media/joy_logo.svg": "./static/media/joy_logo.e32e0c78363bfd1139f7d8d28d631500.svg",
-    "static/media/star.svg": "./static/media/star.b68359bedc9ed6dc904b1044d02cba68.svg",
-    "index.html": "./index.html",
-    "static/media/avatar.svg": "./static/media/avatar.a5015b905b94bcad7c6cd36c75974e10.svg",
-    "main.47fbbed1.css.map": "./static/css/main.47fbbed1.css.map",
-    "main.c28ea0e1.js.map": "./static/js/main.c28ea0e1.js.map"
+    "main.css": "/joy-app/static/css/main.bfe4b14c.css",
+    "main.js": "/joy-app/static/js/main.7c68912e.js",
+    "static/media/girl.svg": "/joy-app/static/media/girl.de3b169fe8bf67111be6f9f63a91bd76.svg",
+    "static/media/star_dashboard_x1.png": "/joy-app/static/media/star_dashboard_x1.e1b69c854fe825d0044d.png",
+    "static/media/joy_logo.svg": "/joy-app/static/media/joy_logo.e32e0c78363bfd1139f7d8d28d631500.svg",
+    "static/media/star.svg": "/joy-app/static/media/star.b68359bedc9ed6dc904b1044d02cba68.svg",
+    "index.html": "/joy-app/index.html",
+    "static/media/avatar.svg": "/joy-app/static/media/avatar.a5015b905b94bcad7c6cd36c75974e10.svg",
+    "main.bfe4b14c.css.map": "/joy-app/static/css/main.bfe4b14c.css.map",
+    "main.7c68912e.js.map": "/joy-app/static/js/main.7c68912e.js.map"
   },
   "entrypoints": [
-    "static/css/main.47fbbed1.css",
-    "static/js/main.c28ea0e1.js"
+    "static/css/main.bfe4b14c.css",
+    "static/js/main.7c68912e.js"
   ]
 }
