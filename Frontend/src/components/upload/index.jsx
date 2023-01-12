@@ -8,7 +8,7 @@ const URL = '/upload';
 
 export default function UploadButtons() {
     const [file, setFile] = React.useState(null);
-    const [uploadedFile, setUploadedFile] = React.useState(false);
+    const [uploadedFilePreview, setUploadedFilePreview] = React.useState(false);
 
     const handleChange = (e) => {
         console.log(e.target.files);
@@ -20,13 +20,28 @@ export default function UploadButtons() {
             alert("select file");
             return;
         }
+
+        // Объект FormData позволяет скомпилировать набор пар ключ/значение для отправки с помощью XMLHttpRequest.
+        const formData = new FormData();
+        // Добавляет новое значение существующего поля объекта FormData, либо создаёт его и присваивает значение
+        formData.append('file', file);
+
+        // fetch-запрос на отправку файла на сервер
+
+        const res = await fetch(URL, {
+            method: 'POST',
+            body: formData,
+        });
+        const data = await res.json();
+        // с сервера возвращается превью загруженного видео для отображения в форме создания лицензии
+        setUploadedFilePreview(data.image);
     }
 
     return (
         <Stack direction="row" alignItems="center" spacing={2}>
             <Button variant="contained" component="label">
                 Upload
-                <input hidden accept="image/*" multiple type="file" onChange={handleChange} />
+                <input hidden accept="video/*" multiple type="file" onChange={handleChange} />
             </Button>
             <IconButton color="primary" aria-label="upload picture" component="label" onClick={handleUpload}>
                 <input hidden accept="image/*" type="file" />
@@ -45,10 +60,10 @@ export default function UploadButtons() {
                 </ul>
             )}
 
-            {uploadedFile && (
+            {uploadedFilePreview && (
                 <div>
-                    <h2>{uploadedFile.fileName}</h2>
-                    <img alt='' src={uploadedFile.filePath} width="200" />
+                    <h2>{uploadedFilePreview.fileName}</h2>
+                    <img alt='' src={uploadedFilePreview.filePath} width="200" />
                 </div>
             )}
         </Stack>
