@@ -1,12 +1,12 @@
 import React from 'react';
-import MiniModal from "../small-modal";
+import ModalMessage from "../modal-message";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import {CustomButton} from "../button";
 
 function SuccessPopup() {
-    const styleMiniModal = {
+    const styleSuccessModal = {
         position: 'absolute',
         top: '50%',
         left: '50%',
@@ -26,7 +26,7 @@ function SuccessPopup() {
     }
 
     return (
-        <MiniModal style={styleMiniModal}>
+        <ModalMessage style={styleSuccessModal}>
             <Stack
                 spacing={2}
                 sx={{
@@ -61,7 +61,7 @@ function SuccessPopup() {
                 </Box>
             </Stack>
 
-        </MiniModal>
+        </ModalMessage>
     )
 }
 

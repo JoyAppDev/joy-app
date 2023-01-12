@@ -1,16 +1,16 @@
 import * as React from 'react';
+
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
-import { Grid } from '@mui/material';
+import Grid from '@mui/material/Grid';
+
 import { theme } from '../../styles/theme';
 
-
-
-function MiniModal({ children, style }) {
+function ModalMessage({ children, style }) {
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -70,4 +70,4 @@ function MiniModal({ children, style }) {
     );
 }
 
-export default MiniModal;
+export default ModalMessage;
