@@ -1,46 +1,21 @@
 import * as React from 'react';
+
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import Modal from '@mui/material/Modal';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
-import { Grid } from '@mui/material';
-import { theme } from '../../styles/theme';
-import LayoutModal from '../modal-form';
 import Dialog from '@mui/material/Dialog';
-import TextField from '@mui/material/TextField';
 import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogActions from '@mui/material/DialogActions';
-import ModalForm from '../modal-form';
 
-const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: '83%',
-  bgcolor: 'rgba(255, 255, 255, 1)',
-  boxShadow: 10,
-  pl: 7.5,
-  pr: 7.5,
-  pb: 9,
-  pt: 3.5,
-  height: '90%',
-};
+import { theme } from '../../styles/theme';
 
-function ModalDashboard() {
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+function ModalDashboard({ openForm, handleCloseForm, children }) {
 
   return (
     <div>
-      <Button onClick={handleOpen}>Open modal</Button>
       <Dialog
-        open={open}
-        onClose={handleClose}
+        open={openForm}
+        onClose={handleCloseForm}
         fullWidth
         maxWidth="lg"
         // PaperProps={{ sx: { width: '90%', height: '70%' } }}
@@ -53,7 +28,7 @@ function ModalDashboard() {
             top: '2%',
           }}
         >
-          <IconButton onClick={handleClose}>
+          <IconButton onClick={handleCloseForm}>
             <CloseIcon
               sx={{
                 width: 11,
@@ -75,7 +50,9 @@ function ModalDashboard() {
         </Box>
 
         <DialogContent sx={{ mx: 7.5, my: 9, padding: 0 }}>
-          <ModalForm />
+
+            {children}
+
         </DialogContent>
       </Dialog>
     </div>
