@@ -1,11 +1,22 @@
 import React from "react";
 import LicenceCard from "../../components/licence-card";
-import addLicenceImage from "../../assets/add_licence_image.png";
 
-function LicenceAddCard() {
+function LicenceAddCard({ image, handleClick }) {
+
+
+
     return (
-        <LicenceCard
-            image={addLicenceImage}
-        />
+        <>
+            <LicenceCard
+                image={image}
+                component="label"
+            >
+                <input hidden accept="video/*" multiple type="file" onChange={handleClick} />
+            </LicenceCard>
+
+        </>
+
     )
 }
+
+export default LicenceAddCard;

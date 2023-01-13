@@ -15,11 +15,12 @@ export default function LicenceCard({
                                         author='John Doe',
                                         date='Now',
                                         heading='Create new license?',
-                                        button='Create license'
+                                        button='Create license',
+                                        handleClick,
+                                        children,
+                                        component
                                     }) {
-const click = () => {
-    alert("Create");
-}
+
     return (
         <Card sx={{ maxWidth: 260 }} variant="outlined">
             <CardActions sx={{ p: 0 }}>
@@ -74,9 +75,12 @@ const click = () => {
                             backgroundColor: '#FF8A00'
                         },
                     }}
-                    onClick={click}
+                    component={component}
+                    onClick={handleClick}
                 >
                     {button}
+
+                    {children}
                 </Button>
             </CardActions>
         </Card>
