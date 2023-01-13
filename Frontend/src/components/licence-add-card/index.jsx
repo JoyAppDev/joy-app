@@ -9,7 +9,7 @@ function LicenceAddCard({ image, handleClick }) {
                 image={image}
                 component="label"
             >
-                <input hidden accept="image/*" multiple type="file" onChange={handleClick} />
+                <input hidden accept="video/*" multiple type="file" onChange={handleClick} />
             </LicenceCard>
 
         </>
