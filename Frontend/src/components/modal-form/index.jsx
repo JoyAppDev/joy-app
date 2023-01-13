@@ -21,13 +21,9 @@ import { CustomInput } from './../input/index';
 import { useNavigate } from 'react-router-dom';
 
 import { CustomButton } from '../button';
-import PopupSuccess from "../popup-success";
 
-function ModalForm({ setOpenForm }) {
+function ModalForm({ setOpenForm, setOpenMessage }) {
   let navigate = useNavigate();
-    const [openMessage, setOpenMessage] = React.useState(false);
-    const handleOpenMessage = () => setOpenMessage(true);
-    const handleCloseMessage = () => setOpenMessage(false);
 
   const {
     handleSubmit,
@@ -56,12 +52,12 @@ function ModalForm({ setOpenForm }) {
     navigate('/dashboard');
     reset();
     setOpenForm(false);
-    handleOpenMessage();
+    setOpenMessage(true);
   };
 
   return (
       <>
-          <PopupSuccess openMessage={openMessage} handleCloseMessage={handleCloseMessage} />
+
           <Grid container component="main" spacing={12.5}>
               <Grid
                   item

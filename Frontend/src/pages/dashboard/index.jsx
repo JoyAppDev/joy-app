@@ -3,8 +3,10 @@ import LayoutDashboard from "../../components/layout-dashboard";
 import LicenceCard from "../../components/licence-card";
 import LicenceAddCard from "../../components/licence-add-card";
 import ModalDashboard from "../../components/modal-dashboard";
+
 import initialData from "./../../utils/data.json";
 import addLicenceImage from "./../../assets/add_licence_image.png";
+import PopupSuccess from "../../components/popup-success";
 
 function Dashboard() {
     const [file, setFile] = React.useState(null);
@@ -13,6 +15,10 @@ function Dashboard() {
     const [openForm, setOpenForm] = React.useState(false);
     const handleOpenForm = () => setOpenForm(true);
     const handleCloseForm = () => setOpenForm(false);
+
+    const [openMessage, setOpenMessage] = React.useState(false);
+    const handleOpenMessage = () => setOpenMessage(true);
+    const handleCloseMessage = () => setOpenMessage(false);
 
     const openLicence = () => {
         alert("Open licence");
@@ -69,7 +75,8 @@ function Dashboard() {
                     handleClick={addLicence}
                 />
             </LayoutDashboard>
-            <ModalDashboard openForm={openForm} handleCloseForm={handleCloseForm} setOpenForm={setOpenForm} />
+            <ModalDashboard openForm={openForm} handleCloseForm={handleCloseForm} setOpenForm={setOpenForm} setOpenMessage={setOpenMessage} />
+            <PopupSuccess openMessage={openMessage} handleCloseMessage={handleCloseMessage} />
         </>
     )
 }

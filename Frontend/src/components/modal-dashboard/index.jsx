@@ -10,14 +10,13 @@ import ModalForm from '../modal-form';
 
 import { theme } from '../../styles/theme';
 
-function ModalDashboard({ openForm, handleCloseForm, setOpenForm }) {
+function ModalDashboard({ openForm, handleCloseForm, setOpenForm, setOpenMessage }) {
   //const [open, setOpen] = React.useState(false);
   //const handleOpen = () => setOpen(true);
   //const handleClose = () => setOpen(false);
 
   return (
     <div>
-
       <Dialog
         open={openForm}
         onClose={handleCloseForm}
@@ -55,7 +54,7 @@ function ModalDashboard({ openForm, handleCloseForm, setOpenForm }) {
         </Box>
 
         <DialogContent sx={{ mx: 7.5, my: 9, padding: 0 }}>
-          <ModalForm setOpenForm={setOpenForm} />
+          <ModalForm setOpenForm={setOpenForm} setOpenMessage={setOpenMessage} />
         </DialogContent>
       </Dialog>
     </div>
