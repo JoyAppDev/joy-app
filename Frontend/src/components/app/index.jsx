@@ -3,7 +3,6 @@ import { Routes, Route } from 'react-router-dom';
 import Login from '../../pages/login';
 import SignIn from '../../pages/signin';
 import Dashboard from '../../pages/dashboard';
-import SuccessPopup from "../popup-success";
 import Upload from "../upload";
 
 function App() {
@@ -13,7 +12,6 @@ function App() {
         <Route exact path="/" element={<Login />} />
         <Route path="register" element={<SignIn />} />
         <Route path="dashboard" element={<Dashboard />} />
-        <Route path="mini" element={<SuccessPopup />} />
         <Route path="upload" element={<Upload />} />
       </Routes>
     </div>

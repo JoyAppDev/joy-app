@@ -2,10 +2,10 @@ import React from 'react';
 import ModalForm from '../../components/modal-form';
 import ModalDashboard from '../../components/modal-dashboard';
 
-function ModalDashboardPage({ open, handleClose }) {
+function ModalDashboardPage({ openForm, handleCloseForm, setOpenForm }) {
   return (
-    <ModalDashboard open={open} handleClose={handleClose}>
-      <ModalForm handleClose={handleClose} />
+    <ModalDashboard openForm={openForm} handleCloseForm={handleCloseForm}>
+      <ModalForm setOpenForm={setOpenForm} />
     </ModalDashboard>
   );
 }

@@ -2,7 +2,7 @@ import React from "react";
 import LayoutDashboard from "../../components/layout-dashboard";
 import LicenceCard from "../../components/licence-card";
 import LicenceAddCard from "../../components/licence-add-card";
-import ModalDashboardPage from "../modal-dashboard-page";
+import ModalDashboard from "../../components/modal-dashboard";
 import initialData from "./../../utils/data.json";
 import addLicenceImage from "./../../assets/add_licence_image.png";
 
@@ -10,9 +10,9 @@ function Dashboard() {
     const [file, setFile] = React.useState(null);
     const [uploadedFilePreview, setUploadedFilePreview] = React.useState(null);
 
-    const [open, setOpen] = React.useState(false);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
+    const [openForm, setOpenForm] = React.useState(false);
+    const handleOpenForm = () => setOpenForm(true);
+    const handleCloseForm = () => setOpenForm(false);
 
     const openLicence = () => {
         alert("Open licence");
@@ -49,7 +49,7 @@ function Dashboard() {
         //handleUpload();
 
         // после удачной загрузки видео открывается модальное окно с формой для создания данных лицензии
-        handleOpen();
+        handleOpenForm();
     }
 
     return(
@@ -69,7 +69,7 @@ function Dashboard() {
                     handleClick={addLicence}
                 />
             </LayoutDashboard>
-            <ModalDashboardPage open={open} handleClose={handleClose} />
+            <ModalDashboard openForm={openForm} handleCloseForm={handleCloseForm} setOpenForm={setOpenForm} />
         </>
     )
 }

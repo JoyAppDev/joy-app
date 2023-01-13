@@ -10,7 +10,7 @@ import ModalForm from '../modal-form';
 
 import { theme } from '../../styles/theme';
 
-function ModalDashboard({ open, handleClose }) {
+function ModalDashboard({ openForm, handleCloseForm, setOpenForm }) {
   //const [open, setOpen] = React.useState(false);
   //const handleOpen = () => setOpen(true);
   //const handleClose = () => setOpen(false);
@@ -19,8 +19,8 @@ function ModalDashboard({ open, handleClose }) {
     <div>
 
       <Dialog
-        open={open}
-        onClose={handleClose}
+        open={openForm}
+        onClose={handleCloseForm}
         fullWidth
         maxWidth="lg"
         // PaperProps={{ sx: { width: '90%', height: '70%' } }}
@@ -33,7 +33,7 @@ function ModalDashboard({ open, handleClose }) {
             top: '2%',
           }}
         >
-          <IconButton onClick={handleClose}>
+          <IconButton onClick={handleCloseForm}>
             <CloseIcon
               sx={{
                 width: 11,
@@ -55,7 +55,7 @@ function ModalDashboard({ open, handleClose }) {
         </Box>
 
         <DialogContent sx={{ mx: 7.5, my: 9, padding: 0 }}>
-          <ModalForm />
+          <ModalForm setOpenForm={setOpenForm} />
         </DialogContent>
       </Dialog>
     </div>

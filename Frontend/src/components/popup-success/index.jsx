@@ -5,7 +5,7 @@ import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import {CustomButton} from "../button";
 
-function SuccessPopup({ open, handleClose }) {
+function SuccessPopup({ openMessage, handleCloseMessage }) {
     const styleSuccessModal = {
         position: 'absolute',
         top: '50%',
@@ -28,8 +28,8 @@ function SuccessPopup({ open, handleClose }) {
     return (
         <ModalMessage
             style={styleSuccessModal}
-            open={open}
-            handleClose={handleClose}
+            openMessage={openMessage}
+            handleCloseMessage={handleCloseMessage}
         >
             <Stack
                 spacing={2}
@@ -64,7 +64,6 @@ function SuccessPopup({ open, handleClose }) {
                     </CustomButton>
                 </Box>
             </Stack>
-
         </ModalMessage>
     )
 }
