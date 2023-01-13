@@ -22,9 +22,13 @@ import { CustomInput } from './../input/index';
 import { useNavigate } from 'react-router-dom';
 
 import { CustomButton } from '../button';
+import PopupSuccess from "../popup-success";
 
-function ModalForm() {
+function ModalForm({ handleClose }) {
   let navigate = useNavigate();
+    const [openMessage, setOpenMessage] = React.useState(false);
+    const handleOpenMessage = () => setOpenMessage(true);
+    const handleCloseMessage = () => setOpenMessage(false);
 
   const {
     handleSubmit,
@@ -52,6 +56,8 @@ function ModalForm() {
     alert(JSON.stringify(fields));
     navigate('/dashboard');
     reset();
+    handleClose();
+    handleOpenMessage();
   };
 
   return (
@@ -248,6 +254,7 @@ function ModalForm() {
           </Stack>
         </Box>
       </Grid>
+        <PopupSuccess open={openMessage} handleClose={handleCloseMessage} />
     </Grid>
   );
 }

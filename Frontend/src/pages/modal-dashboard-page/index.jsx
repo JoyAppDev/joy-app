@@ -5,7 +5,7 @@ import ModalDashboard from '../../components/modal-dashboard';
 function ModalDashboardPage({ open, handleClose }) {
   return (
     <ModalDashboard open={open} handleClose={handleClose}>
-      <ModalForm />
+      <ModalForm handleClose={handleClose} />
     </ModalDashboard>
   );
 }

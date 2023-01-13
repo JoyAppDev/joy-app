@@ -1,7 +1,6 @@
 import * as React from 'react';
 
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import IconButton from '@mui/material/IconButton';
@@ -10,14 +9,9 @@ import Grid from '@mui/material/Grid';
 
 import { theme } from '../../styles/theme';
 
-function ModalMessage({ children, style }) {
-    const [open, setOpen] = React.useState(false);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
-
+function ModalMessage({ children, style, open, handleClose }) {
     return (
         <div>
-            <Button onClick={handleOpen}>Open modal</Button>
             <Modal
                 open={open}
                 onClose={handleClose}
