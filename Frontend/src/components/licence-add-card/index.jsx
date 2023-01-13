@@ -3,15 +3,13 @@ import LicenceCard from "../../components/licence-card";
 
 function LicenceAddCard({ image, handleClick }) {
 
-
-
     return (
         <>
             <LicenceCard
                 image={image}
                 component="label"
             >
-                <input hidden accept="video/*" multiple type="file" onChange={handleClick} />
+                <input hidden accept="image/*" multiple type="file" onChange={handleClick} />
             </LicenceCard>
 
         </>
