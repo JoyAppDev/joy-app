@@ -6,14 +6,10 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
-import ModalForm from '../modal-form';
 
 import { theme } from '../../styles/theme';
 
-function ModalDashboard({ openForm, handleCloseForm, setOpenForm, setOpenMessage }) {
-  //const [open, setOpen] = React.useState(false);
-  //const handleOpen = () => setOpen(true);
-  //const handleClose = () => setOpen(false);
+function ModalDashboard({ openForm, handleCloseForm, children }) {
 
   return (
     <div>
@@ -54,7 +50,9 @@ function ModalDashboard({ openForm, handleCloseForm, setOpenForm, setOpenMessage
         </Box>
 
         <DialogContent sx={{ mx: 7.5, my: 9, padding: 0 }}>
-          <ModalForm setOpenForm={setOpenForm} setOpenMessage={setOpenMessage} />
+
+            {children}
+
         </DialogContent>
       </Dialog>
     </div>
