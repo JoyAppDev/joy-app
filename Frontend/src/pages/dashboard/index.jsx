@@ -1,84 +1,109 @@
-import React from "react";
-import LayoutDashboard from "../../components/layout-dashboard";
-import LicenceCard from "../../components/licence-card";
-import LicenceAddCard from "../../components/licence-add-card";
-import ModalDashboardPage from "../modal-dashboard-page";
+import React from 'react';
+import LayoutDashboard from '../../components/layout-dashboard';
+import LicenceCard from '../../components/licence-card';
+import LicenceAddCard from '../../components/licence-add-card';
 
-import initialData from "./../../utils/data.json";
-import addLicenceImage from "./../../assets/add_licence_image.png";
-import PopupSuccess from "../../components/popup-success";
+import initialData from './../../utils/data.json';
+import addLicenceImage from './../../assets/add_licence_image.png';
+import PopupSuccess from '../../components/popup-success';
+
+import Modal from '../../components/modal';
+import CreateDeal from '../../components/create-deal';
+import CopyLink from '../../components/copy-link';
 
 function Dashboard() {
-    const [file, setFile] = React.useState(null);
-    const [uploadedFilePreview, setUploadedFilePreview] = React.useState(null);
+  const [file, setFile] = React.useState(null);
+  const [uploadedFilePreview, setUploadedFilePreview] = React.useState(null);
 
-    const [openForm, setOpenForm] = React.useState(false);
-    const handleOpenForm = () => setOpenForm(true);
-    const handleCloseForm = () => setOpenForm(false);
+  const [openCreateDealModal, setIsOpenCreateDealModal] = React.useState(false);
+  const [openCopyLinkModal, setIsCopyLinkModal] = React.useState(false);
 
-    const [openMessage, setOpenMessage] = React.useState(false);
-    const handleOpenMessage = () => setOpenMessage(true);
-    const handleCloseMessage = () => setOpenMessage(false);
+  const handleOpenCreateDeal = () => setIsOpenCreateDealModal(true);
+  const handleCloseCreateDeal = () => setIsOpenCreateDealModal(false);
 
-    const openLicence = () => {
-        alert("Open licence");
-    }
+  const handleCopyLinkModalOpen = () => setIsCopyLinkModal(true);
+  const handleCopyLinkModalClose = () => setIsCopyLinkModal(false);
 
-    // функция загрузки и отправки данных на сервер
-    //const handleUpload = async () => {
-    //    if(!file) {
-    //        alert("select file");
-    //        return;
-    //    }
+  const [openMessage, setOpenMessage] = React.useState(false);
+  const handleOpenMessage = () => setOpenMessage(true);
+  const handleCloseMessage = () => setOpenMessage(false);
 
-        // Объект FormData позволяет скомпилировать набор пар ключ/значение для отправки с помощью XMLHttpRequest.
-    //    const formData = new FormData();
-        // Добавляет новое значение существующего поля объекта FormData, либо создаёт его и присваивает значение
-    //    formData.append('file', file);
+  const openLicence = () => {
+    // alert('Open licence');
+    handleCopyLinkModalOpen();
+  };
 
-        // fetch-запрос на отправку файла на сервер
+  // функция загрузки и отправки данных на сервер
+  //const handleUpload = async () => {
+  //    if(!file) {
+  //        alert("select file");
+  //        return;
+  //    }
 
-    //    const res = await fetch(URL, {
-    //        method: 'POST',
-    //        body: formData,
-    //    });
-    //    const data = await res.json();
-        // с сервера возвращается превью загруженного видео для отображения в форме создания лицензии
-    //    setUploadedFilePreview(data.image);
-    //}
+  // Объект FormData позволяет скомпилировать набор пар ключ/значение для отправки с помощью XMLHttpRequest.
+  //    const formData = new FormData();
+  // Добавляет новое значение существующего поля объекта FormData, либо создаёт его и присваивает значение
+  //    formData.append('file', file);
 
-    const addLicence = (e) => {
-        console.log(e.target.files);
-        setFile(e.target.files[0]);
-        alert(e.target.files[0].name);
+  // fetch-запрос на отправку файла на сервер
 
-        //handleUpload();
+  //    const res = await fetch(URL, {
+  //        method: 'POST',
+  //        body: formData,
+  //    });
+  //    const data = await res.json();
+  // с сервера возвращается превью загруженного видео для отображения в форме создания лицензии
+  //    setUploadedFilePreview(data.image);
+  //}
 
-        // после удачной загрузки видео открывается модальное окно с формой для создания данных лицензии
-        handleOpenForm();
-    }
+  const addLicence = e => {
+    console.log(e.target.files);
+    setFile(e.target.files[0]);
+    alert(e.target.files[0].name);
 
-    return(
-        <>
-            <LayoutDashboard>
-                {initialData.map((obj) => (
-                <LicenceCard
-                    key={obj.id}
-                    {...obj}
-                    // image={uploadedFilePreview} // изображение превью приходит с сервера
-                    button='Open licence'
-                    handleClick={openLicence}
-                />
-                ))}
-                <LicenceAddCard
-                    image={addLicenceImage}
-                    handleClick={addLicence}
-                />
-            </LayoutDashboard>
-            <ModalDashboardPage openForm={openForm} handleCloseForm={handleCloseForm} setOpenForm={setOpenForm} setOpenMessage={setOpenMessage} />
-            <PopupSuccess openMessage={openMessage} handleCloseMessage={handleCloseMessage} />
-        </>
-    )
+    //handleUpload();
+
+    // после удачной загрузки видео открывается модальное окно с формой для создания данных лицензии
+    handleOpenCreateDeal();
+  };
+
+  return (
+    <>
+      <LayoutDashboard>
+        {initialData.map(obj => (
+          <LicenceCard
+            key={obj.id}
+            {...obj}
+            // image={uploadedFilePreview} // изображение превью приходит с сервера
+            button="Open licence"
+            handleClick={openLicence}
+          />
+        ))}
+        <LicenceAddCard image={addLicenceImage} handleClick={addLicence} />
+      </LayoutDashboard>
+      <Modal
+        openForm={openCreateDealModal}
+        handleCloseForm={handleCloseCreateDeal}
+        children={
+          <CreateDeal
+            setOpenForm={setIsOpenCreateDealModal}
+            setOpenMessage={setOpenMessage}
+          />
+        }
+      />
+      <Modal
+        openForm={openCopyLinkModal}
+        handleCloseForm={handleCopyLinkModalClose}
+        setOpenForm={setIsCopyLinkModal}
+        setOpenMessage={setOpenMessage}
+        children={<CopyLink setOpenForm={setIsCopyLinkModal} />}
+      />
+      <PopupSuccess
+        openMessage={openMessage}
+        handleCloseMessage={handleCloseMessage}
+      />
+    </>
+  );
 }
 
 export default Dashboard;
