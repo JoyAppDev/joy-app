@@ -2,7 +2,6 @@ import React from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 
-import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
@@ -14,7 +13,6 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 
-import InsertPhotoOutlinedIcon from '@mui/icons-material/InsertPhotoOutlined';
 import { useForm, Controller } from 'react-hook-form';
 
 import { CustomInput } from '../input/index';
@@ -61,7 +59,7 @@ function CopyLink({ setOpenForm }) {
       </Typography>
 
       <Box component="form" noValidate onSubmit={handleSubmit(onSubmit)}>
-        <Controller
+        {/* <Controller
           control={control}
           name="social"
           fullWidth
@@ -75,9 +73,19 @@ function CopyLink({ setOpenForm }) {
               error={!!errors.social?.message}
               helperText={errors.social?.message}
               placeholder={'TikTok |'}
+              InputProps={{
+                readOnly: true,
+              }}
             />
           )}
+        /> */}
+        <CustomInput
+          label={'Social Media'}
+          InputProps={{
+            readOnly: true,
+          }}
         />
+
         <FormControl fullWidth sx={{ my: 2 }}>
           <InputLabel htmlFor="license-type">License type</InputLabel>
           <Controller

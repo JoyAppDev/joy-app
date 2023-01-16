@@ -2,7 +2,6 @@ import React from 'react';
 
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
@@ -14,7 +13,6 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 
-import InsertPhotoOutlinedIcon from '@mui/icons-material/InsertPhotoOutlined';
 import { useForm, Controller } from 'react-hook-form';
 
 import { CustomInput } from '../input/index';
