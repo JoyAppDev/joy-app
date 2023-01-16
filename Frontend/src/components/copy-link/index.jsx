@@ -91,11 +91,11 @@ function CopyLink({ setOpenForm }) {
                 label="License Type"
                 id="license-type"
               >
-                <MenuItem value={1} label="One">
-                  One
+                <MenuItem value={1} label="Exclusive license">
+                  Exclusive license
                 </MenuItem>
-                <MenuItem value={2} label="Two">
-                  Two
+                <MenuItem value={2} label="Non-exclusive license">
+                  Non-exclusive license
                 </MenuItem>
               </Select>
             )}
