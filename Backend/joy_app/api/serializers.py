@@ -31,7 +31,7 @@ class LicenseSerializer(serializers.ModelSerializer):
                   'license_type', 'validity',
                   'territory', 'ways_to_use',
                   'price', 'service_fee',
-                  'additional_info', 'brand'
+                  'additional_info', 
                   )
 
         validators = [
