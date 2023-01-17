@@ -14,6 +14,7 @@ import CopyLink from '../../components/copy-link';
 function Dashboard() {
   const [file, setFile] = React.useState(null);
   const [uploadedFilePreview, setUploadedFilePreview] = React.useState(null);
+  const [selectedCard, setSelectedCard] = React.useState(null);
 
   const [openCreateDealModal, setIsOpenCreateDealModal] = React.useState(false);
   const [openCopyLinkModal, setIsCopyLinkModal] = React.useState(false);
@@ -67,19 +68,25 @@ function Dashboard() {
     handleOpenCreateDeal();
   };
 
+  function handleCopyLicenseClick(card) {
+    setSelectedCard(card);
+  }
+
   return (
     <>
       <LayoutDashboard>
         {initialData.map(obj => (
           <LicenceCard
             key={obj.id}
-            {...obj}
+            // {...obj}
+            card={obj}
             // image={uploadedFilePreview} // изображение превью приходит с сервера
             button="Open licence"
-            handleClick={openLicence}
+            onCopyLicense={handleCopyLicenseClick}
+            onOpen={openLicence}
           />
         ))}
-        <LicenceAddCard image={addLicenceImage} handleClick={addLicence} />
+        <LicenceAddCard image={addLicenceImage} addLicence={addLicence} />
       </LayoutDashboard>
       <Modal
         openForm={openCreateDealModal}
@@ -96,7 +103,9 @@ function Dashboard() {
         handleCloseForm={handleCopyLinkModalClose}
         setOpenForm={setIsCopyLinkModal}
         setOpenMessage={setOpenMessage}
-        children={<CopyLink setOpenForm={setIsCopyLinkModal} />}
+        children={
+          <CopyLink content={selectedCard} setOpenForm={setIsCopyLinkModal} />
+        }
       />
       <PopupSuccess
         openMessage={openMessage}

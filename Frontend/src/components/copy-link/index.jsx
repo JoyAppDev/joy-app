@@ -20,7 +20,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { CustomButton } from '../button';
 
-function CopyLink({ setOpenForm }) {
+function CopyLink({ setOpenForm, content }) {
   let navigate = useNavigate();
 
   const {
@@ -45,175 +45,94 @@ function CopyLink({ setOpenForm }) {
     }
   );
 
-  const onSubmit = fields => {
-    alert(JSON.stringify(fields));
+  const onSubmit = () => {
+    alert(JSON.stringify(content.link));
     navigate('/dashboard');
     reset();
     setOpenForm(false);
   };
 
   return (
-    <Stack spacing={2}>
+    <Stack spacing={2} sx={{ width: '100%' }}>
       <Typography component="h1" variant="h5" mb={2}>
         Copying a link
       </Typography>
 
       <Box component="form" noValidate onSubmit={handleSubmit(onSubmit)}>
-        {/* <Controller
-          control={control}
-          name="social"
-          fullWidth
-          rules={{ required: true }}
-          render={({ field: { onChange, value } }) => (
-            <CustomInput
-              label={'Social Media'}
-              type={'text'}
-              onChange={onChange}
-              value={value || ''}
-              error={!!errors.social?.message}
-              helperText={errors.social?.message}
-              placeholder={'TikTok |'}
-              InputProps={{
-                readOnly: true,
-              }}
-            />
-          )}
-        /> */}
-        <CustomInput
-          label={'Social Media'}
-          InputProps={{
-            readOnly: true,
-          }}
-        />
-
-        <FormControl fullWidth sx={{ my: 2 }}>
-          <InputLabel htmlFor="license-type">License type</InputLabel>
-          <Controller
-            name="license"
-            control={control}
-            rules={{ required: true }}
-            render={({ field: { onChange, value } }) => (
-              <Select
-                value={value || ''}
-                onChange={onChange}
-                label="License Type"
-                id="license-type"
-              >
-                <MenuItem value={1} label="Exclusive license">
-                  Exclusive license
-                </MenuItem>
-                <MenuItem value={2} label="Non-exclusive license">
-                  Non-exclusive license
-                </MenuItem>
-              </Select>
-            )}
-          />
-        </FormControl>
-        <Stack sx={{ mb: 2 }}>
-          <Controller
-            name="validityDate"
-            defaultValue={new Date()}
-            control={control}
-            rules={{ required: true }}
-            render={({ field: { onChange, value, ...restField } }) => (
-              <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DesktopDatePicker
-                  label="Validity"
-                  value={value || ''}
-                  onChange={onChange}
-                  renderInput={params => <TextField {...params} fullWidth />}
-                  {...restField}
-                />
-              </LocalizationProvider>
-            )}
-          />
-        </Stack>
-
-        <Controller
-          control={control}
-          name="territory"
-          fullWidth
-          rules={{ required: true }}
-          render={({ field: { onChange, value } }) => (
-            <CustomInput
-              label={'Territory'}
-              type={'text'}
-              onChange={onChange}
-              value={value || ''}
-              error={!!errors.territory?.message}
-              helperText={errors.territory?.message}
-              placeholder={'USA'}
-            />
-          )}
-        />
-
-        <FormControl fullWidth sx={{ my: 2 }}>
-          <InputLabel id="ways-to-use-label">Ways to use</InputLabel>
-          <Controller
-            name="waysToUse"
-            control={control}
-            rules={{ required: false }}
-            render={({ field: { onChange, value } }) => (
-              <Select
-                labelId="ways-to-use-label"
-                value={value || ''}
-                onChange={onChange}
-                label="ways-to-use"
-                id="ways-to-use"
-              >
-                <MenuItem value={1} label="One">
-                  One
-                </MenuItem>
-                <MenuItem value={2} label="Two">
-                  Two
-                </MenuItem>
-              </Select>
-            )}
-          />
-        </FormControl>
-
-        <Controller
-          control={control}
-          name="addInfo"
-          fullWidth
-          rules={{ required: false }}
-          render={({ field: { onChange, value } }) => (
-            <CustomInput
-              label={'Additional info'}
-              type={'text'}
-              onChange={onChange}
-              value={value || ''}
-              error={!!errors.addInfo?.message}
-              helperText={errors.addInfo?.message}
-              placeholder={'Text'}
-            />
-          )}
-        />
-        <Stack spacing={2} mt={2} sx={{ alignItems: 'center' }}>
-          <Controller
-            control={control}
-            name="price"
+        <Stack spacing={2}>
+          <CustomInput
             fullWidth
-            rules={{ required: true }}
-            render={({ field: { onChange, value } }) => (
-              <CustomInput
-                label={'Price'}
-                type={'number'}
-                onChange={onChange}
-                value={value || ''}
-                error={!!errors.price?.message}
-                helperText={errors.price?.message}
-                placeholder={'$2000'}
-              />
-            )}
+            label={'Social Media'}
+            value={content.media}
+            InputProps={{
+              readOnly: true,
+            }}
           />
 
+          <CustomInput
+            fullWidth
+            label={'License Type'}
+            value={content.license}
+            InputProps={{
+              readOnly: true,
+            }}
+          />
+
+          <CustomInput
+            fullWidth
+            label={'Validity'}
+            value={content.date}
+            InputProps={{
+              readOnly: true,
+            }}
+          />
+
+          <CustomInput
+            fullWidth
+            label={'Territory'}
+            value={content.teritory}
+            InputProps={{
+              readOnly: true,
+            }}
+          />
+
+          <CustomInput
+            fullWidth
+            label={'Ways to use'}
+            value={content.use}
+            InputProps={{
+              readOnly: true,
+            }}
+          />
+
+          <CustomInput
+            fullWidth
+            label={'Additional info'}
+            value={content.additional}
+            InputProps={{
+              readOnly: true,
+            }}
+          />
+
+          <CustomInput
+            fullWidth
+            label={'Price'}
+            value={content.price}
+            InputProps={{
+              readOnly: true,
+            }}
+          />
           <CustomButton
             type="submit"
             fullWidth
             variant="contained"
-            disabled={!isValid}
-            sx={{ mt: 3, mb: 2, fontSize: '15px', fontWeight: '500' }}
+            sx={{
+              mt: 3,
+              mb: 2,
+              fontSize: '15px',
+              fontWeight: '500',
+              width: '100%',
+            }}
           >
             COPY LINK
           </CustomButton>

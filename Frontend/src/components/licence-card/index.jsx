@@ -16,10 +16,16 @@ export default function LicenceCard({
   date = 'Now',
   heading = 'Create new license?',
   button = 'Create license',
-  handleClick,
+  onOpen,
   children,
   component,
+  onCopyLicense,
+  card,
 }) {
+  function handleClick() {
+    onCopyLicense(card);
+    onOpen(false);
+  }
   return (
     <Card sx={{ maxWidth: 260 }} variant="outlined">
       <CardActions sx={{ p: 0 }}>
