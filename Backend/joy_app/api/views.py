@@ -16,13 +16,11 @@ class LicenseViewSet(viewsets.ModelViewSet):
     permission_classes = (CreatorOrReadOnly,)
     filter_backends = (DjangoFilterBackend, filters.SearchFilter,
                        filters.OrderingFilter)
-    filterset_fields = ('creator', 'new_deal')
     search_fields = ('new_deal')
-    ordering_fields = ('price', 'creator')
+    ordering_fields = ('price')
 
     def perform_create(self, serializer):
         serializer.save(creator=self.request.user)
-
 
     def get_permissions(self):
         if self.action == 'retrieve':
@@ -62,5 +60,4 @@ class BrandViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         license = get_object_or_404(License, pk=self.kwargs.get('license_id'))
-        return license.brand
-     
+        return list(license.brand)
