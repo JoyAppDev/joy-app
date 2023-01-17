@@ -22,15 +22,17 @@ class LicenseSerializer(serializers.ModelSerializer):
 
     creator = serializers.SlugRelatedField(slug_field='username',
                                            read_only=True)
+    brand = serializers.SlugRelatedField(slug_field='organization_name',
+                                           read_only=True)
 
     class Meta:
 
         model = License
-        fields = ('id', 'new_deal', 'creator',
+        fields = ('id', 'new_deal', 'creator', 'brand', 
                   'license_type', 'validity',
                   'territory', 'ways_to_use',
                   'price', 'service_fee',
-                  'additional_info',
+                  'additional_info', 'content'
                   )
 
 

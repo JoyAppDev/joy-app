@@ -60,4 +60,4 @@ class BrandViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         license = get_object_or_404(License, pk=self.kwargs.get('license_id'))
-        return list(license.brand)
+        return [license.brand]

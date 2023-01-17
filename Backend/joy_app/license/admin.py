@@ -5,6 +5,7 @@ from license.models import License, Brand, Creator
 
 class LicenseAdmin(admin.ModelAdmin):
     list_display = (
+        'id', 'brand',
         'new_deal', 'creator',
         'license_type',
         'validity', 'territory',
