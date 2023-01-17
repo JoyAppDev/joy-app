@@ -28,7 +28,7 @@ class BrandAdmin(admin.ModelAdmin):
         'mobile_phone', 'license')
     search_fields = ('email', 'organization_name',
                      'state_number', 'official_address', 'license')
-    list_filter = ('email', 'organization_name', 'state_number',)
+    list_filter = ('email', 'organization_name', 'state_number', 'license')
     empty_value_display = '-empty-'
 
 

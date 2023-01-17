@@ -23,6 +23,7 @@ class LicenseViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         serializer.save(creator=self.request.user)
 
+
     def get_permissions(self):
         if self.action == 'retrieve':
             return (ReadOnly(),)
@@ -56,9 +57,10 @@ class BrandViewSet(viewsets.ModelViewSet):
     serializer_class = BrandSerializer
     permission_classes = (AllowAny,)
     filter_backends = (DjangoFilterBackend, filters.SearchFilter)
-    filterset_fields = ('organization_name',)
     search_fields = ('organization_name',)
+    pagination_class = None
 
     def get_queryset(self):
         license = get_object_or_404(License, pk=self.kwargs.get('license_id'))
         return license.brand
+     

@@ -10,7 +10,7 @@ class BrandSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = Brand
-        fields = ('id', 'email', 'organization_name',
+        fields = ('id', 'email','organization_name',
                   'official_address', 'state_number',
                   'representative_name', 'job_title',
                   'mobile_phone')
@@ -21,8 +21,8 @@ class LicenseSerializer(serializers.ModelSerializer):
     Сериализатор для получения лицензий.
     """
 
-    creator = serializers.PrimaryKeyRelatedField(
-        read_only=True, default=serializers.CurrentUserDefault())
+    creator = serializers.SlugRelatedField(
+        read_only=True, slug_field="name_surname")
 
     class Meta:
 
