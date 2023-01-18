@@ -63,3 +63,7 @@ class BrandViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         license = get_object_or_404(License, pk=self.kwargs.get('license_id'))
         return [license.brand]
+    
+    def perform_create(self, serializer):
+        license = get_object_or_404(License, pk=self.kwargs.get('license_id'))
+        serializer.save(license=license)
