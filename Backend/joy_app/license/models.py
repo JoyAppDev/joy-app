@@ -62,7 +62,7 @@ class Creator(AbstractUser):
 
 class License(models.Model):
 
-    new_deal = models.CharField(max_length=100, unique=True)
+    new_deal = models.CharField(max_length=100)
     creator = models.ForeignKey(
         Creator, verbose_name='creator',
         on_delete=models.CASCADE,
@@ -92,11 +92,15 @@ class License(models.Model):
 
 
 class Brand(models.Model):
-
+   
     license = models.OneToOneField(License, verbose_name='license',
                                    on_delete=models.CASCADE,
                                    related_name='brand',
                                    null=True)
+    email = models.EmailField(
+        'Email',
+        max_length=200,
+        unique=False,)
     organization_name = models.CharField(
         'organization_name',
         max_length=150,
