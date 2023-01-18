@@ -92,7 +92,7 @@ class License(models.Model):
 
 
 class Brand(models.Model):
-   
+
     license = models.OneToOneField(License, verbose_name='license',
                                    on_delete=models.CASCADE,
                                    related_name='brand',
