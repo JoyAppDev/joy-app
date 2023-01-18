@@ -10,7 +10,7 @@ class LicenseAdmin(admin.ModelAdmin):
         'license_type',
         'validity', 'territory',
         'ways_to_use', 'price',
-        'service_fee', 'additional_info', 'brand'
+        'additional_info',
         )
     search_fields = ('new_deal', 'creator',
                      'price',
@@ -25,8 +25,8 @@ class BrandAdmin(admin.ModelAdmin):
     list_display = (
         'email', 'organization_name',
         'official_address', 'state_number',
-        'representative_name', 'job_title',
-        'mobile_phone', 'license')
+        'representative_name_surname', 'job_title',
+        'license')
     search_fields = ('email', 'organization_name',
                      'state_number', 'official_address', 'license')
     list_filter = ('email', 'organization_name', 'state_number', 'license')

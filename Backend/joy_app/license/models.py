@@ -29,8 +29,11 @@ class Creator(AbstractUser):
         'Address',
         max_length=150,
         unique=False)
-    id_number = models.DecimalField(max_digits=30, decimal_places=0,
-                                    unique=False)
+    id_number = models.IntegerField(unique=False)
+    payment_type = models.CharField(
+        'Payment_type',
+        max_length=150)
+
     payment_info = models.CharField(
         'Payment_info',
         max_length=150)
@@ -69,7 +72,6 @@ class License(models.Model):
     territory = models.CharField(max_length=100)
     ways_to_use = models.CharField(max_length=100)
     price = models.DecimalField(max_digits=10, decimal_places=2)
-    service_fee = models.DecimalField(max_digits=10, decimal_places=2)
     additional_info = models.CharField(max_length=300)
     content = models.URLField()
 
@@ -95,10 +97,6 @@ class Brand(models.Model):
                                    on_delete=models.CASCADE,
                                    related_name='brand',
                                    null=True)
-    email = models.EmailField(
-        'Email',
-        max_length=200,
-        unique=False,)
     organization_name = models.CharField(
         'organization_name',
         max_length=150,
@@ -107,14 +105,17 @@ class Brand(models.Model):
         'official_address',
         max_length=150,
         unique=False)
-    state_number = models.DecimalField(max_digits=30, decimal_places=0,
-                                       unique=False)
-    representative_name = models.CharField(
+    state_number = models.IntegerField(unique=False)
+    representative_name_surname = models.CharField(
         'representative_name',
         max_length=150, unique=False)
     job_title = models.CharField(
         'job_title',
         max_length=150, unique=False)
+    email = models.EmailField(
+        'Email',
+        max_length=200,
+        unique=False,)
     mobile_phone = PhoneNumberField(null=False, blank=False, unique=False)
 
     class Meta:
