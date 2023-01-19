@@ -10,7 +10,7 @@ class LicenseAdmin(admin.ModelAdmin):
         'license_type',
         'validity', 'territory',
         'ways_to_use', 'price',
-        'additional_info',
+        'additional_info', 'content'
         )
     search_fields = ('new_deal', 'creator',
                      'price',

@@ -75,7 +75,7 @@ class License(models.Model):
     additional_info = models.CharField(max_length=300)
     if license_type == 'exclusive':
         content = models.URLField(unique=True)
-    content = models.URLField(unique=True)
+    content = models.URLField()
 
     class Meta:
         verbose_name = 'license'
