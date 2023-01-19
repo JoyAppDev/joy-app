@@ -73,8 +73,6 @@ class License(models.Model):
     ways_to_use = models.CharField(max_length=100)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     additional_info = models.CharField(max_length=300)
-    if license_type == 'exclusive':
-        content = models.URLField(unique=True)
     content = models.URLField()
 
     class Meta:
