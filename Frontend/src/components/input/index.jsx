@@ -10,6 +10,7 @@ export function CustomInput({
   helperText,
   placeholder,
   inputId,
+  InputProps,
 }) {
   return (
     <TextField
@@ -24,6 +25,7 @@ export function CustomInput({
       id={inputId}
       color="secondary"
       fullWidth={true}
+      InputProps={InputProps}
     />
   );
 }

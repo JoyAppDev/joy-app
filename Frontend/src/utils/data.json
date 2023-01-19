@@ -1,30 +1,62 @@
 [
-    {
-        "id": 0,
-        "image": "",
-        "author": "John Doe",
-        "date": "4 Feb 2022",
-        "heading": "TikTok"
-    },
-    {
-        "id": 1,
-        "image": "",
-        "author": "John Doe",
-        "date": "4 Feb 2022",
-        "heading": "TikTok"
-    },
-    {
-        "id": 2,
-        "image": "",
-        "author": "John Doe",
-        "date": "4 Feb 2022",
-        "heading": "TikTok"
-    },
-    {
-        "id": 3,
-        "image": "",
-        "author": "John Doe",
-        "date": "4 Feb 2022",
-        "heading": "TikTok"
-    }
+  {
+    "id": 0,
+    "image": "",
+    "author": "John Doe",
+    "date": "4 Feb 2022",
+    "heading": "TikTok",
+    "media": "TikTok",
+    "license": "Exclusive license",
+    "validity": "01/01/2022",
+    "teritory": "USA",
+    "use": "One",
+    "additional": "Only this video",
+    "price": 200,
+    "link": "https://www.google.com/"
+  },
+  {
+    "id": 1,
+    "image": "",
+    "author": "John Doe",
+    "date": "4 Feb 2022",
+    "heading": "TikTok",
+    "media": "TikTok",
+    "license": "Exclusive license",
+    "validity": "01/01/2022",
+    "teritory": "USA",
+    "use": "One",
+    "additional": "Only this video",
+    "price": 200,
+    "link": "https://www.google.com/"
+  },
+  {
+    "id": 2,
+    "image": "",
+    "author": "John Doe",
+    "date": "4 Feb 2022",
+    "heading": "TikTok",
+    "media": "TikTok",
+    "license": "Exclusive license",
+    "validity": "01/01/2022",
+    "teritory": "USA",
+    "use": "One",
+    "additional": "Only this video",
+    "price": 200,
+    "link": "https://www.google.com/"
+  },
+  {
+    "id": 3,
+    "image": "",
+    "author": "John Doe",
+    "date": "4 Feb 2022",
+    "heading": "TikTok",
+    "media": "TikTok",
+    "license": "Exclusive license",
+    "validity": "01/01/2022",
+    "teritory": "USA",
+    "use": "One",
+    "additional": "Only this video",
+    "price": 200,
+    "link": "https://www.google.com/"
+  }
 ]
