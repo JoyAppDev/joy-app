@@ -1,19 +1,10 @@
 import React from 'react';
 import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
 
 import Typography from '@mui/material/Typography';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
 import Stack from '@mui/material/Stack';
 
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
-
-import { useForm, Controller } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 
 import { CustomInput } from '../input/index';
 import { useNavigate } from 'react-router-dom';
@@ -23,12 +14,7 @@ import { CustomButton } from '../button';
 function CopyLink({ setOpenForm, content }) {
   let navigate = useNavigate();
 
-  const {
-    handleSubmit,
-    control,
-    formState: { errors, isValid },
-    reset,
-  } = useForm(
+  const { handleSubmit, reset } = useForm(
     {
       mode: 'onBlur',
     },

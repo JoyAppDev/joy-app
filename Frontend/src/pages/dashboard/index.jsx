@@ -1,7 +1,5 @@
 import React from 'react';
 import LayoutDashboard from '../../components/layout-dashboard';
-import LicenceCard from '../../components/licence-card';
-import LicenceAddCard from '../../components/licence-add-card';
 
 import initialData from './../../utils/data.json';
 import addLicenceImage from './../../assets/add_licence_image.png';
@@ -10,6 +8,10 @@ import PopupSuccess from '../../components/popup-success';
 import Modal from '../../components/modal';
 import CreateDeal from '../../components/create-deal';
 import CopyLink from '../../components/copy-link';
+
+import BasicCard from '../../components/basic-card';
+import ButtonCopyLicenseCard from '../../components/button-copy-license-card';
+import ButtonCreateLicenseCard from '../../components/button-create-license-card';
 
 function Dashboard() {
   const [file, setFile] = React.useState(null);
@@ -76,17 +78,29 @@ function Dashboard() {
     <>
       <LayoutDashboard>
         {initialData.map(obj => (
-          <LicenceCard
+          <BasicCard
             key={obj.id}
-            // {...obj}
-            card={obj}
+            author={obj.author}
+            date={obj.date}
+            heading={obj.media}
             // image={uploadedFilePreview} // изображение превью приходит с сервера
-            button="Open licence"
-            onCopyLicense={handleCopyLicenseClick}
-            onOpen={openLicence}
+            children={
+              <ButtonCopyLicenseCard
+                card={obj}
+                onCopyLicense={handleCopyLicenseClick}
+                onOpen={openLicence}
+              />
+            }
           />
         ))}
-        <LicenceAddCard image={addLicenceImage} addLicence={addLicence} />
+
+        <BasicCard
+          heading="Create new license?"
+          author="John Doe"
+          date="Now"
+          image={addLicenceImage}
+          children={<ButtonCreateLicenseCard addLicence={addLicence} />}
+        />
       </LayoutDashboard>
       <Modal
         openForm={openCreateDealModal}
