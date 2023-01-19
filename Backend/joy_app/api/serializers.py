@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from rest_framework.validators import UniqueTogetherValidator
 
 from license.models import License, Brand, Creator
 
@@ -21,7 +22,8 @@ class LicenseSerializer(serializers.ModelSerializer):
     """
 
     creator = serializers.SlugRelatedField(slug_field='username',
-                                           read_only=True)
+                                           read_only=True,
+                                           default=serializers.CurrentUserDefault())
     brand = serializers.SlugRelatedField(slug_field='organization_name',
                                          read_only=True)
 
@@ -34,6 +36,12 @@ class LicenseSerializer(serializers.ModelSerializer):
                   'price',
                   'additional_info', 'content'
                   )
+        validators = [
+            UniqueTogetherValidator(
+                queryset=License.objects.all(),
+                fields=('new_deal', 'creator')
+            )
+        ]
 
 
 class CreatorSerializer(serializers.ModelSerializer):

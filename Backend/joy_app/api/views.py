@@ -3,7 +3,7 @@ from django.shortcuts import get_object_or_404
 from django_filters.rest_framework import DjangoFilterBackend
 from license.models import Creator, License
 from rest_framework import filters, viewsets
-from rest_framework.permissions import AllowAny, IsAdminUser, IsAuthenticated
+from rest_framework.permissions import AllowAny, IsAdminUser
 
 from .serializers import BrandSerializer, CreatorSerializer, LicenseSerializer
 
@@ -33,8 +33,8 @@ class CustomUserViewSet(viewsets.ModelViewSet):
     """
     Creators
     """
-    
-    permission_classes = (IsAuthenticated)
+
+    permission_classes = (IsAdminUser)
     queryset = Creator.objects.all()
     serializer_class = CreatorSerializer
     permission_classes = (UserOrReadOnly,)
