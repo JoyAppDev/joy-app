@@ -1,6 +1,6 @@
 import React from 'react';
 import Layout from "../../components/layout";
-import HorizontalStepper from './../../components/stepper';
+import MultiStepRegisterForm from '../../components/multi-stepp-register-form';
 import {Stack} from "@mui/material";
 
 function SignIn() {
@@ -10,7 +10,7 @@ function SignIn() {
                 marginLeft: 0,
                 paddingLeft: 0
             }}>
-                <HorizontalStepper />
+                <MultiStepRegisterForm />
             </Stack>
         </Layout>
     )
