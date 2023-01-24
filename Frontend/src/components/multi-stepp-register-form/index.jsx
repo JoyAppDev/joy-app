@@ -10,7 +10,7 @@ import Typography from '@mui/material/Typography';
 import Link from "@mui/material/Link";
 
 import {CustomButton} from "../button";
-import SignInForm from "../signin-form";
+import RegistrationStepFirst from "../registration-step-first";
 import RegistrationStepFinal from "../registration-step-final";
 import {theme} from "../../styles/theme";
 
@@ -34,7 +34,7 @@ export default function MultiStepRegisterForm() {
   function getStepContent(step) {
     switch (step) {
       case 0:
-        return <SignInForm
+        return <RegistrationStepFirst
             {...data}
             updateFields={updateFields}
             setIsValidForm={setIsValidForm}

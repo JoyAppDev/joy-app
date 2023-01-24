@@ -11,7 +11,7 @@ import { Stack } from '@mui/material';
 import {CustomInput} from "../input";
 import {passwordValidator} from "../../utils/validator";
 
-function SignInForm({ email, password, updateFields, setIsValidForm }) {
+function RegistrationStepFirst({ email, password, updateFields, setIsValidForm }) {
 
     const { handleSubmit, control, formState: { errors, isValid }, reset } = useForm({
         mode: "onBlur"
@@ -134,4 +134,4 @@ function SignInForm({ email, password, updateFields, setIsValidForm }) {
     );
 }
 
-export default SignInForm;
+export default RegistrationStepFirst;
