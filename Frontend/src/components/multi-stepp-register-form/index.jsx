@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {useState} from "react";
-import {Link as RouterLink} from "react-router-dom";
+import {Link as RouterLink, useNavigate} from "react-router-dom";
 
 import {Box, Stack} from "@mui/material";
 import Stepper from '@mui/material/Stepper';
@@ -13,6 +13,7 @@ import {CustomButton} from "../button";
 import RegistrationStepFirst from "../registration-step-first";
 import RegistrationStepFinal from "../registration-step-final";
 import {theme} from "../../styles/theme";
+import {useForm} from "react-hook-form";
 
 const INITIAL_DATA = {
   email: "",
@@ -30,6 +31,11 @@ export default function MultiStepRegisterForm() {
   const [activeStep, setActiveStep] = React.useState(0);
   const [data, setData] = useState(INITIAL_DATA);
   const [isValidForm, setIsValidForm] = React.useState(false);
+  const [isValidFinalForm, setIsValidFinalForm] = React.useState(false);
+
+  let navigate = useNavigate();
+
+  const {reset} = useForm();
 
   function getStepContent(step) {
     switch (step) {
@@ -43,6 +49,7 @@ export default function MultiStepRegisterForm() {
         return <RegistrationStepFinal
             {...data}
             updateFields={updateFields}
+            setIsValidFinalForm={setIsValidFinalForm}
         />
       default:
         throw new Error('Unknown step');
@@ -53,7 +60,6 @@ export default function MultiStepRegisterForm() {
     setData(prev => {
       return {...prev, ...fields}
     })
-    console.log(isValidForm);
   }
 
   const handleNext = () => {
@@ -63,6 +69,12 @@ export default function MultiStepRegisterForm() {
   const handle = () => {
     if(activeStep !== steps.length - 1) return handleNext();
     alert(JSON.stringify(data));
+  }
+
+  const handleSubmit = () => {
+    alert(JSON.stringify(data));
+    navigate('/dashboard');
+    reset();
   }
 
   return (
@@ -111,13 +123,25 @@ export default function MultiStepRegisterForm() {
           {getStepContent(activeStep)}
 
           <Stack spacing={2} mt={4}>
-            <CustomButton
-                type="submit"
-                onClick={handle}
-                disabled={!isValidForm}
-            >
-              {activeStep === steps.length - 1 ? 'COMPLETE ACCOUNT' : 'SIGN IN'}
-            </CustomButton>
+            {activeStep === steps.length - 1
+                ?
+                (<CustomButton
+                    type="submit"
+                    onClick={handleSubmit}
+                    disabled={!isValidFinalForm}
+                >
+                      COMPLETE ACCOUNT
+                </CustomButton>
+                )
+                :
+                (<CustomButton
+                    type="submit"
+                    onClick={handle}
+                    disabled={!isValidForm}
+                >
+                      SIGN IN
+                </CustomButton>
+                )}
 
             <Typography>
               If you already have an account, you can

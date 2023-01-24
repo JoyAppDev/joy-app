@@ -89,8 +89,6 @@ function RegistrationStepFirst({ email, password, updateFields, setIsValidForm }
                     />
                 </Stack>
 
-
-
                 <Box
                     sx={{
                         display: 'flex',

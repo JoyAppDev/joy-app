@@ -10,20 +10,37 @@ import Select from '@mui/material/Select';
 
 import { CustomInput } from '../../components/input';
 
-function RegistrationStepFinal({ name, address, updateFields, idNumber, paymentInfo, payPal }) {
+function RegistrationStepFinal({ name, address, updateFields, idNumber, paymentInfo, payPal, setIsValidFinalForm }) {
+  const [paymentInfoSelected, setPaymentInfoSelected] = React.useState('');
+
+
+
   const {
     handleSubmit,
     control,
-    reset,
   } = useForm({
     mode: 'onBlur',
   });
 
   const onSubmit = data => {
     updateFields(data);
-    alert(JSON.stringify(data));
-    reset();
-  };
+    };
+
+  const choosePaymentInfo = (e) => {
+    updateFields({paymentInfo: e.target.value});
+    setPaymentInfoSelected(e.target.value);
+    if (name && address && (e.target.value === 'credit')) {
+      setIsValidFinalForm(true);
+    }
+  }
+
+  const completeRegistration = (e) => {
+    updateFields({payPal: e.target.value});
+    if (name && address && payPal) {
+      setIsValidFinalForm(true);
+    }
+  }
+
   return (
     <Box
       component="form"
@@ -85,18 +102,18 @@ function RegistrationStepFinal({ name, address, updateFields, idNumber, paymentI
             name="payment"
             control={control}
             rules={{ required: false }}
-            render={({ field: { value } }) => (
+            render={() => (
               <Select
-                value={value}
+                value={paymentInfoSelected || ''}
                 //onChange={onChange}
-                onChange={e => updateFields({paymentInfo: e.target.value})}
+                onChange={choosePaymentInfo}
                 label="Payment Type"
                 id="payment_type"
               >
                 <MenuItem value="paypal" label="PayPal">
                   PayPal
                 </MenuItem>
-                <MenuItem value="credit-card" label="Credit card">
+                <MenuItem value="credit" label="Credit card">
                   Credit card
                 </MenuItem>
               </Select>
@@ -105,7 +122,7 @@ function RegistrationStepFinal({ name, address, updateFields, idNumber, paymentI
           />
         </FormControl>
 
-        {paymentInfo === 'paypal' && (
+        {paymentInfoSelected === 'paypal' && (
             <Controller
                 control={control}
                 name="paypal"
@@ -114,14 +131,13 @@ function RegistrationStepFinal({ name, address, updateFields, idNumber, paymentI
                     <CustomInput
                         label={'PayPal'}
                         type={'text'}
-                        onChange={e => updateFields({payPal: e.target.value})}
+                        onChange={completeRegistration}
                         value={payPal || ''}
                         placeholder={''}
                     />
                 )}
             />
         )}
-
 
       </Stack>
     </Box>
