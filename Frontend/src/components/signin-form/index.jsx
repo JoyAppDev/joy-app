@@ -8,7 +8,8 @@ import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
 import { Stack } from '@mui/material';
 
-import AuthenticationInputs from "../authentication-inputs";
+import {CustomInput} from "../input";
+import {passwordValidator} from "../../utils/validator";
 
 function SignInForm({ email, password, updateFields, setIsValidForm }) {
 
@@ -16,6 +17,8 @@ function SignInForm({ email, password, updateFields, setIsValidForm }) {
         mode: "onBlur"
     }, {
         defaultValues: {
+            email: '',
+            password: '',
             termsOfService: false,
         }
     });
@@ -25,6 +28,13 @@ function SignInForm({ email, password, updateFields, setIsValidForm }) {
         setIsValidForm(isValid);
         alert(JSON.stringify(fields));
         reset();
+    }
+    const submitRegister = (e) => {
+        if (e.target.value) {
+            setIsValidForm(true);
+            console.log(isValid);
+        }
+
     }
 
     return (
@@ -41,13 +51,45 @@ function SignInForm({ email, password, updateFields, setIsValidForm }) {
 
             <Stack spacing={2} mt={4}>
 
-                <AuthenticationInputs
-                    email={email}
-                    password={password}
-                    control={control}
-                    errors={errors}
-                    updateFields={updateFields}
-                />
+                <Stack spacing={2}>
+                    <Controller
+                        control={control}
+                        name="e-mail"
+                        rules={{ required: true }}
+                        render={() => (
+                            <CustomInput
+                                label={'Email address'}
+                                type={'text'}
+                                onChange={(e) => updateFields({email: e.target.value})}
+                                value={email || ''}
+                                error={!!errors.email?.message}
+                                helperText={errors.email?.message}
+                                placeholder={'yourname@gmail.com'}
+                            />
+
+                        )}
+
+                    />
+                    <Controller
+                        control={control}
+                        name="password"
+                        rules={ passwordValidator }
+                        render={() => (
+                            <CustomInput
+                                label={"Password"}
+                                type={"password"}
+                                onChange={(e) => updateFields({password: e.target.value})}
+                                value={password || ''}
+                                error={!!errors.password?.message}
+                                helperText={errors.password?.message}
+                                placeholder={''}
+                            />
+
+                        )}
+                    />
+                </Stack>
+
+
 
                 <Box
                     sx={{
@@ -68,6 +110,7 @@ function SignInForm({ email, password, updateFields, setIsValidForm }) {
                                     borderColor: 'rgba(0, 0, 0, 0.6)',
                                 }}
                                 {...field}
+                                onChange={submitRegister}
                             />
                         )}
                     />

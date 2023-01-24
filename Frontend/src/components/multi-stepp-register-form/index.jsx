@@ -1,14 +1,16 @@
 import * as React from 'react';
+import {useState} from "react";
+import {Link as RouterLink} from "react-router-dom";
+
 import {Box, Stack} from "@mui/material";
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import Typography from '@mui/material/Typography';
-import SignInForm from "../signin-form";
-import {useState} from "react";
-import {CustomButton} from "../button";
 import Link from "@mui/material/Link";
-import {Link as RouterLink} from "react-router-dom";
+
+import {CustomButton} from "../button";
+import SignInForm from "../signin-form";
 import RegistrationStepFinal from "../registration-step-final";
 import {theme} from "../../styles/theme";
 
@@ -27,6 +29,7 @@ const steps = ['Step 1', 'Final step'];
 export default function MultiStepRegisterForm() {
   const [activeStep, setActiveStep] = React.useState(0);
   const [data, setData] = useState(INITIAL_DATA);
+  const [isValidForm, setIsValidForm] = React.useState(false);
 
   function getStepContent(step) {
     switch (step) {
@@ -34,6 +37,7 @@ export default function MultiStepRegisterForm() {
         return <SignInForm
             {...data}
             updateFields={updateFields}
+            setIsValidForm={setIsValidForm}
         />;
       case 1:
         return <RegistrationStepFinal
@@ -49,6 +53,7 @@ export default function MultiStepRegisterForm() {
     setData(prev => {
       return {...prev, ...fields}
     })
+    console.log(isValidForm);
   }
 
   const handleNext = () => {
@@ -76,7 +81,7 @@ export default function MultiStepRegisterForm() {
           activeStep={activeStep}
           sx={{
             pt: 3,
-            pb: 5,
+            pb: 2,
             maxWidth: '252px',
       }}
       >
@@ -109,6 +114,7 @@ export default function MultiStepRegisterForm() {
             <CustomButton
                 type="submit"
                 onClick={handle}
+                disabled={!isValidForm}
             >
               {activeStep === steps.length - 1 ? 'COMPLETE ACCOUNT' : 'SIGN IN'}
             </CustomButton>
