@@ -1,19 +1,20 @@
 import * as React from 'react';
-import {useState} from "react";
-import {Link as RouterLink, useNavigate} from "react-router-dom";
+import {useState} from 'react';
+import {Link as RouterLink, useNavigate} from 'react-router-dom';
 
-import {Box, Stack} from "@mui/material";
+import {Box, Stack} from '@mui/material';
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import Typography from '@mui/material/Typography';
-import Link from "@mui/material/Link";
+import Link from '@mui/material/Link';
 
-import {CustomButton} from "../button";
-import RegistrationStepFirst from "../registration-step-first";
-import RegistrationStepFinal from "../registration-step-final";
-import {theme} from "../../styles/theme";
-import {useForm} from "react-hook-form";
+import {CustomButton} from '../button';
+import RegistrationStepFirst from '../registration-step-first';
+import RegistrationStepFinal from '../registration-step-final';
+import {theme} from '../../styles/theme';
+import {useForm} from 'react-hook-form';
+import * as auth from '../../utils/auth';
 
 const INITIAL_DATA = {
   email: "",
@@ -71,8 +72,41 @@ export default function MultiStepRegisterForm() {
     alert(JSON.stringify(data));
   }
 
+
+
+  // регистрация
+  // async
+
+  async function handleRegister({
+                                  email,
+                                  address,
+                                  id_number,
+                                  payment_info,
+                                  name_surname,
+                                  password }) {
+    try {
+      //setIsLoading(true);
+      await auth.register({
+        username: email,
+        email,
+        address,
+        id_number,
+        payment_info,
+        name_surname,
+        password });
+      //handleLogin(email, password);
+    } catch (error) {
+      //setIsInfoTooltipOpen(true);
+      console.log(error);
+    } finally {
+      //setIsLoading(false);
+    }
+  }
+
   const handleSubmit = () => {
     alert(JSON.stringify(data));
+    const { email, password, name, address, idNumber, paymentInfo, payPal } = data;
+    handleRegister({ email, address, idNumber, paymentInfo, name, password });
     navigate('/dashboard');
     reset();
   }

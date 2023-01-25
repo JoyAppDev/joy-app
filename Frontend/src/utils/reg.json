@@ -1,0 +1,9 @@
+{
+  "email":"test@test.ru",
+  "password":"123",
+  "name":"Test Test",
+  "address":"NY, 123 madisson av.",
+  "idNumber":"1",
+  "paymentInfo":"paypal",
+  "payPal":"test@test.ru"
+}
