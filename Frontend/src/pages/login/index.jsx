@@ -11,6 +11,7 @@ import { CustomButton } from '../../components/button';
 import { CustomInput } from '../../components/input';
 import Layout from '../../components/layout';
 import { passwordValidator } from './../../utils/validator';
+import * as auth from "../../utils/auth";
 
 function Login() {
   const {
@@ -22,8 +23,31 @@ function Login() {
     mode: 'onBlur',
   });
 
+    // авторизация
+    // async
+    async function handleLogin(email, password) {
+        try {
+            // setIsLoading(true);
+            const auth_token = await auth.authorize(email, password);
+            //console.log('_id',jwt);
+            //console.log('what jwt:', localStorage.getItem('jwt'));
+            if (auth_token) {
+                console.log('jwt', auth_token);
+                alert('done');
+                //setLoggedIn(true);
+
+            }
+        } catch (error) {
+            console.log(error);
+        } finally {
+            //setIsLoading(false);
+        }
+    }
+
   const onSubmit = data => {
     alert(JSON.stringify(data));
+    const { email, password } = data;
+    handleLogin(email, password);
     reset();
   };
 
@@ -42,7 +66,7 @@ function Login() {
         <Stack spacing={2}>
           <Controller
             control={control}
-            name="e-mail"
+            name="email"
             rules={{ required: true }}
             render={({ field: { onChange, value } }) => (
               <CustomInput

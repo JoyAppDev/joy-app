@@ -8,26 +8,25 @@ function checkResponse(res) {
 }
 
 export const register = ( {
-                           username,
                            email,
                            address,
-                           id_number,
-                           payment_info,
-                           name_surname,
+                           idNumber,
+                           payment,
+                           name,
                            password } ) => {
-    return fetch(`${API_URL}/users`, {
+    return fetch(`${API_URL}/users/`, {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            username: username,
+            username: name,
             email: email,
             address: address,
-            id_number: id_number,
-            payment_info: payment_info,
-            name_surname: name_surname,
+            id_number: idNumber,
+            payment_info: "credit",
+            name_surname: name,
             password: password,
         }
         )
@@ -47,16 +46,16 @@ export const authorize = (email, password) => {
         },
         body: JSON.stringify(
             {
-                "email": email,
-                "name_surname": password
+                "name_surname": email,
+                "password": password,
             }
         )
     })
         .then((response => response.json()))
         .then((data) => {
-            if (data.token){
-                localStorage.setItem('jwt', data.token);
-                return data.token;
+            if (data.auth_token){
+                localStorage.setItem('jwt', data.auth_token);
+                return data.auth_token;
             }
             return data;
         })

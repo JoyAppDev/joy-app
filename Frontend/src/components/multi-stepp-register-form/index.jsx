@@ -80,20 +80,20 @@ export default function MultiStepRegisterForm() {
   async function handleRegister({
                                   email,
                                   address,
-                                  id_number,
-                                  payment_info,
-                                  name_surname,
+                                  idNumber,
+                                  paymentInfo,
+                                  name,
                                   password }) {
     try {
       //setIsLoading(true);
       await auth.register({
-        username: email,
         email,
         address,
-        id_number,
-        payment_info,
-        name_surname,
+        idNumber,
+        paymentInfo,
+        name,
         password });
+      navigate('/dashboard');
       //handleLogin(email, password);
     } catch (error) {
       //setIsInfoTooltipOpen(true);
@@ -106,8 +106,8 @@ export default function MultiStepRegisterForm() {
   const handleSubmit = () => {
     alert(JSON.stringify(data));
     const { email, password, name, address, idNumber, paymentInfo, payPal } = data;
+    console.log('pay: ', paymentInfo, "address: ", address);
     handleRegister({ email, address, idNumber, paymentInfo, name, password });
-    navigate('/dashboard');
     reset();
   }
 

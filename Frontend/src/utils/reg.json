@@ -1,9 +1,30 @@
-{
-  "email":"test@test.ru",
-  "password":"123",
-  "name":"Test Test",
-  "address":"NY, 123 madisson av.",
-  "idNumber":"1",
-  "paymentInfo":"paypal",
-  "payPal":"test@test.ru"
-}
+[
+  {
+    "username": "user1@example.com",
+    "email": "user1@example.com",
+    "address": "NY",
+    "id_number": 1,
+    "payment_info": "credit",
+    "name_surname": "Iren P",
+    "password": "FVel8qQ0IO2v"
+  },
+
+  {
+    "username": "user1@example.com",
+    "email": "user1@example.com",
+    "address": "NY",
+    "id_number": 1,
+    "payment_info": "credit",
+    "name_surname": "Iren P",
+    "id": 4
+  },
+  {
+    "email": "test@test.ru",
+    "password": "123",
+    "name": "Test Test",
+    "address": "NY, 123 madisson av.",
+    "idNumber": "1",
+    "paymentInfo": "paypal",
+    "payPal": "test@test.ru"
+  }
+]
