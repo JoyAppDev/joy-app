@@ -33,6 +33,7 @@ export default function MultiStepRegisterForm() {
   const [data, setData] = useState(INITIAL_DATA);
   const [isValidForm, setIsValidForm] = React.useState(false);
   const [isValidFinalForm, setIsValidFinalForm] = React.useState(false);
+  const [isError, setIsError] = React.useState(false);
 
   let navigate = useNavigate();
 
@@ -96,7 +97,7 @@ export default function MultiStepRegisterForm() {
       navigate('/dashboard');
       //handleLogin(email, password);
     } catch (error) {
-      //setIsInfoTooltipOpen(true);
+      setIsError(true);
       console.log(error);
     } finally {
       //setIsLoading(false);
@@ -157,6 +158,10 @@ export default function MultiStepRegisterForm() {
           {getStepContent(activeStep)}
 
           <Stack spacing={2} mt={4}>
+            {isError && (
+                <Typography sx={{color: "red"}}>Error: wrong data type</Typography>
+            )}
+
             {activeStep === steps.length - 1
                 ?
                 (<CustomButton
