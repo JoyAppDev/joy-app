@@ -61,3 +61,23 @@ export const authorize = (email, password) => {
         })
 };
 
+export const checkToken = (token) => {
+    return fetch(`${API_URL}/users/me`, {
+        //credentials: 'include',
+        method: "GET",
+        headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+        }
+    })
+        .then(res => {
+            if (res.ok) {
+                return res.json();
+            }
+            else {
+                console.log(`Ошибка: ${res.status}`);
+            }
+        })
+        .then(data => data)
+}
