@@ -1,7 +1,41 @@
+import pyrebase
+import os
+
 from rest_framework import serializers
+from django.core.files.storage import default_storage
+from django.contrib import messages
 from rest_framework.validators import UniqueTogetherValidator
 
-from license.models import License, Brand, Creator
+from license.models import License, Brand, Creator, Video
+
+config = {
+    "apiKey": "AIzaSyBTd_sOSa54keszsYTAexuK86QlINLzsj4",
+    "authDomain": "test-1-15b18.firebaseapp.com",
+    "projectId": "test-1-15b18",
+    "storageBucket": "test-1-15b18.appspot.com",
+    "messagingSenderId": "7527290689",
+    "appId": "1:7527290689:web:04cd00262339b2b746f3c0",
+    "databaseURL": ""
+}
+
+firebase = pyrebase.initialize_app(config)
+storage = firebase.storage()
+
+
+class VideoTestSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Video
+        fields = ('__all__')
+
+    def create(self, request, format=None):
+        
+        file = request['video']
+        file_save = default_storage.save(file.name, file)
+        storage.child("files/" + file.name).put("media/" + file.name)
+        delete = default_storage.delete(file.name)
+        # messages.success(request, "File upload in Firebase Storage successful")
+        return request
 
 
 class BrandSerializer(serializers.ModelSerializer):

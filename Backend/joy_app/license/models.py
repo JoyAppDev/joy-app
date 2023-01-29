@@ -4,6 +4,10 @@ from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
 
 
+class Video(models.Model):
+    video = models.FileField()
+
+
 CHOICES = (
         ('exclusive', 'exclusive'),
         ('non-exclusive', 'non-exclusive'),)

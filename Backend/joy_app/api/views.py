@@ -1,11 +1,49 @@
+import pyrebase
+import os
+
 from api.permissions import CreatorOrReadOnly, ReadOnly, UserOrReadOnly
+from django.core.files.storage import default_storage
+from django.contrib import messages
 from django.shortcuts import get_object_or_404
 from django_filters.rest_framework import DjangoFilterBackend
-from license.models import Creator, License
+from license.models import Creator, License, Video
 from rest_framework import filters, viewsets
+from rest_framework.parsers import FileUploadParser, MultiPartParser
 from rest_framework.permissions import AllowAny, IsAdminUser
 
-from .serializers import BrandSerializer, CreatorSerializer, LicenseSerializer
+from .serializers import BrandSerializer, CreatorSerializer, LicenseSerializer, VideoTestSerializer
+
+config = {
+    "apiKey": "AIzaSyBTd_sOSa54keszsYTAexuK86QlINLzsj4",
+    "authDomain": "test-1-15b18.firebaseapp.com",
+    "projectId": "test-1-15b18",
+    "storageBucket": "test-1-15b18.appspot.com",
+    "messagingSenderId": "7527290689",
+    "appId": "1:7527290689:web:04cd00262339b2b746f3c0",
+    "databaseURL": ""
+}
+
+firebase = pyrebase.initialize_app(config)
+storage = firebase.storage()
+
+
+class FileUploadViewSet(viewsets.ModelViewSet):
+    parser_classes = (MultiPartParser,)
+    permission_classes = (AllowAny,)
+    queryset = Video.objects.all()
+    serializer_class = VideoTestSerializer
+
+
+    def post(self, request, format=None):
+        print('test')
+        print(request.FILES)
+        print(request.data)
+        file = request.FILES['file']
+        print(file)
+        file_save = default_storage.save(file.name, file)
+        storage.child("files/" + file.name).put("media/" + file.name)
+        delete = default_storage.delete(file.name)
+        messages.success(request, "File upload in Firebase Storage successful")
 
 
 class LicenseViewSet(viewsets.ModelViewSet):
@@ -67,3 +105,5 @@ class BrandViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         license = get_object_or_404(License, pk=self.kwargs.get('license_id'))
         serializer.save(license=license)
+
+
