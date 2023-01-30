@@ -4,6 +4,7 @@ import Login from '../../pages/login';
 import SignIn from '../../pages/signin';
 import Dashboard from '../../pages/dashboard';
 import * as auth from '../../utils/auth';
+import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
 function App() {
     const [currentUser, setCurrentUser] = React.useState({});
@@ -42,13 +43,15 @@ function App() {
 
 
   return (
-    <div className="page">
-      <Routes>
-        <Route exact path="/" element={<Login />} />
-        <Route path="register" element={<SignIn />} />
-        <Route path="dashboard" element={<Dashboard />} />
-      </Routes>
-    </div>
+      <CurrentUserContext.Provider value={currentUser}>
+          <div className="page">
+              <Routes>
+                  <Route exact path="/" element={<Login />} />
+                  <Route path="register" element={<SignIn />} />
+                  <Route path="dashboard" element={<Dashboard />} />
+              </Routes>
+          </div>
+      </CurrentUserContext.Provider>
   );
 }
 
