@@ -1,10 +1,46 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import {Routes, Route, useNavigate} from 'react-router-dom';
 import Login from '../../pages/login';
 import SignIn from '../../pages/signin';
 import Dashboard from '../../pages/dashboard';
+import * as auth from '../../utils/auth';
 
 function App() {
+    const [currentUser, setCurrentUser] = React.useState({});
+    const [loggedIn, setLoggedIn] = React.useState(false);
+
+    let navigate = useNavigate();
+
+    // check token for authorization
+    // const token = '0b7d621f3284500d0f6bb091758199b94cb6d99a';
+
+    React.useEffect(() => {
+        checkToken()
+    }, []);
+
+    const checkToken = () => {
+
+        const token = localStorage.getItem('jwt');
+        console.log('jwt', token);
+        if (token) {
+            auth.checkToken(token)
+                .then((response) => {
+                    setCurrentUser(response.username);
+                    setLoggedIn(true);
+                    navigate('/dashboard');
+                    console.log("user", response.username);
+                })
+                .catch((err) => {
+                    console.log(err);
+                })
+        }
+        else if (token === null) {
+            //handleSignOut();
+            alert('no token');
+        }
+    }
+
+
   return (
     <div className="page">
       <Routes>
