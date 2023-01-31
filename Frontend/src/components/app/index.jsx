@@ -5,6 +5,8 @@ import SignIn from '../../pages/signin';
 import Dashboard from '../../pages/dashboard';
 import * as auth from '../../utils/auth';
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
+import RequireAuth from "../../hoc/RequireAuth";
+//import ProtectedRoute from "../protected-route";
 
 function App() {
     const [currentUser, setCurrentUser] = React.useState({});
@@ -48,7 +50,11 @@ function App() {
               <Routes>
                   <Route exact path="/" element={<Login />} />
                   <Route path="register" element={<SignIn />} />
-                  <Route path="dashboard" element={<Dashboard />} />
+                  <Route path="dashboard" element={
+                      <RequireAuth>
+                          <Dashboard />
+                      </RequireAuth>
+                  } />
               </Routes>
           </div>
       </CurrentUserContext.Provider>
