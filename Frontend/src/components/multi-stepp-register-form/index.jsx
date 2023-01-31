@@ -72,9 +72,8 @@ export default function MultiStepRegisterForm({ onRegister, isError }) {
   // async
 
   const handleSubmit = () => {
-    alert(JSON.stringify(data));
     const { email, password, name, address, idNumber, paymentInfo, payPal } = data;
-    console.log('pay: ', paymentInfo, "address: ", address);
+    // console.log('pay: ', paymentInfo, "address: ", address);
     onRegister({ email, address, idNumber, paymentInfo, name, password });
     reset();
   }

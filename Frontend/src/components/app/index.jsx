@@ -71,7 +71,7 @@ function App() {
                 name,
                 password });
             //navigate('/dashboard');
-            handleLogin(email, password);
+            handleLogin(name, password);
         } catch (error) {
             setIsRegisterError(true);
             console.log(error);

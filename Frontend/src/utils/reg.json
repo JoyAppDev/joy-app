@@ -10,13 +10,14 @@
   },
 
   {
-    "username": "user1@example.com",
+    "username": "user1",
     "email": "user1@example.com",
     "address": "NY",
-    "id_number": 1,
+    "id_number": 2,
     "payment_info": "credit",
-    "name_surname": "Iren P",
-    "id": 4
+    "name_surname": "user1",
+    "id": 4,
+    "password": "y43ERYV3z1NN"
   },
   {
     "email": "test@test.ru",
