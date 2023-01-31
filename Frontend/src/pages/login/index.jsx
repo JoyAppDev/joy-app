@@ -11,9 +11,8 @@ import { CustomButton } from '../../components/button';
 import { CustomInput } from '../../components/input';
 import Layout from '../../components/layout';
 import { passwordValidator } from './../../utils/validator';
-import * as auth from "../../utils/auth";
 
-function Login() {
+function Login({ onLogin, isError }) {
   const {
     handleSubmit,
     control,
@@ -23,31 +22,12 @@ function Login() {
     mode: 'onBlur',
   });
 
-    // авторизация
-    // async
-    async function handleLogin(email, password) {
-        try {
-            // setIsLoading(true);
-            const auth_token = await auth.authorize(email, password);
-            //console.log('_id',jwt);
-            //console.log('what jwt:', localStorage.getItem('jwt'));
-            if (auth_token) {
-                console.log('jwt', auth_token);
-                alert('done');
-                //setLoggedIn(true);
 
-            }
-        } catch (error) {
-            console.log(error);
-        } finally {
-            //setIsLoading(false);
-        }
-    }
 
   const onSubmit = data => {
-    alert(JSON.stringify(data));
+    console.log(JSON.stringify(data));
     const { email, password } = data;
-    handleLogin(email, password);
+    onLogin(email, password);
     reset();
   };
 
@@ -99,6 +79,10 @@ function Login() {
         </Stack>
 
         <Stack spacing={2} mt={4}>
+            {isError && (
+                <Typography sx={{color: "red"}}>Error: wrong email or password</Typography>
+            )}
+
           <CustomButton type="submit" disabled={!isValid}>
             LOG IN
           </CustomButton>

@@ -1,20 +1,18 @@
 import * as React from 'react';
-import {useState} from 'react';
-import {Link as RouterLink, useNavigate} from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
 
-import {Box, Stack} from '@mui/material';
+import { Box, Stack } from '@mui/material';
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
 
-import {CustomButton} from '../button';
+import { CustomButton } from '../button';
 import RegistrationStepFirst from '../registration-step-first';
 import RegistrationStepFinal from '../registration-step-final';
-import {theme} from '../../styles/theme';
-import {useForm} from 'react-hook-form';
-import * as auth from '../../utils/auth';
+import { theme } from '../../styles/theme';
+import { useForm } from 'react-hook-form';
 
 const INITIAL_DATA = {
   email: "",
@@ -28,14 +26,11 @@ const INITIAL_DATA = {
 
 const steps = ['Step 1', 'Final step'];
 
-export default function MultiStepRegisterForm() {
+export default function MultiStepRegisterForm({ onRegister, isError }) {
   const [activeStep, setActiveStep] = React.useState(0);
-  const [data, setData] = useState(INITIAL_DATA);
+  const [data, setData] = React.useState(INITIAL_DATA);
   const [isValidForm, setIsValidForm] = React.useState(false);
   const [isValidFinalForm, setIsValidFinalForm] = React.useState(false);
-  const [isError, setIsError] = React.useState(false);
-
-  let navigate = useNavigate();
 
   const {reset} = useForm();
 
@@ -68,47 +63,19 @@ export default function MultiStepRegisterForm() {
     setActiveStep(activeStep + 1);
   };
 
-  const handle = () => {
+  const handleTransition = () => {
     if(activeStep !== steps.length - 1) return handleNext();
     alert(JSON.stringify(data));
   }
 
-
-
   // регистрация
   // async
-
-  async function handleRegister({
-                                  email,
-                                  address,
-                                  idNumber,
-                                  paymentInfo,
-                                  name,
-                                  password }) {
-    try {
-      //setIsLoading(true);
-      await auth.register({
-        email,
-        address,
-        idNumber,
-        paymentInfo,
-        name,
-        password });
-      navigate('/dashboard');
-      //handleLogin(email, password);
-    } catch (error) {
-      setIsError(true);
-      console.log(error);
-    } finally {
-      //setIsLoading(false);
-    }
-  }
 
   const handleSubmit = () => {
     alert(JSON.stringify(data));
     const { email, password, name, address, idNumber, paymentInfo, payPal } = data;
     console.log('pay: ', paymentInfo, "address: ", address);
-    handleRegister({ email, address, idNumber, paymentInfo, name, password });
+    onRegister({ email, address, idNumber, paymentInfo, name, password });
     reset();
   }
 
@@ -175,7 +142,7 @@ export default function MultiStepRegisterForm() {
                 :
                 (<CustomButton
                     type="submit"
-                    onClick={handle}
+                    onClick={handleTransition}
                     disabled={!isValidForm}
                 >
                       SIGN IN
