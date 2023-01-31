@@ -22,14 +22,17 @@ function Login({ onLogin, isError }) {
     mode: 'onBlur',
   });
 
-
-
-  const onSubmit = data => {
-    console.log(JSON.stringify(data));
+  const onSubmit = (data, isError) => {
     const { email, password } = data;
     onLogin(email, password);
-    reset();
+    if (!isError) {
+        reset();
+    }
   };
+
+  const onChangeAndClearError = (e) => {
+
+  }
 
   return (
     <Layout>

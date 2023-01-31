@@ -83,7 +83,9 @@ function App() {
       <CurrentUserContext.Provider value={currentUser}>
           <div className="page">
               <Routes>
-                  <Route exact path="/" element={<Login onLogin={handleLogin} isError={isLoginError} />} />
+                  <Route exact path="/" element={
+                      <Login onLogin={handleLogin} isError={isLoginError} />
+                  } />
                   <Route path="register" element={
                       <SignIn onRegister={handleRegister} isError={isRegisterError} />
                   } />
