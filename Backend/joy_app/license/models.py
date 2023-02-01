@@ -45,13 +45,13 @@ class CustomUserManager(BaseUserManager):
         return user
 
 class Creator(AbstractUser):
-    # username = models.CharField(
-    #     ('username'),
-    #     max_length=150,
-    # #     unique=True,
-    #     blank=True,
-    #     null=True,
-    # )
+    username = models.CharField(
+        'username',
+        max_length=150,
+        unique=False,
+        blank=True,
+        null=True,
+    )
     email = models.EmailField(
         'email',
         max_length=200,
@@ -59,7 +59,7 @@ class Creator(AbstractUser):
     name_surname = models.CharField(
         'name_surname',
         max_length=150,
-        unique=True)
+        unique=False)
     address = models.CharField(
         'Address',
         max_length=150,
