@@ -21,12 +21,10 @@ export const register = ( {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            username: name,
             email: email,
             address: address,
             id_number: idNumber,
             payment_info: "credit",
-            name_surname: name,
             password: password,
         }
         )
@@ -46,7 +44,7 @@ export const authorize = (email, password) => {
         },
         body: JSON.stringify(
             {
-                "name_surname": email,
+                "email": email,
                 "password": password,
             }
         )
