@@ -1,3 +1,4 @@
+from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.models import AbstractUser
 
 from django.db import models
@@ -9,22 +10,56 @@ CHOICES = (
         ('non-exclusive', 'non-exclusive'),)
 
 
+class CustomUserManager(BaseUserManager):
+    def create_user(self, email, password, **extra_fields):
+        """
+        Creates and saves a User with the given email, first name,
+        last name and password.
+        """
+        if not email:
+            raise ValueError("Users must have an email address")
+        if not password:
+            raise ValueError("Users must have a password")
+        user = self.model(
+            email=self.normalize_email(email),
+            **extra_fields,
+        )
+
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
+
+    def create_superuser(self, email, password=None, **extra_fields):
+        """
+        Creates and saves a superuser with the given email, first name,
+        last name and password.
+        """
+        user = self.create_user(
+            email,
+            password=password,
+            **extra_fields,
+        )
+        user.is_staff = True
+        user.is_superuser = True
+        user.save(using=self._db)
+        return user
+
 class Creator(AbstractUser):
     username = models.CharField(
-        ('username'),
+        'username',
         max_length=150,
-        unique=True,
+        unique=False,
         blank=True,
         null=True,
     )
     email = models.EmailField(
-        'Email',
+        'email',
         max_length=200,
-        unique=False,)
+        unique=True,)
     name_surname = models.CharField(
         'name_surname',
         max_length=150,
-        unique=True)
+        unique=False)
     address = models.CharField(
         'Address',
         max_length=150,
@@ -38,9 +73,9 @@ class Creator(AbstractUser):
         'Payment_info',
         max_length=150)
 
-    USERNAME_FIELD = "name_surname"
+    USERNAME_FIELD = 'email'
 
-    REQUIRED_FIELDS = ['username', 'email', 'address',
+    REQUIRED_FIELDS = ['address',
                        'id_number', 'payment_info']
 
     FIELDS_TO_UPDATE = ['email', 'address', 'id_number', 'payment_info']
@@ -49,12 +84,14 @@ class Creator(AbstractUser):
         verbose_name = 'Creator'
         verbose_name_plural = 'Creators'
         ordering = ('id_number',)
-        constraints = [
-            models.UniqueConstraint(
-                fields=["email", "username"],
-                name="unique_auth"
-            ),
-        ]
+        # constraints = [
+        #     models.UniqueConstraint(
+        #         fields=["email", "username"],
+        #         name="unique_auth"
+        #     ),
+        # ]
+    
+    objects = CustomUserManager()
 
     def __str__(self):
         return self.name_surname
@@ -80,12 +117,12 @@ class License(models.Model):
         verbose_name_plural = 'licenses'
         ordering = ('creator',)
 
-        constraints = [
-            models.UniqueConstraint(
-                fields=['new_deal', 'creator'],
-                name='unique_name_owner'
-            )
-        ]
+        # constraints = [
+        #     models.UniqueConstraint(
+        #         fields=['new_deal', 'creator'],
+        #         name='unique_name_owner'
+        #     )
+        # ]
 
     def __str__(self):
         return self.new_deal
