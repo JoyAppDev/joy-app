@@ -11,7 +11,6 @@ export const register = ( {
                            email,
                            address,
                            idNumber,
-                           payment,
                            name,
                            password } ) => {
     return fetch(`${API_URL}/users/`, {
@@ -23,6 +22,7 @@ export const register = ( {
         body: JSON.stringify({
             email: email,
             address: address,
+            name_surname: name,
             id_number: idNumber,
             payment_info: "credit",
             password: password,

@@ -67,7 +67,6 @@ function App() {
                 email,
                 address,
                 idNumber,
-                paymentInfo,
                 name,
                 password });
             //navigate('/dashboard');
