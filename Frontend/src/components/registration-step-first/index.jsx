@@ -9,9 +9,13 @@ import Link from '@mui/material/Link';
 import { Stack } from '@mui/material';
 
 import {CustomInput} from "../input";
-import {passwordValidator} from "../../utils/validator";
+import { EMAIL_PATTERN, PASSWORD_PATTERN } from "../../utils/constants";
 
 function RegistrationStepFirst({ email, password, updateFields, setIsValidForm }) {
+
+    const [emailIsValid, setEmailIsValid] = React.useState(false);
+    const [passwordIsValid, setPasswordIsValid] = React.useState(false);
+    const [isTermsOfServiceChecked, setIsTermsOfServiceChecked] = React.useState(false);
 
     const { handleSubmit, control, formState: { errors, isValid }, reset } = useForm({
         mode: "onBlur"
@@ -25,17 +29,30 @@ function RegistrationStepFirst({ email, password, updateFields, setIsValidForm }
 
     const onSubmit = (fields) => {
         updateFields(fields);
-        setIsValidForm(isValid);
         alert(JSON.stringify(fields));
         reset();
     }
     const submitRegister = (e) => {
         if (e.target.value) {
-            setIsValidForm(true);
-            console.log(isValid);
+            setIsTermsOfServiceChecked(true);
         }
-
     }
+
+    const validateForm = React.useCallback(() => {
+        console.log(email);
+        setEmailIsValid(EMAIL_PATTERN.test(email));
+        setPasswordIsValid(PASSWORD_PATTERN.test(password));
+    }, [EMAIL_PATTERN, email, PASSWORD_PATTERN, password]);
+
+    React.useEffect(() => {
+        validateForm();
+        if (!passwordIsValid || !emailIsValid || !isTermsOfServiceChecked) {
+            setIsValidForm(false);
+        } else {
+            setIsValidForm(true);
+        }
+    }, [emailIsValid, isTermsOfServiceChecked, isValid, validateForm]);
+
 
     return (
         <Box
@@ -73,7 +90,7 @@ function RegistrationStepFirst({ email, password, updateFields, setIsValidForm }
                     <Controller
                         control={control}
                         name="password"
-                        rules={ passwordValidator }
+                        rules={{ required: true }}
                         render={() => (
                             <CustomInput
                                 label={"Password"}
