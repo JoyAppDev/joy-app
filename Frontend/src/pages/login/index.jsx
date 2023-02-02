@@ -12,7 +12,7 @@ import { CustomInput } from '../../components/input';
 import Layout from '../../components/layout';
 import { passwordValidator } from './../../utils/validator';
 
-function Login() {
+function Login({ onLogin, isError, setIsError }) {
   const {
     handleSubmit,
     control,
@@ -22,10 +22,18 @@ function Login() {
     mode: 'onBlur',
   });
 
-  const onSubmit = data => {
-    alert(JSON.stringify(data));
-    reset();
+  const onSubmit = (data, isError) => {
+    const { email, password } = data;
+    onLogin(email, password);
+    if (!isError) {
+        reset();
+    }
   };
+
+  const onChangeAndClearError = () => {
+      setIsError(false);
+      console.log('clear');
+  }
 
   return (
     <Layout>
@@ -42,13 +50,13 @@ function Login() {
         <Stack spacing={2}>
           <Controller
             control={control}
-            name="e-mail"
+            name="email"
             rules={{ required: true }}
             render={({ field: { onChange, value } }) => (
               <CustomInput
                 label={'Email address'}
                 type={'text'}
-                onChange={e => onChange(e)}
+                onChange={e => {onChange(e); onChangeAndClearError()}}
                 value={value || ''}
                 error={!!errors.email?.message}
                 helperText={errors.email?.message}
@@ -59,12 +67,12 @@ function Login() {
           <Controller
             control={control}
             name="password"
-            rules={passwordValidator}
+            rules={ passwordValidator }
             render={({ field: { onChange, value } }) => (
               <CustomInput
                 label={'Password'}
                 type={'password'}
-                onChange={e => onChange(e)}
+                onChange={e => {onChange(e); onChangeAndClearError()}}
                 value={value || ''}
                 error={!!errors.password?.message}
                 helperText={errors.password?.message}
@@ -75,6 +83,10 @@ function Login() {
         </Stack>
 
         <Stack spacing={2} mt={4}>
+            {isError && (
+                <Typography sx={{color: "red"}}>Error: wrong email or password</Typography>
+            )}
+
           <CustomButton type="submit" disabled={!isValid}>
             LOG IN
           </CustomButton>
