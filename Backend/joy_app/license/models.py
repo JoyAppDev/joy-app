@@ -75,7 +75,7 @@ class Creator(AbstractUser):
 
     USERNAME_FIELD = 'email'
 
-    REQUIRED_FIELDS = ['address',
+    REQUIRED_FIELDS = ['address', 'name_surname',
                        'id_number', 'payment_info']
 
     FIELDS_TO_UPDATE = ['email', 'address', 'id_number', 'payment_info']
