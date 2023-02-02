@@ -84,7 +84,7 @@ function App() {
           <div className="page">
               <Routes>
                   <Route exact path="/" element={
-                      <Login onLogin={handleLogin} isError={isLoginError} />
+                      <Login onLogin={handleLogin} isError={isLoginError} setIsError={setIsLoginError} />
                   } />
                   <Route path="register" element={
                       <SignIn onRegister={handleRegister} isError={isRegisterError} />

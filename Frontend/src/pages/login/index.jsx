@@ -12,7 +12,7 @@ import { CustomInput } from '../../components/input';
 import Layout from '../../components/layout';
 import { passwordValidator } from './../../utils/validator';
 
-function Login({ onLogin, isError }) {
+function Login({ onLogin, isError, setIsError }) {
   const {
     handleSubmit,
     control,
@@ -30,8 +30,9 @@ function Login({ onLogin, isError }) {
     }
   };
 
-  const onChangeAndClearError = (e) => {
-
+  const onChangeAndClearError = () => {
+      setIsError(false);
+      console.log('clear');
   }
 
   return (
@@ -55,7 +56,7 @@ function Login({ onLogin, isError }) {
               <CustomInput
                 label={'Email address'}
                 type={'text'}
-                onChange={e => onChange(e)}
+                onChange={e => {onChange(e); onChangeAndClearError()}}
                 value={value || ''}
                 error={!!errors.email?.message}
                 helperText={errors.email?.message}
@@ -66,12 +67,12 @@ function Login({ onLogin, isError }) {
           <Controller
             control={control}
             name="password"
-            rules={passwordValidator}
+            rules={ passwordValidator }
             render={({ field: { onChange, value } }) => (
               <CustomInput
                 label={'Password'}
                 type={'password'}
-                onChange={e => onChange(e)}
+                onChange={e => {onChange(e); onChangeAndClearError()}}
                 value={value || ''}
                 error={!!errors.password?.message}
                 helperText={errors.password?.message}
