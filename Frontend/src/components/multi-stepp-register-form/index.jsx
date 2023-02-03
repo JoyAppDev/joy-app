@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
 
 import { Box, Stack } from '@mui/material';
 import Stepper from '@mui/material/Stepper';
@@ -12,7 +13,6 @@ import { CustomButton } from '../button';
 import RegistrationStepFirst from '../registration-step-first';
 import RegistrationStepFinal from '../registration-step-final';
 import { theme } from '../../styles/theme';
-import { useForm } from 'react-hook-form';
 
 const INITIAL_DATA = {
   email: "",
@@ -32,7 +32,7 @@ export default function MultiStepRegisterForm({ onRegister, isError }) {
   const [isValidForm, setIsValidForm] = React.useState(false);
   const [isValidFinalForm, setIsValidFinalForm] = React.useState(false);
 
-  const {reset} = useForm();
+  const { reset } = useForm();
 
   function getStepContent(step) {
     switch (step) {

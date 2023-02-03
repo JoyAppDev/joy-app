@@ -14,7 +14,7 @@ import { Button } from "@mui/material";
 
 import avatar from './../../assets/avatar.svg';
 
-export default function AccountMenu() {
+export default function AccountMenu({ logOut }) {
     const [amount, setAmount] = useState('2000$');
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
@@ -100,7 +100,7 @@ export default function AccountMenu() {
                 transformOrigin={{ horizontal: 'right', vertical: 'top' }}
                 anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
             >
-                <MenuItem>
+                <MenuItem onClick={logOut}>
                     <ListItemIcon>
                         <Logout fontSize="small" />
                     </ListItemIcon>

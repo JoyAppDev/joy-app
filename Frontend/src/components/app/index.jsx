@@ -1,5 +1,6 @@
 import React from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
+
 import Login from '../../pages/login';
 import SignIn from '../../pages/signin';
 import Dashboard from '../../pages/dashboard';
@@ -14,6 +15,13 @@ function App() {
     const [isRegisterError, setIsRegisterError] = React.useState(false);
 
     let navigate = useNavigate();
+
+    // log out
+    const handleLogOut = () => {
+        localStorage.clear();
+        setCurrentUser({});
+        navigate('/');
+    }
 
     // check token for authorization
     React.useEffect(() => {
@@ -59,7 +67,7 @@ function App() {
                                       email,
                                       address,
                                       idNumber,
-                                      paymentInfo,
+                                      // paymentInfo,
                                       name,
                                       password }) {
         try {
@@ -69,8 +77,7 @@ function App() {
                 idNumber,
                 name,
                 password });
-            //navigate('/dashboard');
-            handleLogin(email, password);
+            handleLogin(email, password).then((res) => {return res.json()});
         } catch (error) {
             setIsRegisterError(true);
             console.log(error);
@@ -90,7 +97,7 @@ function App() {
                   } />
                   <Route path="dashboard" element={
                       <RequireAuth>
-                          <Dashboard />
+                          <Dashboard logOut={handleLogOut} />
                       </RequireAuth>
                   } />
               </Routes>

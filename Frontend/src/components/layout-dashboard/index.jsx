@@ -6,10 +6,10 @@ import HeaderDashboard from '../header-dashboard';
 import './index.css';
 
 
-function LayoutDashboard({ children }) {
+function LayoutDashboard({ children, logOut }) {
     return (
         <>
-            <HeaderDashboard />
+            <HeaderDashboard logOut={logOut} />
             <div className='layout__background'>
                 <Box
                     display="grid"

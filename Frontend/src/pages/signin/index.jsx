@@ -1,7 +1,9 @@
 import React from 'react';
+
+import Stack from "@mui/material/Stack";
+
 import Layout from "../../components/layout";
 import MultiStepRegisterForm from '../../components/multi-stepp-register-form';
-import {Stack} from "@mui/material";
 
 function SignIn({onRegister, isError }) {
     return (

@@ -6,7 +6,7 @@ import HeaderTabs from "../header-tabs";
 import AccountMenu from "../account-menu";
 import './index.css';
 
-function HeaderDashboard() {
+function HeaderDashboard({ logOut }) {
     return (
         <div className='header__dashboard'>
             <Box sx={{
@@ -29,7 +29,7 @@ function HeaderDashboard() {
                     />
                     <HeaderTabs sx={{ alignSelf: 'end' }} />
                 </Stack>
-                <AccountMenu />
+                <AccountMenu logOut={logOut} />
             </Box>
         </div>
 

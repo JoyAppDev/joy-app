@@ -13,7 +13,7 @@ import BasicCard from '../../components/basic-card';
 import ButtonCopyLicenseCard from '../../components/button-copy-license-card';
 import ButtonCreateLicenseCard from '../../components/button-create-license-card';
 
-function Dashboard() {
+function Dashboard({ logOut }) {
   const [file, setFile] = React.useState(null);
   const [uploadedFilePreview, setUploadedFilePreview] = React.useState(null);
   const [selectedCard, setSelectedCard] = React.useState(null);
@@ -76,7 +76,7 @@ function Dashboard() {
 
   return (
     <>
-      <LayoutDashboard>
+      <LayoutDashboard logOut={logOut}>
         {initialData.map(obj => (
           <BasicCard
             key={obj.id}
