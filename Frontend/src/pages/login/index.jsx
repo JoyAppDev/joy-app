@@ -5,7 +5,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
-import { Stack } from '@mui/material';
+import Stack from '@mui/material/Stack';
 
 import { CustomButton } from '../../components/button';
 import { CustomInput } from '../../components/input';
@@ -32,7 +32,6 @@ function Login({ onLogin, isError, setIsError }) {
 
   const onChangeAndClearError = () => {
       setIsError(false);
-      console.log('clear');
   }
 
   return (

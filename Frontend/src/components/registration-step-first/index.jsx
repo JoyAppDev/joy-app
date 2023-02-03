@@ -6,9 +6,9 @@ import Box from '@mui/material/Box';
 import Checkbox from "@mui/material/Checkbox";
 import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
-import { Stack } from '@mui/material';
+import Stack from '@mui/material/Stack';
 
-import {CustomInput} from "../input";
+import { CustomInput } from "../input";
 import { EMAIL_PATTERN, PASSWORD_PATTERN } from "../../utils/constants";
 
 function RegistrationStepFirst({ email, password, updateFields, setIsValidForm }) {
@@ -39,7 +39,6 @@ function RegistrationStepFirst({ email, password, updateFields, setIsValidForm }
     }
 
     const validateForm = React.useCallback(() => {
-        console.log(email);
         setEmailIsValid(EMAIL_PATTERN.test(email));
         setPasswordIsValid(PASSWORD_PATTERN.test(password));
     }, [EMAIL_PATTERN, email, PASSWORD_PATTERN, password]);

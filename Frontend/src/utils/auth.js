@@ -52,19 +52,6 @@ export const authorize = (email, password) => {
         .then((res) => {
             console.log(res);
             return checkResponse(res);
-
-        //.then(res => {
-         //   if (res.ok) {
-         //       return res.json();
-         //   }
-        //    else Promise.reject(res.status);
-        //})
-        //.then((data) => {
-        //    if (data.auth_token){
-        //        localStorage.setItem('jwt', data.auth_token);
-        //        return data.auth_token;
-        //    }
-        //    return data;
         })
 };
 

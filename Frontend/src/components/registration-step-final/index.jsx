@@ -2,7 +2,7 @@ import React from 'react';
 import { useForm, Controller } from 'react-hook-form';
 
 import Box from '@mui/material/Box';
-import { Stack } from '@mui/material';
+import Stack from '@mui/material/Stack';
 import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
@@ -12,8 +12,6 @@ import { CustomInput } from '../../components/input';
 
 function RegistrationStepFinal({ name, address, updateFields, idNumber, paymentInfo, payPal, setIsValidFinalForm }) {
   const [paymentInfoSelected, setPaymentInfoSelected] = React.useState('');
-
-
 
   const {
     handleSubmit,
@@ -77,7 +75,7 @@ function RegistrationStepFinal({ name, address, updateFields, idNumber, paymentI
               type={'text'}
               onChange={e => updateFields({address: e.target.value})}
               value={address || ''}
-              placeholder={'NY, 123 madisson av.'}
+              placeholder={'NY, 123 Madisson av.'}
             />
           )}
         />
@@ -105,7 +103,6 @@ function RegistrationStepFinal({ name, address, updateFields, idNumber, paymentI
             render={() => (
               <Select
                 value={paymentInfoSelected || ''}
-                //onChange={onChange}
                 onChange={choosePaymentInfo}
                 label="Payment Type"
                 id="payment_type"
@@ -118,7 +115,6 @@ function RegistrationStepFinal({ name, address, updateFields, idNumber, paymentI
                 </MenuItem>
               </Select>
             )}
-            //defaultValue="paypal"
           />
         </FormControl>
 
