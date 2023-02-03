@@ -16,6 +16,13 @@ function App() {
 
     let navigate = useNavigate();
 
+    // log out
+    const handleLogOut = () => {
+        localStorage.clear();
+        setCurrentUser({});
+        navigate('/');
+    }
+
     // check token for authorization
     React.useEffect(() => {
         checkToken()
@@ -90,7 +97,7 @@ function App() {
                   } />
                   <Route path="dashboard" element={
                       <RequireAuth>
-                          <Dashboard />
+                          <Dashboard logOut={handleLogOut} />
                       </RequireAuth>
                   } />
               </Routes>
