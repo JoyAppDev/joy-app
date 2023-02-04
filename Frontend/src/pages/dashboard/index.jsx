@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import LayoutDashboard from '../../components/layout-dashboard';
+import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 import initialData from './../../utils/data.json';
 import addLicenceImage from './../../assets/add_licence_image.png';
@@ -13,7 +15,7 @@ import BasicCard from '../../components/basic-card';
 import ButtonCopyLicenseCard from '../../components/button-copy-license-card';
 import ButtonCreateLicenseCard from '../../components/button-create-license-card';
 
-function Dashboard({ logOut }) {
+function Dashboard() {
   const [file, setFile] = React.useState(null);
   const [uploadedFilePreview, setUploadedFilePreview] = React.useState(null);
   const [selectedCard, setSelectedCard] = React.useState(null);
@@ -30,6 +32,16 @@ function Dashboard({ logOut }) {
   const [openMessage, setOpenMessage] = React.useState(false);
   const handleOpenMessage = () => setOpenMessage(true);
   const handleCloseMessage = () => setOpenMessage(false);
+
+  const navigate = useNavigate();
+
+  const { user } = useSelector(state => state.auth);
+
+  useEffect(() => {
+    if (!user) {
+      navigate('/');
+    }
+  }, [user, navigate]);
 
   const openLicence = () => {
     // alert('Open licence');
@@ -76,7 +88,7 @@ function Dashboard({ logOut }) {
 
   return (
     <>
-      <LayoutDashboard logOut={logOut}>
+      <LayoutDashboard>
         {initialData.map(obj => (
           <BasicCard
             key={obj.id}
