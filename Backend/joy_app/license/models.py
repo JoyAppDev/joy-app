@@ -84,17 +84,14 @@ class Creator(AbstractUser):
         verbose_name = 'Creator'
         verbose_name_plural = 'Creators'
         ordering = ('id_number',)
-        # constraints = [
-        #     models.UniqueConstraint(
-        #         fields=["email", "username"],
-        #         name="unique_auth"
-        #     ),
-        # ]
     
     objects = CustomUserManager()
 
     def __str__(self):
         return self.name_surname
+
+
+
 
 
 class License(models.Model):
@@ -110,13 +107,12 @@ class License(models.Model):
     ways_to_use = models.CharField(max_length=100)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     additional_info = models.CharField(max_length=300)
-    content = models.URLField()
+    # content = models.URLField()
 
     class Meta:
         verbose_name = 'license'
         verbose_name_plural = 'licenses'
         ordering = ('creator',)
-
         # constraints = [
         #     models.UniqueConstraint(
         #         fields=['new_deal', 'creator'],
@@ -126,6 +122,17 @@ class License(models.Model):
 
     def __str__(self):
         return self.new_deal
+
+class Content(models.Model):
+    license = models.ForeignKey(
+        License,
+        verbose_name='license_content',
+        on_delete=models.CASCADE
+    )
+    media_file = models.FileField()
+
+    def __str__(self):
+        return self.license.new_deal
 
 
 class Brand(models.Model):

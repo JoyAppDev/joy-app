@@ -1,7 +1,7 @@
 from api.permissions import CreatorOrReadOnly, ReadOnly, UserOrReadOnly
 from django.shortcuts import get_object_or_404
 from django_filters.rest_framework import DjangoFilterBackend
-from license.models import Creator, License
+from license.models import Creator, License, Brand
 from rest_framework import filters, viewsets
 from rest_framework.permissions import AllowAny, IsAdminUser
 
@@ -13,7 +13,7 @@ class LicenseViewSet(viewsets.ModelViewSet):
     """Licenses"""
     queryset = License.objects.all()
     serializer_class = LicenseSerializer
-    permission_classes = (CreatorOrReadOnly,)
+    permission_classes = (CreatorOrReadOnly,)# change permissions!!! CreatorOrReadOnly
     filter_backends = (DjangoFilterBackend, filters.SearchFilter,
                        filters.OrderingFilter)
     search_fields = ('new_deal')
@@ -56,13 +56,15 @@ class BrandViewSet(viewsets.ModelViewSet):
 
     serializer_class = BrandSerializer
     permission_classes = (AllowAny,)
+    queryset = Brand.objects.all()
     filter_backends = (DjangoFilterBackend, filters.SearchFilter)
     search_fields = ('organization_name',)
     pagination_class = None
+    
 
-    def get_queryset(self):
-        license = get_object_or_404(License, pk=self.kwargs.get('license_id'))
-        return [license.brand]
+    # def get_queryset(self):
+    #     license = get_object_or_404(License, pk=self.kwargs.get('license_id'))
+    #     return [license.brand]
 
     def perform_create(self, serializer):
         license = get_object_or_404(License, pk=self.kwargs.get('license_id'))

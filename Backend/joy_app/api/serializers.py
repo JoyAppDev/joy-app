@@ -1,7 +1,16 @@
 from rest_framework import serializers
 from rest_framework.validators import UniqueTogetherValidator
 
-from license.models import License, Brand, Creator
+from license.models import License, Brand, Creator, Content
+
+
+class ContentSerializer(serializers.ModelSerializer):
+    """
+    Сериализатор для модели контента
+    """
+    class Meta:
+        model = Content
+        fields = ('media_file',)
 
 
 class BrandSerializer(serializers.ModelSerializer):
@@ -26,6 +35,10 @@ class LicenseSerializer(serializers.ModelSerializer):
                                            default=serializers.CurrentUserDefault())
     brand = serializers.SlugRelatedField(slug_field='organization_name',
                                          read_only=True)
+    content = ContentSerializer(
+        source='content_set',
+        many=True,
+    )
 
     class Meta:
 
@@ -43,6 +56,18 @@ class LicenseSerializer(serializers.ModelSerializer):
             )
         ]
 
+    def create(self, validated_data):
+        content = validated_data.pop('content')
+        license = License.objects.create(**validated_data)
+        print(content)
+        for file in content:
+            print(file)
+            Content.objects.create(
+                media_file=file.media_file,
+                license=license.id
+            )
+            # current_file, _ = Content.objects.get_or_create(*file)
+        return license
 
 class CreatorSerializer(serializers.ModelSerializer):
     """
