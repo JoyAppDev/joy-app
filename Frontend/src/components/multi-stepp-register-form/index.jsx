@@ -34,11 +34,6 @@ const INITIAL_DATA = {
 
 const steps = ['Step 1', 'Final step'];
 
-// validation schema
-const Schema = yup.object().shape({
-  email: yup.string().email('Please enter a valid email.'),
-});
-
 export default function MultiStepRegisterForm() {
   const [activeStep, setActiveStep] = React.useState(0);
   const [data, setData] = React.useState(INITIAL_DATA);
@@ -172,12 +167,6 @@ export default function MultiStepRegisterForm() {
           {getStepContent(activeStep)}
 
           <Stack spacing={2} mt={4}>
-            {/* {isError && (
-              <Typography sx={{ color: 'red' }}>
-                Error: wrong data type
-              </Typography>
-            )} */}
-
             {activeStep === steps.length - 1 ? (
               <CustomButton
                 type="submit"

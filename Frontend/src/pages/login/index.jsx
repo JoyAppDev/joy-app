@@ -41,31 +41,13 @@ function Login() {
     handleSubmit,
     control,
     formState: { errors, isValid },
-    // reset,
   } = useForm({
     mode: 'onBlur',
   });
 
-  const onSubmit = (data, isError) => {
+  const onSubmit = data => {
     dispatch(login(data));
-    // onLogin(email, password);
-    // if (!isError) {
-    //   reset();
-    // }
   };
-
-  // const onChangeAndClearError = () => {
-  //   setIsError(false);
-  // };
-
-  // const onSubmit = (data, isError) => {
-  //   const { email, password } = data;
-  //   console.log(email, password);
-  //   // onLogin(email, password);
-  //   // if (!isError) {
-  //   //   reset();
-  //   // }
-  // };
 
   if (isLoading) {
     return <Spinner />;
@@ -94,7 +76,6 @@ function Login() {
                 type={'text'}
                 onChange={e => {
                   onChange(e);
-                  // onChangeAndClearError();
                 }}
                 value={value || ''}
                 error={!!errors.email?.message}
@@ -113,7 +94,6 @@ function Login() {
                 type={'password'}
                 onChange={e => {
                   onChange(e);
-                  // onChangeAndClearError();
                 }}
                 value={value || ''}
                 error={!!errors.password?.message}
@@ -125,12 +105,6 @@ function Login() {
         </Stack>
 
         <Stack spacing={2} mt={4}>
-          {/* {isError && (
-            <Typography sx={{ color: 'red' }}>
-              Error: wrong email or password
-            </Typography>
-          )} */}
-
           <CustomButton type="submit" disabled={!isValid}>
             LOG IN
           </CustomButton>

@@ -5,7 +5,7 @@ import Stack from '@mui/material/Stack';
 import Layout from '../../components/layout';
 import MultiStepRegisterForm from '../../components/multi-stepp-register-form';
 
-function SignIn({ onRegister, isError }) {
+function SignIn() {
   return (
     <Layout>
       <Stack
@@ -14,10 +14,7 @@ function SignIn({ onRegister, isError }) {
           paddingLeft: 0,
         }}
       >
-        <MultiStepRegisterForm
-        // onRegister={onRegister}
-        // isError={isError}
-        />
+        <MultiStepRegisterForm />
       </Stack>
     </Layout>
   );

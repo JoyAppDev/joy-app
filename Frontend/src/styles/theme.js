@@ -19,6 +19,7 @@ export const theme = createTheme({
       orange: '#FF8A00',
     },
   },
+
   components: {
     // Name of the component
     MuiInpMuiOutlinedInput: {
