@@ -21,10 +21,8 @@ export const theme = createTheme({
   },
 
   components: {
-    // Name of the component
     MuiInpMuiOutlinedInput: {
       styleOverrides: {
-        // Name of the slot
         root: {
           lineHeight: 24,
           letterSpacing: 0.15,

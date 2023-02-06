@@ -2,7 +2,6 @@ import axios from 'axios';
 
 import { API_URL } from '../utils/constants';
 
-//register user
 const register = async userData => {
   const response = await axios.post(`${API_URL}/users/`, {
     email: userData.email,
@@ -20,7 +19,6 @@ const register = async userData => {
   return response.data;
 };
 
-//login user
 const login = async userData => {
   const response = await axios.post(`${API_URL}/auth/token/login/`, {
     email: userData.email,
@@ -34,7 +32,6 @@ const login = async userData => {
   return response.data;
 };
 
-//logout user
 const logout = () => {
   localStorage.removeItem('user');
 };

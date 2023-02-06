@@ -1,9 +1,6 @@
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
-import { useForm } from 'react-hook-form';
-import * as yup from 'yup';
-import { yupResolver } from '@hookform/resolvers/yup';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
