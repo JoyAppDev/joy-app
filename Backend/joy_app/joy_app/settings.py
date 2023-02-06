@@ -47,7 +47,14 @@ REST_FRAMEWORK = {
 
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 5,
+
+    # 'DEFAULT_PARSER_CLASSES': [
+    #     'rest_framework.parsers.MultiPartParser',
+    #     'rest_framework.parsers.FormParser'
+    # ],
 }
+
+DATA_UPLOAD_MAX_MEMORY_SIZE = 5242880
 
 DJOSER = {
     'LOGIN_FIELD': 'email'

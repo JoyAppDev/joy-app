@@ -1,11 +1,11 @@
 from api.permissions import CreatorOrReadOnly, ReadOnly, UserOrReadOnly
 from django.shortcuts import get_object_or_404
 from django_filters.rest_framework import DjangoFilterBackend
-from license.models import Creator, License, Brand
+from license.models import Creator, License, License2, Brand
 from rest_framework import filters, viewsets
 from rest_framework.permissions import AllowAny, IsAdminUser
 
-from .serializers import BrandSerializer, CreatorSerializer, LicenseSerializer
+from .serializers import BrandSerializer, CreatorSerializer, LicenseSerializer, LicenseSerializer2
 
 
 class LicenseViewSet(viewsets.ModelViewSet):
@@ -26,6 +26,21 @@ class LicenseViewSet(viewsets.ModelViewSet):
         if self.action == 'retrieve':
             return (ReadOnly(),)
         return super().get_permissions()
+
+
+class LicenseViewSet2(viewsets.ModelViewSet):
+
+    """Licenses"""
+    queryset = License2.objects.all()
+    serializer_class = LicenseSerializer2
+    permission_classes = (CreatorOrReadOnly,)# change permissions!!! CreatorOrReadOnly
+    filter_backends = (DjangoFilterBackend, filters.SearchFilter,
+                       filters.OrderingFilter)
+    search_fields = ('new_deal')
+    ordering_fields = ('price')
+
+    def perform_create(self, serializer):
+        serializer.save(creator=self.request.user)
 
 
 class CustomUserViewSet(viewsets.ModelViewSet):
