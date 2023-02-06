@@ -1,19 +1,23 @@
 from rest_framework import serializers
 from rest_framework.validators import UniqueTogetherValidator
 
+
 from license.models import License, License2, Brand, Creator, Content
+
 
 
 class ContentSerializer(serializers.ModelSerializer):
     """
     Сериализатор для модели контента
     """
+
     
     class Meta:
         model = Content
         fields = ('media_file',)
 
    
+
 
 
 class BrandSerializer(serializers.ModelSerializer):
@@ -73,6 +77,7 @@ class LicenseSerializer(serializers.ModelSerializer):
         return license
 
 
+
 class LicenseSerializer2(serializers.ModelSerializer):
     """
     Сериализатор для получения лицензий.
@@ -103,6 +108,7 @@ class LicenseSerializer2(serializers.ModelSerializer):
                 fields=('new_deal', 'creator')
             )
         ]
+
 
 
 

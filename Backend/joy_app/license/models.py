@@ -135,6 +135,7 @@ class Content(models.Model):
         return self.license.new_deal
 
 
+
 class License2(models.Model):
 
     new_deal = models.CharField(max_length=100)
@@ -154,6 +155,7 @@ class License2(models.Model):
         verbose_name = 'license2'
         verbose_name_plural = 'licenses2'
         ordering = ('creator',)
+
 
 
 
