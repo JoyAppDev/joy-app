@@ -7,75 +7,68 @@ import Checkbox from '@mui/material/Checkbox';
 import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
+import TextField from '@mui/material/TextField';
+import FormGroup from '@mui/material/FormGroup';
+import FormHelperText from '@mui/material/FormHelperText';
+import FormControlLabel from '@mui/material/FormControlLabel';
 
-import { CustomInput } from '../input';
-import { EMAIL_PATTERN, PASSWORD_PATTERN } from '../../utils/constants';
+import * as yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
 
-function RegistrationStepFirst({
-  email,
-  password,
-  updateFields,
-  setIsValidForm,
-}) {
-  const [emailIsValid, setEmailIsValid] = React.useState(false);
-  const [passwordIsValid, setPasswordIsValid] = React.useState(false);
-  const [isTermsOfServiceChecked, setIsTermsOfServiceChecked] =
-    React.useState(false);
+const schema = yup.object().shape({
+  email: yup
+    .string()
+    .label('Email address')
+    .trim()
+    .email('Please enter a valid email format.')
+    .required('E-mail is required'),
+  password: yup
+    .string()
+    .required('Password is required')
+    .min(3, '​Password must contain at least 3 characters'),
+  termsCheck: yup
+    .boolean()
+    .oneOf([true], 'Please accept Terms of use')
+    .required('Terms of use is required'),
+});
+
+function RegistrationStepFirst({ updateFields, setIsValidForm }) {
+  const initialValues = {
+    email: '',
+    password: '',
+    termsOfService: false,
+  };
 
   const {
     handleSubmit,
     control,
+    register,
     formState: { errors, isValid },
     reset,
-  } = useForm(
-    {
-      mode: 'onBlur',
-    },
-    {
-      defaultValues: {
-        email: '',
-        password: '',
-        termsOfService: false,
-      },
-    }
-  );
+  } = useForm({
+    mode: 'onChange',
+    defaultValues: initialValues,
+    resolver: yupResolver(schema),
+  });
 
-  const onSubmit = fields => {
+  const handleSubmission = fields => {
+    console.log(fields);
     updateFields(fields);
     alert(JSON.stringify(fields));
     reset();
   };
-  const submitRegister = e => {
-    if (e.target.value) {
-      setIsTermsOfServiceChecked(true);
-    }
-  };
 
-  const validateForm = React.useCallback(() => {
-    setEmailIsValid(EMAIL_PATTERN.test(email));
-    setPasswordIsValid(PASSWORD_PATTERN.test(password));
-  }, [email, password]);
-
+  console.log(errors);
   React.useEffect(() => {
-    validateForm();
-    if (!passwordIsValid || !emailIsValid || !isTermsOfServiceChecked) {
-      setIsValidForm(false);
-    } else {
+    if (isValid) {
       setIsValidForm(true);
     }
-  }, [
-    emailIsValid,
-    isTermsOfServiceChecked,
-    isValid,
-    passwordIsValid,
-    setIsValidForm,
-    validateForm,
-  ]);
+  }, [isValid, setIsValidForm]);
 
   return (
     <Box
       component="form"
-      onSubmit={handleSubmit(onSubmit)}
+      onSubmit={handleSubmit(handleSubmission)}
       noValidate
       sx={{
         mt: 4.4,
@@ -87,17 +80,20 @@ function RegistrationStepFirst({
         <Stack spacing={2}>
           <Controller
             control={control}
-            name="e-mail"
+            name="email"
             rules={{ required: true }}
-            render={() => (
-              <CustomInput
+            defaultValue={initialValues.email}
+            render={({ field }) => (
+              <TextField
+                {...field}
                 label={'Email address'}
                 type={'text'}
-                onChange={e => updateFields({ email: e.target.value })}
-                value={email || ''}
-                error={!!errors.email?.message}
-                helperText={errors.email?.message}
                 placeholder={'yourname@gmail.com'}
+                error={!!errors.email}
+                helperText={errors.email ? errors.email.message : ' '}
+                required
+                color="secondary"
+                fullWidth
               />
             )}
           />
@@ -105,15 +101,17 @@ function RegistrationStepFirst({
             control={control}
             name="password"
             rules={{ required: true }}
-            render={() => (
-              <CustomInput
+            render={({ field }) => (
+              <TextField
+                {...field}
                 label={'Password'}
                 type={'password'}
-                onChange={e => updateFields({ password: e.target.value })}
-                value={password || ''}
-                error={!!errors.password?.message}
-                helperText={errors.password?.message}
                 placeholder={''}
+                error={!!errors.password}
+                helperText={errors.password ? errors.password.message : ' '}
+                required
+                color="secondary"
+                fullWidth
               />
             )}
           />
@@ -128,32 +126,43 @@ function RegistrationStepFirst({
             paddingLeft: '12px',
           }}
         >
-          <Controller
-            name="termsOfService"
-            control={control}
-            rules={{ required: true }}
-            render={({ field }) => (
-              <Checkbox
-                sx={{
-                  borderColor: 'rgba(0, 0, 0, 0.6)',
-                }}
-                {...field}
-                onChange={submitRegister}
-              />
-            )}
-          />
-          <Typography ml={1.5}>I agree with </Typography>
-          <Link
-            sx={{
-              textDecoration: 'none',
-              color: 'custom.greyDark',
-              marginLeft: '4px',
-            }}
-            component={RouterLink}
-            to="/"
-          >
-            Terms of service
-          </Link>
+          <FormGroup>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  sx={{
+                    borderColor: 'rgba(0, 0, 0, 0.6)',
+                  }}
+                  required
+                />
+              }
+              {...register('termsCheck')}
+              label={
+                <Box sx={{ display: 'flex', flexDirection: 'row' }}>
+                  <Typography
+                    ml={1.5}
+                    color={errors['termsCheck'] ? 'error' : 'inherit'}
+                  >
+                    I agree with
+                  </Typography>
+                  <Link
+                    sx={{
+                      textDecoration: 'none',
+                      color: 'custom.greyDark',
+                      marginLeft: '4px',
+                    }}
+                    component={RouterLink}
+                    to="/"
+                  >
+                    Terms of service
+                  </Link>
+                </Box>
+              }
+            />
+            <FormHelperText error={!!errors['termsCheck']}>
+              {errors['termsCheck'] ? errors['termsCheck'].message : ''}
+            </FormHelperText>
+          </FormGroup>
         </Box>
       </Stack>
     </Box>
