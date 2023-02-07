@@ -13,9 +13,10 @@ import BasicCard from '../../components/basic-card';
 import ButtonCopyLicenseCard from '../../components/button-copy-license-card';
 import ButtonCreateLicenseCard from '../../components/button-create-license-card';
 
+import {API_URL} from "../../utils/constants";
+
 function Dashboard({ logOut }) {
   const [file, setFile] = React.useState(null);
-  const [uploadedFilePreview, setUploadedFilePreview] = React.useState(null);
   const [selectedCard, setSelectedCard] = React.useState(null);
 
   const [openCreateDealModal, setIsOpenCreateDealModal] = React.useState(false);
@@ -32,43 +33,59 @@ function Dashboard({ logOut }) {
   const handleCloseMessage = () => setOpenMessage(false);
 
   const openLicence = () => {
-    // alert('Open licence');
     handleCopyLinkModalOpen();
   };
 
   // функция загрузки и отправки данных на сервер
-  //const handleUpload = async () => {
-  //    if(!file) {
-  //        alert("select file");
-  //        return;
-  //    }
+  const handleUpload = async (file) => {
+      if(!file) {
+          alert("select file");
+          return;
+      }
+      const token = localStorage.getItem('token');
 
-  // Объект FormData позволяет скомпилировать набор пар ключ/значение для отправки с помощью XMLHttpRequest.
-  //    const formData = new FormData();
-  // Добавляет новое значение существующего поля объекта FormData, либо создаёт его и присваивает значение
-  //    formData.append('file', file);
+      // Объект FormData позволяет скомпилировать набор пар ключ/значение для отправки с помощью XMLHttpRequest.
+      const formData = new FormData();
 
-  // fetch-запрос на отправку файла на сервер
+      // Добавляет новое значение существующего поля объекта FormData, либо создаёт его и присваивает значение
+      formData.append('new_deal', "First");
+      formData.append('license_type', "exclusive");
+      formData.append('validity', "2023-02-03");
+      formData.append('territory', "world");
+      formData.append('ways_to_use', "string");
+      formData.append('price', "2000");
+      formData.append('additional_info', "string");
+      formData.append('content', file);
 
-  //    const res = await fetch(URL, {
-  //        method: 'POST',
-  //        body: formData,
-  //    });
-  //    const data = await res.json();
+      //for (let file of files) { formData.append('content', file); }
+
+      console.log(formData);
+      console.log('file', formData.get('content'));
+
+      // fetch-запрос на отправку файла на сервер
+      const res = await fetch(`${API_URL}/api/licenses2/`, {
+         method: 'POST',
+         headers: {
+                 "Authorization": `Token ${token}`
+         },
+         body: formData,
+      });
+         const data = await res.json();
+         console.log(JSON.stringify(data));
   // с сервера возвращается превью загруженного видео для отображения в форме создания лицензии
   //    setUploadedFilePreview(data.image);
-  //}
+  }
 
-  const addLicence = e => {
-    console.log(e.target.files);
-    setFile(e.target.files[0]);
-    alert(e.target.files[0].name);
+    const addLicence = e => {
+        console.log(e.target.files);
+        const file = e.target.files[0];
+        setFile(e.target.files[0]);
 
-    //handleUpload();
+        handleUpload(file);
 
-    // после удачной загрузки видео открывается модальное окно с формой для создания данных лицензии
-    handleOpenCreateDeal();
-  };
+        // после удачной загрузки видео открывается модальное окно с формой для создания данных лицензии
+        handleOpenCreateDeal();
+    };
 
   function handleCopyLicenseClick(card) {
     setSelectedCard(card);

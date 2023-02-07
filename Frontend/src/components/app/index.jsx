@@ -77,7 +77,7 @@ function App() {
                 idNumber,
                 name,
                 password });
-            handleLogin(email, password).then((res) => {return res.json()});
+            handleLogin(email, password);
         } catch (error) {
             setIsRegisterError(true);
             console.log(error);
