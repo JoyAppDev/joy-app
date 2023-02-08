@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { logout, reset } from '../../slices/auth-slice';
+import { logout, resetData } from '../../slices/auth-slice';
 import { useNavigate } from 'react-router-dom';
 
 import Box from '@mui/material/Box';
@@ -33,7 +33,7 @@ export default function AccountMenu() {
 
   const onLogOut = () => {
     dispatch(logout());
-    dispatch(reset());
+    dispatch(resetData());
     navigate('/');
   };
 

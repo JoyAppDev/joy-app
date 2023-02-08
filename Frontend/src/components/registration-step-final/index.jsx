@@ -1,5 +1,5 @@
 import React from 'react';
-import { useForm, Controller } from 'react-hook-form';
+import { Controller, useFormContext } from 'react-hook-form';
 
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
@@ -7,43 +7,14 @@ import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import { TextField } from '@mui/material';
 
-import { CustomInput } from '../../components/input';
-
-function RegistrationStepFinal({ name, address, updateFields, idNumber, paymentInfo, payPal, setIsValidFinalForm }) {
-  const [paymentInfoSelected, setPaymentInfoSelected] = React.useState('');
-
-  const {
-    handleSubmit,
-    control,
-  } = useForm({
-    mode: 'onBlur',
-  });
-
-  const onSubmit = data => {
-    updateFields(data);
-    };
-
-  const choosePaymentInfo = (e) => {
-    updateFields({paymentInfo: e.target.value});
-    setPaymentInfoSelected(e.target.value);
-    if (name && address && (e.target.value === 'credit')) {
-      setIsValidFinalForm(true);
-    }
-  }
-
-  const completeRegistration = (e) => {
-    updateFields({payPal: e.target.value});
-    if (name && address && payPal) {
-      setIsValidFinalForm(true);
-    }
-  }
+function RegistrationStepFinal() {
+  const { control, defaultValue, watch } = useFormContext();
+  const type = watch('paymentInfo');
 
   return (
     <Box
-      component="form"
-      onSubmit={handleSubmit(onSubmit)}
-      noValidate
       sx={{
         mt: 4.4,
         width: '458px',
@@ -52,89 +23,98 @@ function RegistrationStepFinal({ name, address, updateFields, idNumber, paymentI
     >
       <Stack spacing={2}>
         <Controller
-          control={control}
           name="name"
-          rules={{ required: true }}
-          render={() => (
-            <CustomInput
+          control={control}
+          defaultValue={defaultValue}
+          render={({ field, fieldState: { invalid, error } }) => (
+            <TextField
               label={'Name / Surname'}
-              type={'text'}
-              onChange={e => updateFields({name: e.target.value})}
-              value={name || ''}
-              placeholder={'John Dow'}
+              helperText={invalid ? error.message : ''}
+              {...field}
+              error={invalid}
             />
           )}
         />
+
         <Controller
-          control={control}
           name="address"
-          rules={{ required: true }}
-          render={() => (
-            <CustomInput
+          render={({ field, fieldState: { invalid, error } }) => (
+            <TextField
               label={'Address'}
-              type={'text'}
-              onChange={e => updateFields({address: e.target.value})}
-              value={address || ''}
+              helperText={invalid ? error.message : ''}
+              {...field}
+              error={invalid}
               placeholder={'NY, 123 Madisson av.'}
             />
           )}
-        />
-        <Controller
           control={control}
-          name="id-number"
-          rules={{ required: false }}
-          render={() => (
-            <CustomInput
+          defaultValue
+          variant="outlined"
+        />
+
+        <Controller
+          name="idNumber"
+          render={({ field, fieldState: { invalid, error } }) => (
+            <TextField
               label={'ID number'}
-              type={'number'}
-              onChange={e => updateFields({idNumber: e.target.value})}
-              value={idNumber || ''}
+              helperText={invalid ? error.message : ''}
+              {...field}
+              error={invalid}
               placeholder={'123-456-789'}
             />
           )}
+          control={control}
+          defaultValue
         />
 
         <FormControl variant="outlined">
-          <InputLabel htmlFor="payment_type">Payment type</InputLabel>
-          <Controller
-            name="payment"
-            control={control}
-            rules={{ required: false }}
-            render={() => (
-              <Select
-                value={paymentInfoSelected || ''}
-                onChange={choosePaymentInfo}
-                label="Payment Type"
-                id="payment_type"
-              >
-                <MenuItem value="paypal" label="PayPal">
-                  PayPal
-                </MenuItem>
-                <MenuItem value="credit" label="Credit card">
-                  Credit card
-                </MenuItem>
-              </Select>
-            )}
-          />
-        </FormControl>
-
-        {paymentInfoSelected === 'paypal' && (
+          <InputLabel id="type-label" htmlFor="paymentInfo">
+            Payment type
+          </InputLabel>
+          <Stack spacing={2}>
             <Controller
-                control={control}
-                name="paypal"
-                rules={{ required: false }}
-                render={() => (
-                    <CustomInput
-                        label={'PayPal'}
-                        type={'text'}
-                        onChange={completeRegistration}
-                        value={payPal || ''}
-                        placeholder={''}
-                    />
-                )}
+              name="paymentInfo"
+              control={control}
+              rules={{ required: false }}
+              render={({ field }) => (
+                <Select
+                  sx={{ maxWidth: 600 }}
+                  margin="dense"
+                  {...field}
+                  type="select"
+                  labelId="type-label"
+                  label="Payment Type"
+                >
+                  <MenuItem value="paypal" label="PayPal">
+                    PayPal
+                  </MenuItem>
+                  <MenuItem value="credit" label="Credit card">
+                    Credit card
+                  </MenuItem>
+                </Select>
+              )}
             />
-        )}
 
+            {type === 'paypal' && (
+              <>
+                <Controller
+                  name="paypal"
+                  control={control}
+                  render={({ field, fieldState: { invalid, error } }) => (
+                    <TextField
+                      {...field}
+                      fullWidth
+                      sx={{ maxWidth: 600 }}
+                      label={'PayPal'}
+                      helperText={invalid ? error.message : ''}
+                      error={invalid}
+                    />
+                  )}
+                />
+              </>
+            )}
+          </Stack>
+        </FormControl>
       </Stack>
     </Box>
   );

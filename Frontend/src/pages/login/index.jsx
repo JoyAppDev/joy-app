@@ -15,7 +15,7 @@ import { CustomInput } from '../../components/input';
 import Layout from '../../components/layout';
 import { passwordValidator } from './../../utils/validator';
 import Spinner from '../../components/spinner';
-import { login, reset } from '../../slices/auth-slice';
+import { login, resetData } from '../../slices/auth-slice';
 
 function Login() {
   const navigate = useNavigate();
@@ -34,7 +34,7 @@ function Login() {
       navigate('/dashboard');
     }
 
-    dispatch(reset());
+    dispatch(resetData());
   }, [user, isError, isSuccess, message, navigate, dispatch]);
 
   const {

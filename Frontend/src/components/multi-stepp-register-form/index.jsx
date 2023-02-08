@@ -3,6 +3,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import * as yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useForm, FormProvider } from 'react-hook-form';
 
 import { Box, Stack } from '@mui/material';
 import Stepper from '@mui/material/Stepper';
@@ -17,28 +20,23 @@ import RegistrationStepFinal from '../registration-step-final';
 import { theme } from '../../styles/theme';
 import Spinner from '../spinner';
 
-import { register, reset } from '../../slices/auth-slice';
-
-const INITIAL_DATA = {
-  email: '',
-  password: '',
-  name: '',
-  address: '',
-  idNumber: '',
-  paymentInfo: '',
-  payPal: '',
-};
+import { register, resetData } from '../../slices/auth-slice';
 
 const steps = ['Step 1', 'Final step'];
 
+const defaultValues = {
+  email: '',
+  password: '',
+  termsCheck: false,
+  name: '',
+  address: '',
+  idNumber: '',
+  paymentInfo: 'credit',
+  paypal: '',
+};
+
 export default function MultiStepRegisterForm() {
   const [activeStep, setActiveStep] = React.useState(0);
-  const [data, setData] = React.useState(INITIAL_DATA);
-  const [isValidForm, setIsValidForm] = React.useState(false);
-  const [isValidFinalForm, setIsValidFinalForm] = React.useState(false);
-
-  const { email, password, name, address, idNumber, paymentInfo, payPal } =
-    data;
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -46,6 +44,77 @@ export default function MultiStepRegisterForm() {
   const { user, isLoading, isError, isSuccess, message } = useSelector(
     state => state.auth
   );
+
+  const validationSchema = [
+    yup.object({
+      email: yup
+        .string()
+        .trim()
+        .email('Please enter a valid email format.')
+        .required('E-mail is required'),
+      password: yup
+        .string()
+        .trim()
+        .required('Password is required')
+        .min(3, '​Password must contain at least 3 characters'),
+      termsCheck: yup
+        .boolean()
+        .oneOf([true], 'Please accept Terms of service')
+        .required('Terms of use is required'),
+    }),
+
+    yup.object({
+      name: yup.string().trim().required(),
+      address: yup.string().trim().required(),
+      idNumber: yup.string().trim().required(),
+      paymentInfo: yup.string().oneOf(['paypal', 'credit']),
+      paypal: yup.string().when('paymentInfo', {
+        is: val => val === 'paypal',
+        then: yup.string().required(),
+      }),
+    }),
+  ];
+
+  const currentValidationSchema = validationSchema[activeStep];
+
+  const methods = useForm({
+    shouldUnregister: false,
+    defaultValues,
+    resolver: yupResolver(currentValidationSchema),
+    mode: 'onChange',
+  });
+
+  const {
+    handleSubmit,
+    trigger,
+    formState: { isValid },
+    reset,
+  } = methods;
+
+  const onSubmit = data => {
+    const { email, password, name, address, idNumber, paymentInfo, paypal } =
+      data;
+
+    const userData = {
+      email,
+      password,
+      name,
+      address,
+      idNumber,
+      paymentInfo,
+      paypal,
+    };
+
+    dispatch(register(userData));
+    reset();
+  };
+
+  const handleNext = async () => {
+    const isStepValid = await trigger();
+    if (isStepValid) {
+      setActiveStep(prevActiveStep => prevActiveStep + 1);
+    }
+  };
 
   React.useEffect(() => {
     if (isError) {
@@ -56,61 +125,18 @@ export default function MultiStepRegisterForm() {
       navigate('/dashboard');
     }
 
-    dispatch(reset());
-  }, [user, isError, isSuccess, message, navigate, dispatch]);
+    dispatch(resetData());
+  }, [user, isError, isSuccess, message, navigate, dispatch, reset]);
 
-  const handleRegister = e => {
-    e.preventDefault();
-
-    const userData = {
-      email,
-      password,
-      name,
-      address,
-      idNumber,
-      paymentInfo,
-      payPal,
-    };
-
-    dispatch(register(userData));
-  };
-
-  function getStepContent(step) {
-    switch (step) {
+  const getStepContent = () => {
+    switch (activeStep) {
       case 0:
-        return (
-          <RegistrationStepFirst
-            {...data}
-            updateFields={updateFields}
-            setIsValidForm={setIsValidForm}
-          />
-        );
+        return <RegistrationStepFirst />;
       case 1:
-        return (
-          <RegistrationStepFinal
-            {...data}
-            updateFields={updateFields}
-            setIsValidFinalForm={setIsValidFinalForm}
-          />
-        );
+        return <RegistrationStepFinal />;
       default:
-        throw new Error('Unknown step');
+        return null;
     }
-  }
-
-  function updateFields(fields) {
-    setData(prev => {
-      return { ...prev, ...fields };
-    });
-  }
-
-  const handleNext = () => {
-    setActiveStep(activeStep + 1);
-  };
-
-  const handleTransition = () => {
-    if (activeStep !== steps.length - 1) return handleNext();
-    // alert(JSON.stringify(data));
   };
 
   if (isLoading) {
@@ -153,6 +179,7 @@ export default function MultiStepRegisterForm() {
           </Step>
         ))}
       </Stepper>
+
       {activeStep === steps.length ? (
         <React.Fragment>
           <Typography variant="h5" gutterBottom>
@@ -161,42 +188,47 @@ export default function MultiStepRegisterForm() {
         </React.Fragment>
       ) : (
         <React.Fragment>
-          {getStepContent(activeStep)}
+          <FormProvider {...methods}>
+            <form>
+              {getStepContent()}
 
-          <Stack spacing={2} mt={4}>
-            {activeStep === steps.length - 1 ? (
-              <CustomButton
-                type="submit"
-                onClick={handleRegister}
-                disabled={!isValidFinalForm}
-              >
-                COMPLETE ACCOUNT
-              </CustomButton>
-            ) : (
-              <CustomButton
-                type="submit"
-                onClick={handleTransition}
-                disabled={!isValidForm}
-              >
-                SIGN IN
-              </CustomButton>
-            )}
+              <Stack spacing={2} mt={4}>
+                {activeStep === steps.length - 1 ? (
+                  <CustomButton
+                    variant="contained"
+                    onClick={handleSubmit(onSubmit)}
+                    disabled={!isValid}
+                  >
+                    COMPLETE ACCOUNT
+                  </CustomButton>
+                ) : (
+                  <CustomButton
+                    variant="contained"
+                    color="primary"
+                    onClick={handleNext}
+                    disabled={!isValid}
+                  >
+                    SIGN IN
+                  </CustomButton>
+                )}
 
-            <Typography>
-              If you already have an account, you can
-              <Link
-                sx={{
-                  textDecorationColor: 'rgba(55, 103, 226, 1)',
-                  color: 'rgba(55, 103, 226, 1)',
-                  marginLeft: '4px',
-                }}
-                component={RouterLink}
-                to="/"
-              >
-                LOG IN.
-              </Link>
-            </Typography>
-          </Stack>
+                <Typography>
+                  If you already have an account, you can
+                  <Link
+                    sx={{
+                      textDecorationColor: 'rgba(55, 103, 226, 1)',
+                      color: 'rgba(55, 103, 226, 1)',
+                      marginLeft: '4px',
+                    }}
+                    component={RouterLink}
+                    to="/"
+                  >
+                    LOG IN.
+                  </Link>
+                </Typography>
+              </Stack>
+            </form>
+          </FormProvider>
         </React.Fragment>
       )}
     </Box>
