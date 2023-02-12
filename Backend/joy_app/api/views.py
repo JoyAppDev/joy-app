@@ -1,12 +1,14 @@
 from api.permissions import CreatorOrReadOnly, ReadOnly, UserOrReadOnly
 from django.shortcuts import get_object_or_404
 from django_filters.rest_framework import DjangoFilterBackend
-from license.models import Creator, License, License2, Brand
+from license.models import Creator, License, License2, Brand, Content
 
 from rest_framework import filters, viewsets
+from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.permissions import AllowAny, IsAdminUser
+from rest_framework.response import Response
 
-from .serializers import BrandSerializer, CreatorSerializer, LicenseSerializer, LicenseSerializer2
+from .serializers import BrandSerializer, CreatorSerializer, LicenseSerializer, LicenseSerializer2, LicenseSerializer3, ContentSerializer
 
 
 class LicenseViewSet(viewsets.ModelViewSet):
@@ -19,6 +21,7 @@ class LicenseViewSet(viewsets.ModelViewSet):
                        filters.OrderingFilter)
     search_fields = ('new_deal')
     ordering_fields = ('price')
+
 
     def perform_create(self, serializer):
         serializer.save(creator=self.request.user)
@@ -42,6 +45,27 @@ class LicenseViewSet2(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(creator=self.request.user)
+
+class LicenseViewSet3(viewsets.ModelViewSet):
+
+    """Licenses"""
+    queryset = License.objects.all()
+    serializer_class = LicenseSerializer3
+    permission_classes = (CreatorOrReadOnly,)# change permissions!!! CreatorOrReadOnly
+    filter_backends = (DjangoFilterBackend, filters.SearchFilter,
+                       filters.OrderingFilter)
+    search_fields = ('new_deal')
+    ordering_fields = ('price')
+
+
+    def perform_create(self, serializer):
+        serializer.save(creator=self.request.user)
+   
+
+    def get_permissions(self):
+        if self.action == 'retrieve':
+            return (ReadOnly(),)
+        return super().get_permissions()
 
 
 class CustomUserViewSet(viewsets.ModelViewSet):
@@ -85,3 +109,24 @@ class BrandViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         license = get_object_or_404(License, pk=self.kwargs.get('license_id'))
         serializer.save(license=license)
+
+
+class ContentVievSet(viewsets.ModelViewSet):
+    """
+    Content
+    """
+
+    serializer_class = ContentSerializer
+    permission_classes = (AllowAny,)
+    parser_classes = (FormParser, MultiPartParser,)
+    pagination_class = None
+
+
+    def perform_create(self, serializer):
+        license_id = get_object_or_404(License, pk=self.kwargs.get('license_id'))
+        serializer.save(license=license_id)
+
+    def get_queryset(self):
+        license = get_object_or_404(License, pk=self.kwargs.get('license_id'))
+        queryset = Content.objects.filter(license=license)
+        return queryset

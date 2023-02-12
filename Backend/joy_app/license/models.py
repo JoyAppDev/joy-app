@@ -88,7 +88,7 @@ class Creator(AbstractUser):
     objects = CustomUserManager()
 
     def __str__(self):
-        return self.name_surname
+        return self.email
 
 
 
@@ -132,7 +132,7 @@ class Content(models.Model):
     media_file = models.FileField()
 
     def __str__(self):
-        return self.license.new_deal
+        return self.media_file.url
 
 
 
@@ -140,7 +140,7 @@ class License2(models.Model):
 
     new_deal = models.CharField(max_length=100)
     creator = models.ForeignKey(
-        Creator, verbose_name='creator',
+        Creator, verbose_name='creator2',
         on_delete=models.CASCADE,
         related_name='licenses2')
     license_type = models.CharField(max_length=25, choices=CHOICES)

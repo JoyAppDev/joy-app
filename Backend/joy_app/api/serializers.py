@@ -1,3 +1,4 @@
+from django.forms.models import model_to_dict
 from rest_framework import serializers
 from rest_framework.validators import UniqueTogetherValidator
 
@@ -10,11 +11,30 @@ class ContentSerializer(serializers.ModelSerializer):
     """
     Сериализатор для модели контента
     """
+    media_file = serializers.ListField(child=serializers.FileField())
 
     
     class Meta:
         model = Content
-        fields = ('media_file',)
+        fields = ('license_id', 'media_file',)
+        
+
+    def create(self, validated_data):
+        license=validated_data.get('license')
+        content = [
+            Content(license=license, media_file=media_file) for media_file in validated_data['media_file']
+        ]
+        result = Content.objects.bulk_create(content)
+        return result
+
+
+    def to_representation(self, instance):
+        if type(instance) is list:
+            result ={'media_file': []}
+            for obj in instance:
+                result['media_file'].append(obj.media_file.name)
+        return result
+    
 
    
 
@@ -42,10 +62,7 @@ class LicenseSerializer(serializers.ModelSerializer):
                                            default=serializers.CurrentUserDefault())
     brand = serializers.SlugRelatedField(slug_field='organization_name',
                                          read_only=True)
-    content = ContentSerializer(
-        source='content_set',
-        many=True,
-    )
+   
 
     class Meta:
 
@@ -54,7 +71,7 @@ class LicenseSerializer(serializers.ModelSerializer):
                   'license_type', 'validity',
                   'territory', 'ways_to_use',
                   'price',
-                  'additional_info', 'content'
+                  'additional_info', 
                   )
         validators = [
             UniqueTogetherValidator(
@@ -62,19 +79,6 @@ class LicenseSerializer(serializers.ModelSerializer):
                 fields=('new_deal', 'creator')
             )
         ]
-
-    def create(self, validated_data):
-        content = validated_data.pop('content')
-        license = License.objects.create(**validated_data)
-        print(content)
-        for file in content:
-            print(file)
-            Content.objects.create(
-                media_file=file.media_file,
-                license=license.id
-            )
-            # current_file, _ = Content.objects.get_or_create(*file)
-        return license
 
 
 
@@ -108,6 +112,51 @@ class LicenseSerializer2(serializers.ModelSerializer):
                 fields=('new_deal', 'creator')
             )
         ]
+
+
+class LicenseSerializer3(serializers.ModelSerializer):
+    """
+    Сериализатор для получения лицензий.
+    """
+
+    creator = serializers.SlugRelatedField(slug_field='username',
+                                           read_only=True,
+                                           default=serializers.CurrentUserDefault())
+    brand = serializers.SlugRelatedField(slug_field='organization_name',
+                                         read_only=True)
+    content = serializers.ListField(child=serializers.FileField())
+
+    class Meta:
+
+        model = License2
+        fields = ('id', 'new_deal', 'creator', 'brand',
+                  'license_type', 'validity',
+                  'territory', 'ways_to_use',
+                  'price',
+                  'additional_info', 'content'
+                  )
+        validators = [
+            UniqueTogetherValidator(
+                queryset=License.objects.all(),
+                fields=('new_deal', 'creator')
+            )
+        ]
+
+    def create(self, validated_data):
+        content = validated_data.pop('content')
+        license = License.objects.create(**validated_data)
+        list_content = [
+            Content(license=license, media_file=media_file) for media_file in content
+        ]
+        Content.objects.bulk_create(list_content)
+        return license
+
+    def to_representation(self, instance):
+        content = Content.objects.filter(license_id=instance.id)
+        result = {'instance': model_to_dict(instance), 'content': []}
+        for item in content:
+            result['content'].append(item.media_file.name)
+        return result
 
 
 
