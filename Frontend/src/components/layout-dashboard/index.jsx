@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container } from '@mui/material';
+import { Container, Divider } from '@mui/material';
 
 import Box from '@mui/material/Box';
 import HeaderDashboard from '../header-dashboard';
@@ -9,18 +9,20 @@ function LayoutDashboard({ children }) {
   return (
     <>
       <HeaderDashboard />
-      <Container maxWidth="lg">
-        <div className="layout__background">
+      <div className="layout__background">
+        <Container maxWidth="lg" disableGutters>
           <Box
             display="grid"
             gridTemplateColumns="repeat(4, 1fr)"
             gap={5}
             sx={{ pt: 9 }}
+            width="100%"
+            height="100vh"
           >
             {children}
           </Box>
-        </div>
-      </Container>
+        </Container>
+      </div>
     </>
   );
 }

@@ -14,6 +14,7 @@ export const CustomInput = React.forwardRef(
       inputId,
       InputProps,
       field,
+      autoComplete,
     },
     inputRef
   ) => {
@@ -33,38 +34,8 @@ export const CustomInput = React.forwardRef(
         InputProps={InputProps}
         inputRef={inputRef}
         field={field}
+        autoComplete={autoComplete}
       />
     );
   }
 );
-
-// export function CustomInput({
-//   label,
-//   type,
-//   onChange,
-//   value,
-//   error,
-//   helperText,
-//   placeholder,
-//   inputId,
-//   InputProps,
-//   field,
-// }) {
-//   return (
-//     <TextField
-//       required={true}
-//       label={label}
-//       type={type}
-//       onChange={onChange}
-//       value={value}
-//       error={error}
-//       helperText={helperText}
-//       placeholder={placeholder}
-//       id={inputId}
-//       color="secondary"
-//       fullWidth={true}
-//       InputProps={InputProps}
-//       field={field}
-//     />
-//   );
-// }

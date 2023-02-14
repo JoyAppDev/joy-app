@@ -59,6 +59,7 @@ function Login() {
         component="form"
         onSubmit={handleSubmit(onSubmit)}
         noValidate
+        autoComplete="off"
         sx={{
           mt: 4.4,
           maxWidth: '458px',
@@ -81,6 +82,7 @@ function Login() {
                 error={!!errors.email?.message}
                 helperText={errors.email?.message}
                 placeholder={'yourname@gmail.com'}
+                autoComplete="off"
               />
             )}
           />
@@ -99,6 +101,7 @@ function Login() {
                 error={!!errors.password?.message}
                 helperText={errors.password?.message}
                 placeholder={''}
+                autoComplete="off"
               />
             )}
           />
