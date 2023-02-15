@@ -34,8 +34,8 @@ function CreateDeal({ setOpenForm, setOpenMessage }) {
     },
     {
       defaultValues: {
-        deal: '',
-        license: '',
+        deal: 'New Deal',
+        license: 'Exclusive License',
         validity: '',
         territory: '',
         waysToUse: '',
@@ -86,10 +86,11 @@ function CreateDeal({ setOpenForm, setOpenMessage }) {
               rules={{ required: true }}
               render={({ field: { onChange, value } }) => (
                 <Select
-                  value={value || ''}
+                  value={value || '1'}
                   onChange={onChange}
                   label="License Type"
                   id="license-type"
+                  readOnly
                 >
                   <MenuItem value={1} label="Exclusive license">
                     Exclusive license
@@ -131,10 +132,11 @@ function CreateDeal({ setOpenForm, setOpenMessage }) {
                 label={'Territory'}
                 type={'text'}
                 onChange={onChange}
-                value={value || ''}
+                value={value || 'World'}
                 error={!!errors.territory?.message}
                 helperText={errors.territory?.message}
-                placeholder={'USA'}
+                placeholder={'World'}
+                readOnly
               />
             )}
           />

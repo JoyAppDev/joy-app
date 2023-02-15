@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import LayoutDashboard from '../../components/layout-dashboard';
+import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 import initialData from './../../utils/data.json';
 import addLicenceImage from './../../assets/add_licence_image.png';
@@ -17,6 +19,7 @@ import {API_URL} from "../../utils/constants";
 
 function Dashboard({ logOut }) {
   const [file, setFile] = React.useState(null);
+  const [uploadedFilePreview, setUploadedFilePreview] = React.useState(null);
   const [selectedCard, setSelectedCard] = React.useState(null);
 
   const [openCreateDealModal, setIsOpenCreateDealModal] = React.useState(false);
@@ -32,12 +35,23 @@ function Dashboard({ logOut }) {
   const handleOpenMessage = () => setOpenMessage(true);
   const handleCloseMessage = () => setOpenMessage(false);
 
+  const navigate = useNavigate();
+
+  const { user } = useSelector(state => state.auth);
+
+  useEffect(() => {
+    if (!user) {
+      navigate('/');
+    }
+  }, [user, navigate]);
+
   const openLicence = () => {
+    // alert('Open licence');
     handleCopyLinkModalOpen();
   };
 
   // функция загрузки и отправки данных на сервер
-  const handleUpload = async (file) => {
+  const handleUpload = async (files) => {
       if(!file) {
           alert("select file");
           return;
@@ -48,25 +62,25 @@ function Dashboard({ logOut }) {
       const formData = new FormData();
 
       // Добавляет новое значение существующего поля объекта FormData, либо создаёт его и присваивает значение
-      formData.append('new_deal', "First");
+      formData.append('new_deal', "Second");
       formData.append('license_type', "exclusive");
       formData.append('validity', "2023-02-03");
       formData.append('territory', "world");
       formData.append('ways_to_use', "string");
       formData.append('price', "2000");
       formData.append('additional_info', "string");
-      formData.append('content', file);
+      //formData.append('content', files[0]);
+      //formData.append('content', files[1]);
 
-      //for (let file of files) { formData.append('content', file); }
+      for (let file of files) { formData.append('content', file); }
 
       console.log(formData);
-      console.log('file', formData.get('content'));
 
       // fetch-запрос на отправку файла на сервер
-      const res = await fetch(`${API_URL}/api/licenses2/`, {
+      const res = await fetch(`${API_URL}/api/licenses3/`, {
          method: 'POST',
          headers: {
-                 "Authorization": `Token ${token}`
+                 "Authorization": `Token 50f9b141ec8b596db46e3f2334f3d935ee670316`
          },
          body: formData,
       });
@@ -78,10 +92,10 @@ function Dashboard({ logOut }) {
 
     const addLicence = e => {
         console.log(e.target.files);
-        const file = e.target.files[0];
+        const files = e.target.files;
         setFile(e.target.files[0]);
 
-        handleUpload(file);
+        handleUpload(files);
 
         // после удачной загрузки видео открывается модальное окно с формой для создания данных лицензии
         handleOpenCreateDeal();

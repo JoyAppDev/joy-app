@@ -1,5 +1,7 @@
 import React from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import Login from '../../pages/login';
 import SignIn from '../../pages/signin';
@@ -86,23 +88,14 @@ function App() {
 
 
   return (
-      <CurrentUserContext.Provider value={currentUser}>
-          <div className="page">
-              <Routes>
-                  <Route exact path="/" element={
-                      <Login onLogin={handleLogin} isError={isLoginError} setIsError={setIsLoginError} />
-                  } />
-                  <Route path="register" element={
-                      <SignIn onRegister={handleRegister} isError={isRegisterError} />
-                  } />
-                  <Route path="dashboard" element={
-                      <RequireAuth>
-                          <Dashboard logOut={handleLogOut} />
-                      </RequireAuth>
-                  } />
-              </Routes>
-          </div>
-      </CurrentUserContext.Provider>
+    <div className="page">
+      <Routes>
+        <Route exact path="/" element={<Login />} />
+        <Route path="register" element={<SignIn />} />
+        <Route path="dashboard" element={<Dashboard />} />
+      </Routes>
+      <ToastContainer />
+    </div>
   );
 }
 
