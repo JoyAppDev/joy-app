@@ -144,9 +144,9 @@ class License2(models.Model):
         on_delete=models.CASCADE,
         related_name='licenses2')
     license_type = models.CharField(max_length=25, choices=CHOICES)
-    validity = models.DateField(verbose_name='validity', auto_now_add=False)
+    validity = models.CharField(verbose_name='validity', max_length=100)
     territory = models.CharField(max_length=100)
-    ways_to_use = models.CharField(max_length=100)
+    ways_to_use = models.CharField(max_length=200)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     additional_info = models.CharField(max_length=300)
     content = models.FileField()
