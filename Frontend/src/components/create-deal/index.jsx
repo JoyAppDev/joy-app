@@ -75,7 +75,6 @@ function CreateDeal({ setOpenForm, setOpenMessage, files, setOpenErrorMessage })
   }
 
   const onSubmit = fields => {
-    //alert(JSON.stringify(fields));
     createLicence(files, fields);
     reset();
     setOpenForm(false);

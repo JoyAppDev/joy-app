@@ -23,20 +23,19 @@ function Dashboard({ logOut }) {
   const [openCreateDealModal, setIsOpenCreateDealModal] = React.useState(false);
   const [openCopyLinkModal, setIsCopyLinkModal] = React.useState(false);
 
+  const [openMessage, setOpenMessage] = React.useState(false);
+  const [openErrorMessage, setOpenErrorMessage] = React.useState(false);
+
   const handleOpenCreateDeal = () => setIsOpenCreateDealModal(true);
   const handleCloseCreateDeal = () => setIsOpenCreateDealModal(false);
 
   const handleCopyLinkModalOpen = () => setIsCopyLinkModal(true);
   const handleCopyLinkModalClose = () => setIsCopyLinkModal(false);
 
-  const [openMessage, setOpenMessage] = React.useState(false);
-  const [openErrorMessage, setOpenErrorMessage] = React.useState(false);
-  //const handleOpenMessage = () => setOpenMessage(true);
   const handleCloseMessage = () => {
       setOpenMessage(false);
       setOpenErrorMessage(false);
   }
-
 
   const navigate = useNavigate();
 
@@ -49,7 +48,6 @@ function Dashboard({ logOut }) {
   }, [user, navigate]);
 
   const openLicence = () => {
-    // alert('Open licence');
     handleCopyLinkModalOpen();
   };
 
