@@ -1,6 +1,5 @@
 import React from 'react';
 
-import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import InputLabel from '@mui/material/InputLabel';
@@ -9,24 +8,19 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import Stack from '@mui/material/Stack';
 
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
-
 import { useForm, Controller } from 'react-hook-form';
 
 import { CustomInput } from '../input/index';
-import { useNavigate } from 'react-router-dom';
 
 import { CustomButton } from '../button';
+import { API_URL } from "../../utils/constants";
 
-function CreateDeal({ setOpenForm, setOpenMessage }) {
-  let navigate = useNavigate();
+function CreateDeal({ setOpenForm, setOpenMessage, setNewDeal, files }) {
 
   const {
     handleSubmit,
     control,
-    formState: { errors, isValid },
+    formState: { isValid },
     reset,
   } = useForm(
     {
@@ -34,9 +28,9 @@ function CreateDeal({ setOpenForm, setOpenMessage }) {
     },
     {
       defaultValues: {
-        deal: 'New Deal',
-        license: 'Exclusive License',
-        validity: '',
+        deal: '',
+        license: '',
+        validityDate: '',
         territory: '',
         waysToUse: '',
         addInfo: '',
@@ -45,9 +39,47 @@ function CreateDeal({ setOpenForm, setOpenMessage }) {
     }
   );
 
+  // функция загрузки и отправки данных на сервер
+  const handleUpload = async (files, newDeal) => {
+    if(!files) {
+      alert("select file");
+      return;
+    }
+    const token = localStorage.getItem('token');
+
+    // Объект FormData позволяет скомпилировать набор пар ключ/значение для отправки с помощью XMLHttpRequest.
+    const formData = new FormData();
+
+    // Добавляет новое значение существующего поля объекта FormData, либо создаёт его и присваивает значение
+    formData.append('new_deal', newDeal.deal);
+    formData.append('license_type', newDeal.license);
+    formData.append('validity', newDeal.validityDate);
+    formData.append('territory', newDeal.territory);
+    formData.append('ways_to_use', newDeal.waysToUse);
+    formData.append('price', newDeal.price);
+    formData.append('additional_info', newDeal.addInfo);
+    for (let file of files) { formData.append('content', file); }
+
+    console.log(formData);
+
+    // fetch-запрос на отправку файла на сервер
+    const res = await fetch(`${API_URL}/api/licenses3/`, {
+      method: 'POST',
+      headers: {
+        "Authorization": `Token 50f9b141ec8b596db46e3f2334f3d935ee670316`
+      },
+      body: formData,
+    });
+    const data = await res.json();
+    console.log(JSON.stringify(data));
+    // с сервера возвращается превью загруженного видео для отображения в форме создания лицензии
+    //    setUploadedFilePreview(data.image);
+  }
+
   const onSubmit = fields => {
     alert(JSON.stringify(fields));
-    navigate('/dashboard');
+    setNewDeal(fields);
+    handleUpload(files, fields);
     reset();
     setOpenForm(false);
     setOpenMessage(true);
@@ -61,81 +93,71 @@ function CreateDeal({ setOpenForm, setOpenMessage }) {
         </Typography>
 
         <Box component="form" noValidate onSubmit={handleSubmit(onSubmit)}>
-          <Controller
-            control={control}
-            name="deal"
-            fullWidth
-            rules={{ required: true }}
-            render={({ field: { onChange, value } }) => (
-              <CustomInput
-                label={'New Deal'}
-                type={'text'}
-                onChange={onChange}
-                value={value || ''}
-                error={!!errors.deal?.message}
-                helperText={errors.deal?.message}
-                placeholder={'Your text'}
-              />
-            )}
-          />
-          <FormControl fullWidth sx={{ my: 2 }}>
-            <InputLabel htmlFor="license-type">License type</InputLabel>
+          <Stack sx={{ my: 2 }}>
             <Controller
-              name="license"
-              control={control}
-              rules={{ required: true }}
-              render={({ field: { onChange, value } }) => (
-                <Select
-                  value={value || '1'}
-                  onChange={onChange}
-                  label="License Type"
-                  id="license-type"
-                  readOnly
-                >
-                  <MenuItem value={1} label="Exclusive license">
-                    Exclusive license
-                  </MenuItem>
-                  <MenuItem value={2} label="Non-exclusive license">
-                    Non-exclusive license
-                  </MenuItem>
-                </Select>
-              )}
+                control={control}
+                defaultValue={'New Deal_1'}
+                name="deal"
+                fullWidth
+                rules={{ required: true }}
+                render={({ field: { onChange, value } }) => (
+                    <CustomInput
+                        label={'New Deal'}
+                        type={'text'}
+                        onChange={onChange}
+                        value={value || ''}
+                        placeholder={'Your text'}
+                    />
+                )}
             />
-          </FormControl>
-          <Stack sx={{ mb: 2 }}>
-            <Controller
-              name="validityDate"
-              defaultValue={new Date()}
+          </Stack>
+
+          <Controller
               control={control}
-              rules={{ required: true }}
-              render={({ field: { onChange, value, ...restField } }) => (
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                  <DesktopDatePicker
-                    label="Validity"
-                    value={value || ''}
-                    onChange={onChange}
-                    renderInput={params => <TextField {...params} fullWidth />}
-                    {...restField}
+              defaultValue={'Exclusive License'}
+              name="license"
+              fullWidth
+              render={({ field: { onChange } }) => (
+                  <CustomInput
+                      label={'License Type'}
+                      type={'text'}
+                      onChange={onChange}
+                      value={'Exclusive License'}
+                      readOnly
                   />
-                </LocalizationProvider>
               )}
+          />
+
+          <Stack sx={{ my: 2 }}>
+            <Controller
+                control={control}
+                defaultValue={'Without time limit (perpetual)'}
+                name="validityDate"
+                fullWidth
+                render={({ field: { onChange } }) => (
+                    <CustomInput
+                        label={'Validity'}
+                        type={'text'}
+                        onChange={onChange}
+                        value={'Without time limit (perpetual)'}
+                        readOnly
+                    />
+                )}
             />
           </Stack>
 
           <Controller
             control={control}
+            defaultValue={'Worldwide'}
             name="territory"
             fullWidth
-            rules={{ required: true }}
-            render={({ field: { onChange, value } }) => (
+            render={({ field: { onChange } }) => (
               <CustomInput
                 label={'Territory'}
                 type={'text'}
                 onChange={onChange}
-                value={value || 'World'}
-                error={!!errors.territory?.message}
-                helperText={errors.territory?.message}
-                placeholder={'World'}
+                value={'Worldwide'}
+                placeholder={'USA'}
                 readOnly
               />
             )}
@@ -154,12 +176,36 @@ function CreateDeal({ setOpenForm, setOpenMessage }) {
                   onChange={onChange}
                   label="ways-to-use"
                   id="ways-to-use"
+                  sx={{
+                    textOverflow: 'ellipsis',
+                    whiteSpace: 'nowrap',
+                    overflow: 'hidden'
+                  }}
                 >
-                  <MenuItem value={1} label="One">
-                    One
+                  <MenuItem value={'Reproduction of Content'} label="Reproduction of Content">
+                    Reproduction of Content
                   </MenuItem>
-                  <MenuItem value={2} label="Two">
-                    Two
+                  <MenuItem value={'Public display and public performance of Content'} label="Public display and public performance of Content">
+                    Public display and public performance of Content
+                  </MenuItem>
+                  <MenuItem
+                      value={'Making available to the public via the Internet in such a way that any Internet user can access the Content from any place at any time by their choice'}
+                      label='Public display and public performance of Content'>
+                    Making available to&nbsp;the public
+                    via the Internet in&nbsp;such a&nbsp;way
+                    that any Internet user can access
+                    the Content from any place at&nbsp;any
+                    time by&nbsp;their choice
+                  </MenuItem>
+                  <MenuItem
+                      value={'Communication on the air via satellite, and/or communication via cable (including by means of retransmission)'}
+                      label='Communication on the air via satellite, and/or communication via cable (including by means of retransmission)'>
+                    Communication on the air via satellite, and/or communication via cable (including by means of retransmission)
+                  </MenuItem>
+                  <MenuItem
+                      value={'Translation and other processing of Content'}
+                      label='Translation and other processing of Content'>
+                    Translation and other processing of Content
                   </MenuItem>
                 </Select>
               )}
@@ -170,15 +216,12 @@ function CreateDeal({ setOpenForm, setOpenMessage }) {
             control={control}
             name="addInfo"
             fullWidth
-            rules={{ required: false }}
             render={({ field: { onChange, value } }) => (
               <CustomInput
                 label={'Additional info'}
                 type={'text'}
                 onChange={onChange}
                 value={value || ''}
-                error={!!errors.addInfo?.message}
-                helperText={errors.addInfo?.message}
                 placeholder={'Text'}
               />
             )}
@@ -195,8 +238,6 @@ function CreateDeal({ setOpenForm, setOpenMessage }) {
                   type={'number'}
                   onChange={onChange}
                   value={value || ''}
-                  error={!!errors.price?.message}
-                  helperText={errors.price?.message}
                   placeholder={'$2000'}
                 />
               )}

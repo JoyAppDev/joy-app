@@ -15,15 +15,14 @@ import BasicCard from '../../components/basic-card';
 import ButtonCopyLicenseCard from '../../components/button-copy-license-card';
 import ButtonCreateLicenseCard from '../../components/button-create-license-card';
 
-import {API_URL} from "../../utils/constants";
-
 function Dashboard({ logOut }) {
-  const [file, setFile] = React.useState(null);
-  const [uploadedFilePreview, setUploadedFilePreview] = React.useState(null);
+  const [files, setFiles] = React.useState(null);
   const [selectedCard, setSelectedCard] = React.useState(null);
 
   const [openCreateDealModal, setIsOpenCreateDealModal] = React.useState(false);
   const [openCopyLinkModal, setIsCopyLinkModal] = React.useState(false);
+
+  const [newDeal, setNewDeal] = React.useState({});
 
   const handleOpenCreateDeal = () => setIsOpenCreateDealModal(true);
   const handleCloseCreateDeal = () => setIsOpenCreateDealModal(false);
@@ -50,55 +49,13 @@ function Dashboard({ logOut }) {
     handleCopyLinkModalOpen();
   };
 
-  // функция загрузки и отправки данных на сервер
-  const handleUpload = async (files) => {
-      if(!file) {
-          alert("select file");
-          return;
-      }
-      const token = localStorage.getItem('token');
 
-      // Объект FormData позволяет скомпилировать набор пар ключ/значение для отправки с помощью XMLHttpRequest.
-      const formData = new FormData();
-
-      // Добавляет новое значение существующего поля объекта FormData, либо создаёт его и присваивает значение
-      formData.append('new_deal', "Second");
-      formData.append('license_type', "exclusive");
-      formData.append('validity', "2023-02-03");
-      formData.append('territory', "world");
-      formData.append('ways_to_use', "string");
-      formData.append('price', "2000");
-      formData.append('additional_info', "string");
-      //formData.append('content', files[0]);
-      //formData.append('content', files[1]);
-
-      for (let file of files) { formData.append('content', file); }
-
-      console.log(formData);
-
-      // fetch-запрос на отправку файла на сервер
-      const res = await fetch(`${API_URL}/api/licenses3/`, {
-         method: 'POST',
-         headers: {
-                 "Authorization": `Token 50f9b141ec8b596db46e3f2334f3d935ee670316`
-         },
-         body: formData,
-      });
-         const data = await res.json();
-         console.log(JSON.stringify(data));
-  // с сервера возвращается превью загруженного видео для отображения в форме создания лицензии
-  //    setUploadedFilePreview(data.image);
-  }
 
     const addLicence = e => {
-        console.log(e.target.files);
-        const files = e.target.files;
-        setFile(e.target.files[0]);
-
-        handleUpload(files);
-
-        // после удачной загрузки видео открывается модальное окно с формой для создания данных лицензии
+        //const files = e.target.files;
+        setFiles(e.target.files);
         handleOpenCreateDeal();
+        //handleUpload(files);
     };
 
   function handleCopyLicenseClick(card) {
@@ -140,6 +97,8 @@ function Dashboard({ logOut }) {
           <CreateDeal
             setOpenForm={setIsOpenCreateDealModal}
             setOpenMessage={setOpenMessage}
+            setNewDeal={setNewDeal}
+            files={files}
           />
         }
       />
