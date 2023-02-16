@@ -1,9 +1,29 @@
+import pyrebase
+import os
+from dotenv import load_dotenv
+
+from django.core.files.storage import default_storage
 from django.forms.models import model_to_dict
 from rest_framework import serializers
 from rest_framework.validators import UniqueTogetherValidator
 
 
 from license.models import License, License2, Brand, Creator, Content
+
+load_dotenv()
+
+config = {
+    "apiKey": os.getenv('APIKEY'),
+    "authDomain": os.getenv('AUTHDOMAIN'),
+    "projectId": os.getenv('PROJECTID'),
+    "storageBucket": os.getenv('STORAGEBUCKET'),
+    "messagingSenderId": os.getenv('MESSAGINGSENDERID'),
+    "appId": os.getenv('APPID'),
+    "databaseURL": os.getenv('DATABASEURL')
+}
+
+firebase = pyrebase.initialize_app(config)
+storage = firebase.storage()
 
 
 
@@ -149,6 +169,11 @@ class LicenseSerializer3(serializers.ModelSerializer):
             Content(license=license, media_file=media_file) for media_file in content
         ]
         Content.objects.bulk_create(list_content)
+        for file in content:
+            file_save = default_storage.save(file.name, file)
+            storage.child("files/" + file.name).put("media/" + file.name)
+            delete = default_storage.delete(file.name)
+            # messages.success(request, "File upload in Firebase Storage successful")
         return license
 
     def to_representation(self, instance):
