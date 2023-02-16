@@ -14,7 +14,7 @@ import { CustomInput } from '../input/index';
 import { CustomButton } from '../button';
 import { upload } from '../../utils/upload';
 
-function CreateDeal({ setOpenForm, setOpenMessage, setNewDeal, files }) {
+function CreateDeal({ setOpenForm, setOpenMessage, files, setOpenErrorMessage }) {
   const [isLoading, setIsLoading] = React.useState(false);
   const {
     handleSubmit,
@@ -66,10 +66,8 @@ function CreateDeal({ setOpenForm, setOpenMessage, setNewDeal, files }) {
       // с сервера возвращается превью загруженного видео для отображения в форме создания лицензии
       //    setUploadedFilePreview(data.image);
     } catch (error) {
+      setOpenErrorMessage(true);
       console.log(error);
-      if (error === 401) {
-        console.log('exit');
-      }
     }
     finally {
       setIsLoading(false);
@@ -78,7 +76,6 @@ function CreateDeal({ setOpenForm, setOpenMessage, setNewDeal, files }) {
 
   const onSubmit = fields => {
     //alert(JSON.stringify(fields));
-    setNewDeal(fields);
     createLicence(files, fields);
     reset();
     setOpenForm(false);

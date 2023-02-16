@@ -14,6 +14,7 @@ import CopyLink from '../../components/copy-link';
 import BasicCard from '../../components/basic-card';
 import ButtonCopyLicenseCard from '../../components/button-copy-license-card';
 import ButtonCreateLicenseCard from '../../components/button-create-license-card';
+import PopupError from "../../components/popup-error";
 
 function Dashboard({ logOut }) {
   const [files, setFiles] = React.useState(null);
@@ -22,8 +23,6 @@ function Dashboard({ logOut }) {
   const [openCreateDealModal, setIsOpenCreateDealModal] = React.useState(false);
   const [openCopyLinkModal, setIsCopyLinkModal] = React.useState(false);
 
-  const [newDeal, setNewDeal] = React.useState({});
-
   const handleOpenCreateDeal = () => setIsOpenCreateDealModal(true);
   const handleCloseCreateDeal = () => setIsOpenCreateDealModal(false);
 
@@ -31,8 +30,13 @@ function Dashboard({ logOut }) {
   const handleCopyLinkModalClose = () => setIsCopyLinkModal(false);
 
   const [openMessage, setOpenMessage] = React.useState(false);
-  const handleOpenMessage = () => setOpenMessage(true);
-  const handleCloseMessage = () => setOpenMessage(false);
+  const [openErrorMessage, setOpenErrorMessage] = React.useState(false);
+  //const handleOpenMessage = () => setOpenMessage(true);
+  const handleCloseMessage = () => {
+      setOpenMessage(false);
+      setOpenErrorMessage(false);
+  }
+
 
   const navigate = useNavigate();
 
@@ -49,14 +53,10 @@ function Dashboard({ logOut }) {
     handleCopyLinkModalOpen();
   };
 
-
-
-    const addLicence = e => {
-        //const files = e.target.files;
-        setFiles(e.target.files);
-        handleOpenCreateDeal();
-        //handleUpload(files);
-    };
+  const addLicence = e => {
+      setFiles(e.target.files);
+      handleOpenCreateDeal();
+  };
 
   function handleCopyLicenseClick(card) {
     setSelectedCard(card);
@@ -97,8 +97,8 @@ function Dashboard({ logOut }) {
           <CreateDeal
             setOpenForm={setIsOpenCreateDealModal}
             setOpenMessage={setOpenMessage}
-            setNewDeal={setNewDeal}
             files={files}
+            setOpenErrorMessage={setOpenErrorMessage}
           />
         }
       />
@@ -113,6 +113,10 @@ function Dashboard({ logOut }) {
       />
       <PopupSuccess
         openMessage={openMessage}
+        handleCloseMessage={handleCloseMessage}
+      />
+      <PopupError
+        openErrorMessage={openErrorMessage}
         handleCloseMessage={handleCloseMessage}
       />
     </>
