@@ -66,7 +66,7 @@ function CreateDeal({ setOpenForm, setOpenMessage, setNewDeal, files }) {
     const res = await fetch(`${API_URL}/api/licenses3/`, {
       method: 'POST',
       headers: {
-        "Authorization": `Token 50f9b141ec8b596db46e3f2334f3d935ee670316`
+        "Authorization": `Token ${token}`
       },
       body: formData,
     });
@@ -114,7 +114,7 @@ function CreateDeal({ setOpenForm, setOpenMessage, setNewDeal, files }) {
 
           <Controller
               control={control}
-              defaultValue={'Exclusive License'}
+              defaultValue={'exclusive'}
               name="license"
               fullWidth
               render={({ field: { onChange } }) => (
