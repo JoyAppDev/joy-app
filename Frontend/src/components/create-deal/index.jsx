@@ -11,12 +11,11 @@ import Stack from '@mui/material/Stack';
 import { useForm, Controller } from 'react-hook-form';
 
 import { CustomInput } from '../input/index';
-
 import { CustomButton } from '../button';
-import { API_URL } from "../../utils/constants";
+import { upload } from '../../utils/upload';
 
 function CreateDeal({ setOpenForm, setOpenMessage, setNewDeal, files }) {
-
+  const [isLoading, setIsLoading] = React.useState(false);
   const {
     handleSubmit,
     control,
@@ -39,18 +38,10 @@ function CreateDeal({ setOpenForm, setOpenMessage, setNewDeal, files }) {
     }
   );
 
-  // функция загрузки и отправки данных на сервер
-  const handleUpload = async (files, newDeal) => {
-    if(!files) {
-      alert("select file");
-      return;
-    }
-    const token = localStorage.getItem('token');
-
+  const createFormData = (files, newDeal) => {
     // Объект FormData позволяет скомпилировать набор пар ключ/значение для отправки с помощью XMLHttpRequest.
     const formData = new FormData();
 
-    // Добавляет новое значение существующего поля объекта FormData, либо создаёт его и присваивает значение
     formData.append('new_deal', newDeal.deal);
     formData.append('license_type', newDeal.license);
     formData.append('validity', newDeal.validityDate);
@@ -60,29 +51,37 @@ function CreateDeal({ setOpenForm, setOpenMessage, setNewDeal, files }) {
     formData.append('additional_info', newDeal.addInfo);
     for (let file of files) { formData.append('content', file); }
 
-    console.log(formData);
+    return formData;
+  }
 
-    // fetch-запрос на отправку файла на сервер
-    const res = await fetch(`${API_URL}/api/licenses3/`, {
-      method: 'POST',
-      headers: {
-        "Authorization": `Token ${token}`
-      },
-      body: formData,
-    });
-    const data = await res.json();
-    console.log(JSON.stringify(data));
-    // с сервера возвращается превью загруженного видео для отображения в форме создания лицензии
-    //    setUploadedFilePreview(data.image);
+  async function createLicence(files, newDeal) {
+    const token = localStorage.getItem('token');
+    const newFormData = createFormData(files, newDeal);
+    try {
+      setIsLoading(true);
+      const res = await upload(token, newFormData);
+      const data = await res.json();
+      console.log(JSON.stringify(data));
+      setOpenMessage(true);
+      // с сервера возвращается превью загруженного видео для отображения в форме создания лицензии
+      //    setUploadedFilePreview(data.image);
+    } catch (error) {
+      console.log(error);
+      if (error === 401) {
+        console.log('exit');
+      }
+    }
+    finally {
+      setIsLoading(false);
+    }
   }
 
   const onSubmit = fields => {
-    alert(JSON.stringify(fields));
+    //alert(JSON.stringify(fields));
     setNewDeal(fields);
-    handleUpload(files, fields);
+    createLicence(files, fields);
     reset();
     setOpenForm(false);
-    setOpenMessage(true);
   };
 
   return (
@@ -250,7 +249,11 @@ function CreateDeal({ setOpenForm, setOpenMessage, setNewDeal, files }) {
               disabled={!isValid}
               sx={{ mt: 3, mb: 2, fontSize: '15px', fontWeight: '500' }}
             >
-              CREATE A NEW DEAL
+              {isLoading?
+                'LOADING...'
+                :
+                'CREATE A NEW DEAL'
+              }
             </CustomButton>
           </Stack>
         </Box>
