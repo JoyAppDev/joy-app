@@ -17,7 +17,7 @@ function LayoutDashboard({ children }) {
             gap={5}
             sx={{ pt: 9 }}
             width="100%"
-            height="100vh"
+            // height="100vh"
           >
             {children}
           </Box>

@@ -11,7 +11,7 @@ import { theme } from '../../styles/theme';
 
 export default function BasicCard({ children, author, date, image, heading }) {
   return (
-    <Card sx={{ maxWidth: 260 }} variant="outlined">
+    <Card sx={{ maxWidth: 260, height: 342 }} variant="outlined">
       <CardActions sx={{ p: 0 }}>
         <CardMedia
           component="img"

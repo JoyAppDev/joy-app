@@ -15,6 +15,10 @@ import BasicCard from '../../components/basic-card';
 import ButtonCopyLicenseCard from '../../components/button-copy-license-card';
 import ButtonCreateLicenseCard from '../../components/button-create-license-card';
 
+const mainText = `
+Your deal has been created.
+Send the link to the brand to make a payment.`;
+
 function Dashboard() {
   const [file, setFile] = React.useState(null);
   const [uploadedFilePreview, setUploadedFilePreview] = React.useState(null);
@@ -136,6 +140,9 @@ function Dashboard() {
       <PopupSuccess
         openMessage={openMessage}
         handleCloseMessage={handleCloseMessage}
+        mainText={mainText}
+        mainTextTitle={'Congrats!'}
+        buttonText="COPY LINK"
       />
     </>
   );

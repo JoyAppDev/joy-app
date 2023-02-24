@@ -7,6 +7,7 @@ import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import InsertPhotoOutlinedIcon from '@mui/icons-material/InsertPhotoOutlined';
 import Grid from '@mui/material/Grid';
+import Image from './../../assets/withdraw-popup-image.svg';
 
 import { theme } from '../../styles/theme';
 
@@ -61,15 +62,21 @@ function Modal({ openForm, handleCloseForm, children }) {
                   alignItems: 'center',
                   justifyContent: 'center',
                   backgroundColor: 'rgba(232, 232, 232, 1)',
+                  backgroundImage: {
+                    md: `url(${Image})`,
+                  },
+                  backgroundRepeat: 'no-repeat',
+                  backgroundSize: 'contain',
+                  height: '100vh',
                 }}
               >
-                <InsertPhotoOutlinedIcon
+                {/* <InsertPhotoOutlinedIcon
                   sx={{
                     height: '48px',
                     width: '48px',
                     color: 'grey',
                   }}
-                />
+                /> */}
               </Grid>
               <Grid item xs={12} sm={8} md={6} square="true">
                 <Box
