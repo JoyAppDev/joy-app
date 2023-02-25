@@ -8,9 +8,9 @@ import AccountMenu from '../account-menu';
 import Modal from '../modal';
 import Withdraw from '../withdraw';
 import PopupSuccess from '../../components/popup-success';
+import Image from './../../assets/withdraw-popup-image.svg';
 import './index.css';
-
-const mainText = `Request has been created.`;
+import { MAIN_TEXT_WITHDRAW } from '../../utils/constants';
 
 function HeaderDashboard() {
   const [openWithdrawModal, setIsOpenWithdrawModal] = React.useState(false);
@@ -80,11 +80,25 @@ function HeaderDashboard() {
             setOpenMessage={setOpenMessage}
           />
         }
+        imageContent={
+          <Box
+            sx={{
+              backgroundImage: {
+                md: `url(${Image})`,
+              },
+              backgroundRepeat: 'no-repeat',
+              backgroundSize: 'cover',
+              width: '100%',
+              height: '100%',
+              backgroundColor: 'white',
+            }}
+          />
+        }
       />
       <PopupSuccess
         openMessage={openMessage}
         handleCloseMessage={handleCloseMessage}
-        mainText={mainText}
+        mainText={MAIN_TEXT_WITHDRAW}
         mainTextTitle={'Congrats!'}
         buttonText="THANKS"
       />

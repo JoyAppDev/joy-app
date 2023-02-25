@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import LayoutDashboard from '../../components/layout-dashboard';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import InsertPhotoOutlinedIcon from '@mui/icons-material/InsertPhotoOutlined';
 
 import initialData from './../../utils/data.json';
 import addLicenceImage from './../../assets/add_licence_image.png';
@@ -14,10 +15,7 @@ import CopyLink from '../../components/copy-link';
 import BasicCard from '../../components/basic-card';
 import ButtonCopyLicenseCard from '../../components/button-copy-license-card';
 import ButtonCreateLicenseCard from '../../components/button-create-license-card';
-
-const mainText = `
-Your deal has been created.
-Send the link to the brand to make a payment.`;
+import { MAIN_TEXT_CREATE_DEAL } from '../../utils/constants';
 
 function Dashboard() {
   const [file, setFile] = React.useState(null);
@@ -127,6 +125,15 @@ function Dashboard() {
             setOpenMessage={setOpenMessage}
           />
         }
+        imageContent={
+          <InsertPhotoOutlinedIcon
+            sx={{
+              height: '48px',
+              width: '48px',
+              color: 'grey',
+            }}
+          />
+        }
       />
       <Modal
         openForm={openCopyLinkModal}
@@ -136,11 +143,20 @@ function Dashboard() {
         children={
           <CopyLink content={selectedCard} setOpenForm={setIsCopyLinkModal} />
         }
+        imageContent={
+          <InsertPhotoOutlinedIcon
+            sx={{
+              height: '48px',
+              width: '48px',
+              color: 'grey',
+            }}
+          />
+        }
       />
       <PopupSuccess
         openMessage={openMessage}
         handleCloseMessage={handleCloseMessage}
-        mainText={mainText}
+        mainText={MAIN_TEXT_CREATE_DEAL}
         mainTextTitle={'Congrats!'}
         buttonText="COPY LINK"
       />

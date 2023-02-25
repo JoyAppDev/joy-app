@@ -11,7 +11,7 @@ import Image from './../../assets/withdraw-popup-image.svg';
 
 import { theme } from '../../styles/theme';
 
-function Modal({ openForm, handleCloseForm, children }) {
+function Modal({ openForm, handleCloseForm, children, imageContent }) {
   return (
     <div>
       <Dialog
@@ -49,7 +49,9 @@ function Modal({ openForm, handleCloseForm, children }) {
           </IconButton>
         </Box>
 
-        <DialogContent sx={{ mx: 7.5, my: 9, padding: 0 }}>
+        <DialogContent
+          sx={{ mx: 7.5, my: 9, padding: 0, position: 'relative' }}
+        >
           <>
             <Grid container component="main" spacing={12.5}>
               <Grid
@@ -62,21 +64,9 @@ function Modal({ openForm, handleCloseForm, children }) {
                   alignItems: 'center',
                   justifyContent: 'center',
                   backgroundColor: 'rgba(232, 232, 232, 1)',
-                  backgroundImage: {
-                    md: `url(${Image})`,
-                  },
-                  backgroundRepeat: 'no-repeat',
-                  backgroundSize: 'contain',
-                  height: '100vh',
                 }}
               >
-                {/* <InsertPhotoOutlinedIcon
-                  sx={{
-                    height: '48px',
-                    width: '48px',
-                    color: 'grey',
-                  }}
-                /> */}
+                {imageContent}
               </Grid>
               <Grid item xs={12} sm={8} md={6} square="true">
                 <Box

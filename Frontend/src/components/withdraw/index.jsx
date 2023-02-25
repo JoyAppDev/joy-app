@@ -25,6 +25,13 @@ function Withdraw({ setOpenForm, setOpenMessage }) {
     reset,
   } = useForm({
     mode: 'onBlur',
+    defaultValues: {
+      paymentInfo: 'credit',
+      email: '',
+      name: '',
+      idNumber: '',
+      amount: '',
+    },
   });
 
   const type = watch('paymentInfo');
@@ -61,7 +68,6 @@ function Withdraw({ setOpenForm, setOpenMessage }) {
                       margin="dense"
                       {...field}
                       type="select"
-                      value={field.value || ''}
                       labelId="type-label"
                       label="PayPal / Credit Card"
                     >
@@ -102,7 +108,6 @@ function Withdraw({ setOpenForm, setOpenMessage }) {
               render={({ field, fieldState: { invalid, error } }) => (
                 <TextField
                   {...field}
-                  value={field.value || ''}
                   label={'Email / Card number'}
                   placeholder={'test@test.com'}
                   error={invalid}
@@ -121,9 +126,9 @@ function Withdraw({ setOpenForm, setOpenMessage }) {
                 <TextField
                   label={'Name / Surname'}
                   placeholder="John Doe"
-                  helperText={invalid ? error.message : ''}
                   {...field}
                   error={invalid}
+                  helperText={invalid ? error.message : ''}
                 />
               )}
             />
@@ -132,14 +137,11 @@ function Withdraw({ setOpenForm, setOpenMessage }) {
               control={control}
               name="idNumber"
               rules={{ required: true }}
-              render={({ field: { onChange, value } }) => (
-                <CustomInput
+              render={({ field, fieldState: { invalid, error } }) => (
+                <TextField
+                  {...field}
                   label={'ID Number'}
                   type={'number'}
-                  onChange={onChange}
-                  value={value || ''}
-                  error={!!errors.price?.message}
-                  helperText={errors.price?.message}
                   placeholder={'123-456-789'}
                 />
               )}
@@ -149,14 +151,11 @@ function Withdraw({ setOpenForm, setOpenMessage }) {
               control={control}
               name="amount"
               rules={{ required: true }}
-              render={({ field: { onChange, value } }) => (
+              render={({ field }) => (
                 <CustomInput
+                  {...field}
                   label={'Amount'}
                   type={'number'}
-                  onChange={onChange}
-                  value={value || ''}
-                  error={!!errors.price?.message}
-                  helperText={errors.price?.message}
                   placeholder={'$2000'}
                 />
               )}
