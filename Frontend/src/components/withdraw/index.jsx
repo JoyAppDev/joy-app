@@ -12,8 +12,6 @@ import Stack from '@mui/material/Stack';
 import { useForm, Controller } from 'react-hook-form';
 
 import { CustomInput } from '../input/index';
-import { useNavigate } from 'react-router-dom';
-import Image from './../../assets/withdraw-popup-image.svg';
 import { CustomButton } from '../button';
 
 function Withdraw({ setOpenForm, setOpenMessage }) {

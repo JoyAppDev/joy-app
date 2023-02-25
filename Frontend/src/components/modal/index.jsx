@@ -5,9 +5,7 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
-import InsertPhotoOutlinedIcon from '@mui/icons-material/InsertPhotoOutlined';
 import Grid from '@mui/material/Grid';
-import Image from './../../assets/withdraw-popup-image.svg';
 
 import { theme } from '../../styles/theme';
 
