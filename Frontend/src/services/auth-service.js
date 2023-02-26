@@ -71,8 +71,11 @@ const getAuth = async () => {
   }
 };
 
-const logout = () => {
+const logout = async () => {
+  const response = await api.post(`${API_URL}/auth/token/logout/`);
   localStorage.removeItem('userToken');
+
+  return response;
 };
 
 const authService = {
