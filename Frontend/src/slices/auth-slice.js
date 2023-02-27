@@ -71,6 +71,7 @@ const initialState = {
   isSuccess: false,
   isLoading: false,
   message: '',
+  isAuthChecked: false,
 };
 
 export const authSlice = createSlice({
@@ -126,7 +127,6 @@ export const authSlice = createSlice({
         state.isLoading = false;
         state.isSuccess = true;
         state.user = payload;
-        console.log(payload);
       })
       .addCase(getUser.rejected, (state, action) => {
         state.isLoading = false;
