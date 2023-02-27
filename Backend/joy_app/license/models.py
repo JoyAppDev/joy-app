@@ -136,25 +136,25 @@ class Content(models.Model):
 
 
 
-class License2(models.Model):
+# class License2(models.Model):
 
-    new_deal = models.CharField(max_length=100)
-    creator = models.ForeignKey(
-        Creator, verbose_name='creator2',
-        on_delete=models.CASCADE,
-        related_name='licenses2')
-    license_type = models.CharField(max_length=25, choices=CHOICES)
-    validity = models.CharField(verbose_name='validity', max_length=100)
-    territory = models.CharField(max_length=100)
-    ways_to_use = models.CharField(max_length=200)
-    price = models.DecimalField(max_digits=10, decimal_places=2)
-    additional_info = models.CharField(max_length=300)
-    content = models.FileField()
+#     new_deal = models.CharField(max_length=100)
+#     creator = models.ForeignKey(
+#         Creator, verbose_name='creator2',
+#         on_delete=models.CASCADE,
+#         related_name='licenses2')
+#     license_type = models.CharField(max_length=25, choices=CHOICES)
+#     validity = models.CharField(verbose_name='validity', max_length=100)
+#     territory = models.CharField(max_length=100)
+#     ways_to_use = models.CharField(max_length=200)
+#     price = models.DecimalField(max_digits=10, decimal_places=2)
+#     additional_info = models.CharField(max_length=300)
+#     content = models.FileField()
 
-    class Meta:
-        verbose_name = 'license2'
-        verbose_name_plural = 'licenses2'
-        ordering = ('creator',)
+#     class Meta:
+#         verbose_name = 'license2'
+#         verbose_name_plural = 'licenses2'
+#         ordering = ('creator',)
 
 
 

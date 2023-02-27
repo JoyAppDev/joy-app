@@ -8,7 +8,7 @@ from rest_framework import serializers
 from rest_framework.validators import UniqueTogetherValidator
 
 
-from license.models import License, License2, Brand, Creator, Content
+from license.models import License, Brand, Creator, Content
 
 load_dotenv()
 
@@ -72,69 +72,69 @@ class BrandSerializer(serializers.ModelSerializer):
                   )
 
 
-class LicenseSerializer(serializers.ModelSerializer):
-    """
-    Сериализатор для получения лицензий.
-    """
+# class LicenseSerializer(serializers.ModelSerializer):
+#     """
+#     Сериализатор для получения лицензий.
+#     """
 
-    creator = serializers.SlugRelatedField(slug_field='username',
-                                           read_only=True,
-                                           default=serializers.CurrentUserDefault())
-    brand = serializers.SlugRelatedField(slug_field='organization_name',
-                                         read_only=True)
+#     creator = serializers.SlugRelatedField(slug_field='username',
+#                                            read_only=True,
+#                                            default=serializers.CurrentUserDefault())
+#     brand = serializers.SlugRelatedField(slug_field='organization_name',
+#                                          read_only=True)
    
 
-    class Meta:
+#     class Meta:
 
-        model = License
-        fields = ('id', 'new_deal', 'creator', 'brand',
-                  'license_type', 'validity',
-                  'territory', 'ways_to_use',
-                  'price',
-                  'additional_info', 
-                  )
-        validators = [
-            UniqueTogetherValidator(
-                queryset=License.objects.all(),
-                fields=('new_deal', 'creator')
-            )
-        ]
-
-
-
-class LicenseSerializer2(serializers.ModelSerializer):
-    """
-    Сериализатор для получения лицензий.
-    """
-
-    creator = serializers.SlugRelatedField(slug_field='username',
-                                           read_only=True,
-                                           default=serializers.CurrentUserDefault())
-    brand = serializers.SlugRelatedField(slug_field='organization_name',
-                                         read_only=True)
-    # content = ContentSerializer(
-    #     source='content_set',
-    #     many=True,
-    # )
-
-    class Meta:
-
-        model = License2
-        fields = ('id', 'new_deal', 'creator', 'brand',
-                  'license_type', 'validity',
-                  'territory', 'ways_to_use',
-                  'price',
-                  'additional_info', 'content'
-                  )
-        validators = [
-            UniqueTogetherValidator(
-                queryset=License.objects.all(),
-                fields=('new_deal', 'creator')
-            )
-        ]
+#         model = License
+#         fields = ('id', 'new_deal', 'creator', 'brand',
+#                   'license_type', 'validity',
+#                   'territory', 'ways_to_use',
+#                   'price',
+#                   'additional_info', 
+#                   )
+#         validators = [
+#             UniqueTogetherValidator(
+#                 queryset=License.objects.all(),
+#                 fields=('new_deal', 'creator')
+#             )
+#         ]
 
 
-class LicenseSerializer3(serializers.ModelSerializer):
+
+# class LicenseSerializer2(serializers.ModelSerializer):
+#     """
+#     Сериализатор для получения лицензий.
+#     """
+
+#     creator = serializers.SlugRelatedField(slug_field='username',
+#                                            read_only=True,
+#                                            default=serializers.CurrentUserDefault())
+#     brand = serializers.SlugRelatedField(slug_field='organization_name',
+#                                          read_only=True)
+#     # content = ContentSerializer(
+#     #     source='content_set',
+#     #     many=True,
+#     # )
+
+#     class Meta:
+
+#         model = License2
+#         fields = ('id', 'new_deal', 'creator', 'brand',
+#                   'license_type', 'validity',
+#                   'territory', 'ways_to_use',
+#                   'price',
+#                   'additional_info', 'content'
+#                   )
+#         validators = [
+#             UniqueTogetherValidator(
+#                 queryset=License.objects.all(),
+#                 fields=('new_deal', 'creator')
+#             )
+#         ]
+
+
+class LicenseSerializer(serializers.ModelSerializer):
     """
     Сериализатор для получения лицензий.
     """
@@ -148,7 +148,7 @@ class LicenseSerializer3(serializers.ModelSerializer):
 
     class Meta:
 
-        model = License2
+        model = License
         fields = ('id', 'new_deal', 'creator', 'brand',
                   'license_type', 'validity',
                   'territory', 'ways_to_use',
