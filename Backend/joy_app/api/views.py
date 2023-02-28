@@ -4,10 +4,12 @@ from django_filters.rest_framework import DjangoFilterBackend
 from license.models import Creator, License, Brand, Content
 
 from rest_framework import filters, viewsets
+from rest_framework.decorators import action
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.permissions import AllowAny, IsAdminUser
 from rest_framework.response import Response
 
+from .permissions import IsAuthor
 from .serializers import BrandSerializer, CreatorSerializer, LicenseSerializer, ContentSerializer
 
 
@@ -88,6 +90,21 @@ class CustomUserViewSet(viewsets.ModelViewSet):
         if self.action == 'retrieve':
             return (ReadOnly(),)
         return super().get_permissions()
+
+    @action(
+        detail=False,
+        url_path=r'(?P<id>\d+)/licenses',
+        permission_classes=[IsAuthor,],
+        methods=['get',]
+    )
+    def all_creators_licenses(self, request, id):
+        creator = get_object_or_404(Creator, id=id)
+        queryset = License.objects.filter(creator=creator)
+        serializer = LicenseSerializer(
+            queryset, many=True, context={'request': request}
+        )
+        return Response(serializer.data)
+
 
 
 class BrandViewSet(viewsets.ModelViewSet):
