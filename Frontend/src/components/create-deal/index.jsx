@@ -13,6 +13,10 @@ import { useForm, Controller } from 'react-hook-form';
 import { CustomInput } from '../input/index';
 import { CustomButton } from '../button';
 import { upload } from '../../utils/upload';
+import { WAYS_TO_USE } from "../../utils/constants";
+import initialData from "../../utils/data.json";
+import BasicCard from "../basic-card";
+import ButtonCopyLicenseCard from "../button-copy-license-card";
 
 function CreateDeal({ setOpenForm, setOpenMessage, files, setOpenErrorMessage }) {
   const [isLoading, setIsLoading] = React.useState(false);
@@ -177,31 +181,11 @@ function CreateDeal({ setOpenForm, setOpenMessage, files, setOpenErrorMessage })
                     overflow: 'hidden'
                   }}
                 >
-                  <MenuItem value={'Reproduction of Content'} label="Reproduction of Content">
-                    Reproduction of Content
-                  </MenuItem>
-                  <MenuItem value={'Public display and public performance of Content'} label="Public display and public performance of Content">
-                    Public display and public performance of Content
-                  </MenuItem>
-                  <MenuItem
-                      value={'Making available to the public via the Internet in such a way that any Internet user can access the Content from any place at any time by their choice'}
-                      label='Public display and public performance of Content'>
-                    Making available to&nbsp;the public
-                    via the Internet in&nbsp;such a&nbsp;way
-                    that any Internet user can access
-                    the Content from any place at&nbsp;any
-                    time by&nbsp;their choice
-                  </MenuItem>
-                  <MenuItem
-                      value={'Communication on the air via satellite, and/or communication via cable (including by means of retransmission)'}
-                      label='Communication on the air via satellite, and/or communication via cable (including by means of retransmission)'>
-                    Communication on the air via satellite, and/or communication via cable (including by means of retransmission)
-                  </MenuItem>
-                  <MenuItem
-                      value={'Translation and other processing of Content'}
-                      label='Translation and other processing of Content'>
-                    Translation and other processing of Content
-                  </MenuItem>
+                  {WAYS_TO_USE.map(item => (
+                      <MenuItem value={item} label={item}>
+                        {item}
+                      </MenuItem>
+                  ))}
                 </Select>
               )}
             />

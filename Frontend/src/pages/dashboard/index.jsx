@@ -117,6 +117,7 @@ function Dashboard({ logOut }) {
         openErrorMessage={openErrorMessage}
         handleCloseMessage={handleCloseMessage}
       />
+
     </>
   );
 }
