@@ -14,9 +14,6 @@ import { CustomInput } from '../input/index';
 import { CustomButton } from '../button';
 import { upload } from '../../utils/upload';
 import { WAYS_TO_USE } from "../../utils/constants";
-import initialData from "../../utils/data.json";
-import BasicCard from "../basic-card";
-import ButtonCopyLicenseCard from "../button-copy-license-card";
 
 function CreateDeal({ setOpenForm, setOpenMessage, files, setOpenErrorMessage }) {
   const [isLoading, setIsLoading] = React.useState(false);
@@ -42,8 +39,9 @@ function CreateDeal({ setOpenForm, setOpenMessage, files, setOpenErrorMessage })
     }
   );
 
+  // Объект FormData позволяет скомпилировать набор пар ключ/значение для отправки с помощью XMLHttpRequest.
+
   const createFormData = (files, newDeal) => {
-    // Объект FormData позволяет скомпилировать набор пар ключ/значение для отправки с помощью XMLHttpRequest.
     const formData = new FormData();
 
     formData.append('new_deal', newDeal.deal);
