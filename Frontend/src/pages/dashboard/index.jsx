@@ -14,6 +14,7 @@ import CopyLink from '../../components/copy-link';
 import BasicCard from '../../components/basic-card';
 import ButtonCopyLicenseCard from '../../components/button-copy-license-card';
 import ButtonCreateLicenseCard from '../../components/button-create-license-card';
+import Withdraw from '../../components/withdraw';
 
 function Dashboard() {
   const [file, setFile] = React.useState(null);
@@ -22,6 +23,7 @@ function Dashboard() {
 
   const [openCreateDealModal, setIsOpenCreateDealModal] = React.useState(false);
   const [openCopyLinkModal, setIsCopyLinkModal] = React.useState(false);
+  const [openWithdrawModal, setIsOpenWithdrawModal] = React.useState(false);
 
   const handleOpenCreateDeal = () => setIsOpenCreateDealModal(true);
   const handleCloseCreateDeal = () => setIsOpenCreateDealModal(false);
@@ -29,19 +31,22 @@ function Dashboard() {
   const handleCopyLinkModalOpen = () => setIsCopyLinkModal(true);
   const handleCopyLinkModalClose = () => setIsCopyLinkModal(false);
 
+  const handleWithDrawModalOpen = () => setIsOpenWithdrawModal(true);
+  const handleWithDrawModalClose = () => setIsOpenWithdrawModal(false);
+
   const [openMessage, setOpenMessage] = React.useState(false);
   const handleOpenMessage = () => setOpenMessage(true);
   const handleCloseMessage = () => setOpenMessage(false);
 
   const navigate = useNavigate();
 
-  const { user } = useSelector(state => state.auth);
+  const { user, isSuccess } = useSelector(state => state.auth);
 
   useEffect(() => {
-    if (!user) {
+    if (!user && isSuccess) {
       navigate('/');
     }
-  }, [user, navigate]);
+  }, [user, navigate, isSuccess]);
 
   const openLicence = () => {
     // alert('Open licence');
@@ -114,6 +119,7 @@ function Dashboard() {
           children={<ButtonCreateLicenseCard addLicence={addLicence} />}
         />
       </LayoutDashboard>
+
       <Modal
         openForm={openCreateDealModal}
         handleCloseForm={handleCloseCreateDeal}
@@ -131,6 +137,19 @@ function Dashboard() {
         setOpenMessage={setOpenMessage}
         children={
           <CopyLink content={selectedCard} setOpenForm={setIsCopyLinkModal} />
+        }
+      />
+
+      <Modal
+        openForm={openWithdrawModal}
+        handleCloseForm={handleWithDrawModalClose}
+        setOpenForm={setIsOpenWithdrawModal}
+        setOpenMessage={setOpenMessage}
+        children={
+          <Withdraw
+            content={selectedCard}
+            setOpenForm={setIsOpenWithdrawModal}
+          />
         }
       />
       <PopupSuccess

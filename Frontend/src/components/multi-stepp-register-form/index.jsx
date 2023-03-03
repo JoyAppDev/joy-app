@@ -81,7 +81,7 @@ export default function MultiStepRegisterForm() {
     shouldUnregister: false,
     defaultValues,
     resolver: yupResolver(currentValidationSchema),
-    mode: 'onChange',
+    mode: 'onBlur',
   });
 
   const {
@@ -121,8 +121,8 @@ export default function MultiStepRegisterForm() {
       toast.error(message);
     }
 
-    if (isSuccess || user) {
-      navigate('/dashboard');
+    if (isSuccess) {
+      navigate('/');
     }
 
     dispatch(resetData());
