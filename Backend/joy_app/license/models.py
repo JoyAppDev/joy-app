@@ -84,17 +84,14 @@ class Creator(AbstractUser):
         verbose_name = 'Creator'
         verbose_name_plural = 'Creators'
         ordering = ('id_number',)
-        # constraints = [
-        #     models.UniqueConstraint(
-        #         fields=["email", "username"],
-        #         name="unique_auth"
-        #     ),
-        # ]
     
     objects = CustomUserManager()
 
     def __str__(self):
-        return self.name_surname
+        return self.email
+
+
+
 
 
 class License(models.Model):
@@ -110,13 +107,12 @@ class License(models.Model):
     ways_to_use = models.CharField(max_length=100)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     additional_info = models.CharField(max_length=300)
-    content = models.URLField()
+    # content = models.URLField()
 
     class Meta:
         verbose_name = 'license'
         verbose_name_plural = 'licenses'
         ordering = ('creator',)
-
         # constraints = [
         #     models.UniqueConstraint(
         #         fields=['new_deal', 'creator'],
@@ -126,6 +122,41 @@ class License(models.Model):
 
     def __str__(self):
         return self.new_deal
+
+class Content(models.Model):
+    license = models.ForeignKey(
+        License,
+        verbose_name='license_content',
+        on_delete=models.CASCADE
+    )
+    media_file = models.FileField()
+
+    def __str__(self):
+        return self.media_file.url
+
+
+
+# class License2(models.Model):
+
+#     new_deal = models.CharField(max_length=100)
+#     creator = models.ForeignKey(
+#         Creator, verbose_name='creator2',
+#         on_delete=models.CASCADE,
+#         related_name='licenses2')
+#     license_type = models.CharField(max_length=25, choices=CHOICES)
+#     validity = models.CharField(verbose_name='validity', max_length=100)
+#     territory = models.CharField(max_length=100)
+#     ways_to_use = models.CharField(max_length=200)
+#     price = models.DecimalField(max_digits=10, decimal_places=2)
+#     additional_info = models.CharField(max_length=300)
+#     content = models.FileField()
+
+#     class Meta:
+#         verbose_name = 'license2'
+#         verbose_name_plural = 'licenses2'
+#         ordering = ('creator',)
+
+
 
 
 class Brand(models.Model):

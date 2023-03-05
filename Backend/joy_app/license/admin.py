@@ -1,6 +1,12 @@
 from django.contrib import admin
 
-from license.models import License, Brand, Creator
+from license.models import License, Brand, Creator, Content
+
+
+class ContentAdmin(admin.ModelAdmin):
+    empty_value_display = '-empty-'
+    list_display = ('license_id', 'media_file',)
+
 
 
 class LicenseAdmin(admin.ModelAdmin):
@@ -10,7 +16,7 @@ class LicenseAdmin(admin.ModelAdmin):
         'license_type',
         'validity', 'territory',
         'ways_to_use', 'price',
-        'additional_info', 'content'
+        'additional_info', # 'content'
         )
     search_fields = ('new_deal', 'creator',
                      'price',
@@ -19,6 +25,24 @@ class LicenseAdmin(admin.ModelAdmin):
                    'price',
                    'license_type')
     empty_value_display = '-empty-'
+
+
+# class LicenseSecondAdmin(admin.ModelAdmin):
+#     list_display = (
+#         'id', #'brand',
+#         'new_deal', 'creator',
+#         'license_type',
+#         'validity', 'territory',
+#         'ways_to_use', 'price',
+#         'additional_info', # 'content'
+#         )
+#     search_fields = ('new_deal', 'creator',
+#                      'price',
+#                      'license_type')
+#     list_filter = ('new_deal', 'creator',
+#                    'price',
+#                    'license_type')
+#     empty_value_display = '-empty-'
 
 
 class BrandAdmin(admin.ModelAdmin):
@@ -43,5 +67,7 @@ class CreatorAdmin(admin.ModelAdmin):
 
 
 admin.site.register(License, LicenseAdmin)
+# admin.site.register(License2, LicenseSecondAdmin)
 admin.site.register(Brand, BrandAdmin)
 admin.site.register(Creator, CreatorAdmin)
+admin.site.register(Content, ContentAdmin)
