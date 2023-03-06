@@ -41,10 +41,8 @@ jobs:
         key: ${{ secrets.SSH_KEY }}
         script: |
           sudo docker pull andrianovaei/joy_app_backend:latest
-          # sudo docker pull thisispetrovich/foodgram_frontend
           sudo docker compose stop
           sudo docker compose rm joy_app
-          # sudo docker compose rm foodgram_frontend
           rm .env
           touch .env
           echo SECRET_KEY=${{ secrets.SECRET_KEY }} >> .env
