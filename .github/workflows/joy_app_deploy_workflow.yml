@@ -48,6 +48,13 @@ jobs:
           rm .env
           touch .env
           echo SECRET_KEY=${{ secrets.SECRET_KEY }} >> .env
+          echo APIKEY=${{ secrets.APIKEY }} >> .env
+          echo AUTHDOMAIN=${{ secrets.AUTHDOMAIN }} >> .env
+          echo PROJECTID=${{ secrets.PROJECTID }} >> .env
+          echo STORAGEBUCKET=${{ secrets.STORAGEBUCKET }} >> .env
+          echo MESSAGINGSENDERID=${{ secrets.MESSAGINGSENDERID }} >> .env
+          echo APPID=${{ secrets.APPID }} >> .env
+          echo DATABASEURL=${{ secrets.DATABASEURL }} >> .env
           echo DB_ENGINE=${{ secrets.DB_ENGINE }} >> .env
           echo DB_NAME=${{ secrets.DB_NAME }} >> .env
           echo POSTGRES_USER=${{ secrets.POSTGRES_USER }} >> .env
