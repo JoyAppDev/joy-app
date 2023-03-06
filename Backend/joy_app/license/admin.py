@@ -59,7 +59,7 @@ class BrandAdmin(admin.ModelAdmin):
 
 class CreatorAdmin(admin.ModelAdmin):
     list_display = (
-        'name_surname', 'address',
+        'email', 'name_surname', 'address',
         'id_number', 'payment_info',)
     search_fields = ('name_surname', 'id_number')
     list_filter = ('name_surname', 'id_number')
