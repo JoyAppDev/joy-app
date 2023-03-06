@@ -52,12 +52,12 @@ function CreateDeal({ setOpenForm, setOpenMessage, files, setOpenErrorMessage })
     formData.append('price', newDeal.price);
     formData.append('additional_info', newDeal.addInfo);
     for (let file of files) { formData.append('content', file); }
-
+    console.log(formData);
     return formData;
   }
 
   async function createLicence(files, newDeal) {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('userToken');
     const newFormData = createFormData(files, newDeal);
     try {
       setIsLoading(true);
@@ -77,6 +77,7 @@ function CreateDeal({ setOpenForm, setOpenMessage, files, setOpenErrorMessage })
   }
 
   const onSubmit = fields => {
+    console.log(files)
     createLicence(files, fields);
     reset();
     setOpenForm(false);
@@ -179,8 +180,8 @@ function CreateDeal({ setOpenForm, setOpenMessage, files, setOpenErrorMessage })
                     overflow: 'hidden'
                   }}
                 >
-                  {WAYS_TO_USE.map(item => (
-                      <MenuItem value={item} label={item}>
+                  {WAYS_TO_USE.map((item) => (
+                      <MenuItem value={item} label={item} key={item}>
                         {item}
                       </MenuItem>
                   ))}
