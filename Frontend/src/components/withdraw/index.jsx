@@ -44,12 +44,17 @@ function Withdraw({ setOpenForm, setOpenMessage }) {
 
   return (
     <>
-      <Stack spacing={2} width={'100%'}>
+      <Stack spacing={2} width={'100%'} mt={12}>
         <Typography component="h1" variant="h5" mb={2}>
           Withdraw money
         </Typography>
 
-        <Box component="form" noValidate onSubmit={handleSubmit(onSubmit)}>
+        <Box
+          component="form"
+          noValidate
+          onSubmit={handleSubmit(onSubmit)}
+          mb={10}
+        >
           <Stack spacing={2}>
             <FormControl variant="outlined">
               <InputLabel id="type-label" htmlFor="paymentInfo">

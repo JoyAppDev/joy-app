@@ -23,7 +23,7 @@ function Modal({ openForm, handleCloseForm, children, imageContent }) {
           sx={{
             position: 'absolute',
             right: '5%',
-            top: '2%',
+            top: '4%',
           }}
         >
           <IconButton onClick={handleCloseForm}>
@@ -48,7 +48,13 @@ function Modal({ openForm, handleCloseForm, children, imageContent }) {
         </Box>
 
         <DialogContent
-          sx={{ mx: 7.5, my: 9, padding: 0, position: 'relative' }}
+          sx={{
+            mx: 7.5,
+            my: 9,
+            padding: 0,
+            position: 'relative',
+            height: '700px',
+          }}
         >
           <>
             <Grid container component="main" spacing={12.5}>
