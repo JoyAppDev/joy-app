@@ -37,14 +37,6 @@ export const createAPI = () => {
 export const api = createAPI();
 
 const register = async userData => {
-  console.log(
-      {email: userData.email,
-        address: userData.address,
-        name_surname: userData.name,
-        id_number: userData.idNumber,
-        payment_info: 'credit',
-        password: userData.password}
-  )
   const response = await api.post(`${API_URL}/api/users/`, {
     email: userData.email,
     address: userData.address,
@@ -53,7 +45,6 @@ const register = async userData => {
     payment_info: 'credit',
     password: userData.password,
   });
-
 
   return response.data;
 };
