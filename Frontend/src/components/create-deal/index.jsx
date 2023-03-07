@@ -1,6 +1,5 @@
 import React from 'react';
 
-import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import InputLabel from '@mui/material/InputLabel';
@@ -9,24 +8,19 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import Stack from '@mui/material/Stack';
 
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
-
 import { useForm, Controller } from 'react-hook-form';
 
 import { CustomInput } from '../input/index';
-import { useNavigate } from 'react-router-dom';
-
 import { CustomButton } from '../button';
+import { upload } from '../../utils/upload';
+import { WAYS_TO_USE } from "../../utils/constants";
 
-function CreateDeal({ setOpenForm, setOpenMessage }) {
-  let navigate = useNavigate();
-
+function CreateDeal({ setOpenForm, setOpenMessage, files, setOpenErrorMessage }) {
+  const [isLoading, setIsLoading] = React.useState(false);
   const {
     handleSubmit,
     control,
-    formState: { errors, isValid },
+    formState: { isValid },
     reset,
   } = useForm(
     {
@@ -36,7 +30,7 @@ function CreateDeal({ setOpenForm, setOpenMessage }) {
       defaultValues: {
         deal: '',
         license: '',
-        validity: '',
+        validityDate: '',
         territory: '',
         waysToUse: '',
         addInfo: '',
@@ -45,12 +39,48 @@ function CreateDeal({ setOpenForm, setOpenMessage }) {
     }
   );
 
+  // Объект FormData позволяет скомпилировать набор пар ключ/значение для отправки с помощью XMLHttpRequest.
+
+  const createFormData = (files, newDeal) => {
+    const formData = new FormData();
+
+    formData.append('new_deal', newDeal.deal);
+    formData.append('license_type', newDeal.license);
+    formData.append('validity', newDeal.validityDate);
+    formData.append('territory', newDeal.territory);
+    formData.append('ways_to_use', newDeal.waysToUse);
+    formData.append('price', newDeal.price);
+    formData.append('additional_info', newDeal.addInfo);
+    for (let file of files) { formData.append('content', file); }
+    console.log(formData);
+    return formData;
+  }
+
+  async function createLicence(files, newDeal) {
+    const token = localStorage.getItem('userToken');
+    const newFormData = createFormData(files, newDeal);
+    try {
+      setIsLoading(true);
+      const res = await upload(token, newFormData);
+      const data = await res.json();
+      console.log(JSON.stringify(data));
+      setOpenMessage(true);
+      // с сервера возвращается превью загруженного видео для отображения в форме создания лицензии
+      //    setUploadedFilePreview(data.image);
+    } catch (error) {
+      setOpenErrorMessage(true);
+      console.log(error);
+    }
+    finally {
+      setIsLoading(false);
+    }
+  }
+
   const onSubmit = fields => {
-    alert(JSON.stringify(fields));
-    navigate('/dashboard');
+    console.log(files)
+    createLicence(files, fields);
     reset();
     setOpenForm(false);
-    setOpenMessage(true);
   };
 
   return (
@@ -61,80 +91,72 @@ function CreateDeal({ setOpenForm, setOpenMessage }) {
         </Typography>
 
         <Box component="form" noValidate onSubmit={handleSubmit(onSubmit)}>
-          <Controller
-            control={control}
-            name="deal"
-            fullWidth
-            rules={{ required: true }}
-            render={({ field: { onChange, value } }) => (
-              <CustomInput
-                label={'New Deal'}
-                type={'text'}
-                onChange={onChange}
-                value={value || ''}
-                error={!!errors.deal?.message}
-                helperText={errors.deal?.message}
-                placeholder={'Your text'}
-              />
-            )}
-          />
-          <FormControl fullWidth sx={{ my: 2 }}>
-            <InputLabel htmlFor="license-type">License type</InputLabel>
+          <Stack sx={{ my: 2 }}>
             <Controller
-              name="license"
-              control={control}
-              rules={{ required: true }}
-              render={({ field: { onChange, value } }) => (
-                <Select
-                  value={value || ''}
-                  onChange={onChange}
-                  label="License Type"
-                  id="license-type"
-                >
-                  <MenuItem value={1} label="Exclusive license">
-                    Exclusive license
-                  </MenuItem>
-                  <MenuItem value={2} label="Non-exclusive license">
-                    Non-exclusive license
-                  </MenuItem>
-                </Select>
-              )}
+                control={control}
+                defaultValue={'New Deal_1'}
+                name="deal"
+                fullWidth
+                rules={{ required: true }}
+                render={({ field: { onChange, value } }) => (
+                    <CustomInput
+                        label={'New Deal'}
+                        type={'text'}
+                        onChange={onChange}
+                        value={value || ''}
+                        placeholder={'Your text'}
+                    />
+                )}
             />
-          </FormControl>
-          <Stack sx={{ mb: 2 }}>
-            <Controller
-              name="validityDate"
-              defaultValue={new Date()}
+          </Stack>
+
+          <Controller
               control={control}
-              rules={{ required: true }}
-              render={({ field: { onChange, value, ...restField } }) => (
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                  <DesktopDatePicker
-                    label="Validity"
-                    value={value || ''}
-                    onChange={onChange}
-                    renderInput={params => <TextField {...params} fullWidth />}
-                    {...restField}
+              defaultValue={'exclusive'}
+              name="license"
+              fullWidth
+              render={({ field: { onChange } }) => (
+                  <CustomInput
+                      label={'License Type'}
+                      type={'text'}
+                      onChange={onChange}
+                      value={'Exclusive License'}
+                      readOnly
                   />
-                </LocalizationProvider>
               )}
+          />
+
+          <Stack sx={{ my: 2 }}>
+            <Controller
+                control={control}
+                defaultValue={'Without time limit (perpetual)'}
+                name="validityDate"
+                fullWidth
+                render={({ field: { onChange } }) => (
+                    <CustomInput
+                        label={'Validity'}
+                        type={'text'}
+                        onChange={onChange}
+                        value={'Without time limit (perpetual)'}
+                        readOnly
+                    />
+                )}
             />
           </Stack>
 
           <Controller
             control={control}
+            defaultValue={'Worldwide'}
             name="territory"
             fullWidth
-            rules={{ required: true }}
-            render={({ field: { onChange, value } }) => (
+            render={({ field: { onChange } }) => (
               <CustomInput
                 label={'Territory'}
                 type={'text'}
                 onChange={onChange}
-                value={value || ''}
-                error={!!errors.territory?.message}
-                helperText={errors.territory?.message}
+                value={'Worldwide'}
                 placeholder={'USA'}
+                readOnly
               />
             )}
           />
@@ -152,13 +174,17 @@ function CreateDeal({ setOpenForm, setOpenMessage }) {
                   onChange={onChange}
                   label="ways-to-use"
                   id="ways-to-use"
+                  sx={{
+                    textOverflow: 'ellipsis',
+                    whiteSpace: 'nowrap',
+                    overflow: 'hidden'
+                  }}
                 >
-                  <MenuItem value={1} label="One">
-                    One
-                  </MenuItem>
-                  <MenuItem value={2} label="Two">
-                    Two
-                  </MenuItem>
+                  {WAYS_TO_USE.map((item) => (
+                      <MenuItem value={item} label={item} key={item}>
+                        {item}
+                      </MenuItem>
+                  ))}
                 </Select>
               )}
             />
@@ -168,15 +194,12 @@ function CreateDeal({ setOpenForm, setOpenMessage }) {
             control={control}
             name="addInfo"
             fullWidth
-            rules={{ required: false }}
             render={({ field: { onChange, value } }) => (
               <CustomInput
                 label={'Additional info'}
                 type={'text'}
                 onChange={onChange}
                 value={value || ''}
-                error={!!errors.addInfo?.message}
-                helperText={errors.addInfo?.message}
                 placeholder={'Text'}
               />
             )}
@@ -193,8 +216,6 @@ function CreateDeal({ setOpenForm, setOpenMessage }) {
                   type={'number'}
                   onChange={onChange}
                   value={value || ''}
-                  error={!!errors.price?.message}
-                  helperText={errors.price?.message}
                   placeholder={'$2000'}
                 />
               )}
@@ -207,7 +228,11 @@ function CreateDeal({ setOpenForm, setOpenMessage }) {
               disabled={!isValid}
               sx={{ mt: 3, mb: 2, fontSize: '15px', fontWeight: '500' }}
             >
-              CREATE A NEW DEAL
+              {isLoading?
+                'LOADING...'
+                :
+                'CREATE A NEW DEAL'
+              }
             </CustomButton>
           </Stack>
         </Box>
