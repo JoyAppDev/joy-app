@@ -5,12 +5,11 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
-import InsertPhotoOutlinedIcon from '@mui/icons-material/InsertPhotoOutlined';
 import Grid from '@mui/material/Grid';
 
 import { theme } from '../../styles/theme';
 
-function Modal({ openForm, handleCloseForm, children }) {
+function Modal({ openForm, handleCloseForm, children, imageContent }) {
   return (
     <div>
       <Dialog
@@ -24,7 +23,7 @@ function Modal({ openForm, handleCloseForm, children }) {
           sx={{
             position: 'absolute',
             right: '5%',
-            top: '2%',
+            top: '4%',
           }}
         >
           <IconButton onClick={handleCloseForm}>
@@ -48,7 +47,15 @@ function Modal({ openForm, handleCloseForm, children }) {
           </IconButton>
         </Box>
 
-        <DialogContent sx={{ mx: 7.5, my: 9, padding: 0 }}>
+        <DialogContent
+          sx={{
+            mx: 7.5,
+            my: 9,
+            padding: 0,
+            position: 'relative',
+            height: '700px',
+          }}
+        >
           <>
             <Grid container component="main" spacing={12.5}>
               <Grid
@@ -63,13 +70,7 @@ function Modal({ openForm, handleCloseForm, children }) {
                   backgroundColor: 'rgba(232, 232, 232, 1)',
                 }}
               >
-                <InsertPhotoOutlinedIcon
-                  sx={{
-                    height: '48px',
-                    width: '48px',
-                    color: 'grey',
-                  }}
-                />
+                {imageContent}
               </Grid>
               <Grid item xs={12} sm={8} md={6} square="true">
                 <Box

@@ -16,14 +16,16 @@ import Logout from '@mui/icons-material/Logout';
 import { Button } from '@mui/material';
 
 import avatar from './../../assets/avatar.svg';
+import Modal from '../modal';
 
-export default function AccountMenu() {
+export default function AccountMenu({ onOpenWithdraw, onCloseWithdraw }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const [amount, setAmount] = useState('2000$');
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+
   const handleClick = event => {
     setAnchorEl(event.currentTarget);
   };
@@ -62,6 +64,7 @@ export default function AccountMenu() {
               backgroundColor: '#FF8A00',
             },
           }}
+          onClick={onOpenWithdraw}
         >
           Withdraw
         </Button>

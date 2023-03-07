@@ -1,131 +1,181 @@
 import React from 'react';
-import Box from '@mui/material/Box';
 
+import TextField from '@mui/material/TextField';
+import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
 import Stack from '@mui/material/Stack';
 
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 
 import { CustomInput } from '../input/index';
-import { useNavigate } from 'react-router-dom';
-
 import { CustomButton } from '../button';
 
-function Withdraw({ setOpenForm, content }) {
-  let navigate = useNavigate();
-
-  const { handleSubmit, reset } = useForm(
-    {
-      mode: 'onBlur',
+function Withdraw({ setOpenForm, setOpenMessage }) {
+  const {
+    handleSubmit,
+    watch,
+    control,
+    formState: { errors, isValid },
+    reset,
+  } = useForm({
+    mode: 'onBlur',
+    defaultValues: {
+      paymentInfo: 'credit',
+      email: '',
+      name: '',
+      idNumber: '',
+      amount: '',
     },
-    {
-      defaultValues: {
-        deal: '',
-        license: '',
-        validity: '',
-        territory: '',
-        waysToUse: '',
-        addInfo: '',
-        price: '',
-      },
-    }
-  );
+  });
 
-  const onSubmit = () => {
-    alert(JSON.stringify(content.link));
-    navigate('/dashboard');
+  const type = watch('paymentInfo');
+
+  const onSubmit = (fields, e) => {
+    e.preventDefault();
+    console.log(JSON.stringify(fields));
     reset();
     setOpenForm(false);
+    setOpenMessage(true);
   };
 
   return (
-    <Stack spacing={2} sx={{ width: '100%' }}>
-      <Typography component="h1" variant="h5" mb={2}>
-        Copying a link
-      </Typography>
+    <>
+      <Stack spacing={2} width={'100%'} mt={12}>
+        <Typography component="h1" variant="h5" mb={2}>
+          Withdraw money
+        </Typography>
 
-      <Box component="form" noValidate onSubmit={handleSubmit(onSubmit)}>
-        <Stack spacing={2}>
-          <CustomInput
-            fullWidth
-            label={'Social Media'}
-            value={content.media}
-            InputProps={{
-              readOnly: true,
-            }}
-          />
+        <Box
+          component="form"
+          noValidate
+          onSubmit={handleSubmit(onSubmit)}
+          mb={10}
+        >
+          <Stack spacing={2}>
+            <FormControl variant="outlined">
+              <InputLabel id="type-label" htmlFor="paymentInfo">
+                PayPal / Credit Card
+              </InputLabel>
+              <Stack spacing={2}>
+                <Controller
+                  name="paymentInfo"
+                  control={control}
+                  rules={{ required: true }}
+                  render={({ field }) => (
+                    <Select
+                      sx={{ maxWidth: 600 }}
+                      margin="dense"
+                      {...field}
+                      type="select"
+                      labelId="type-label"
+                      label="PayPal / Credit Card"
+                    >
+                      <MenuItem value="paypal" label="PayPal">
+                        PayPal
+                      </MenuItem>
+                      <MenuItem value="credit" label="Credit card">
+                        Credit card
+                      </MenuItem>
+                    </Select>
+                  )}
+                />
 
-          <CustomInput
-            fullWidth
-            label={'License Type'}
-            value={content.license}
-            InputProps={{
-              readOnly: true,
-            }}
-          />
+                {type === 'paypal' && (
+                  <>
+                    <Controller
+                      name="paypal"
+                      control={control}
+                      render={({ field, fieldState: { invalid, error } }) => (
+                        <TextField
+                          {...field}
+                          sx={{ maxWidth: 600 }}
+                          label={'PayPal'}
+                          helperText={invalid ? error.message : ''}
+                          error={invalid}
+                        />
+                      )}
+                    />
+                  </>
+                )}
+              </Stack>
+            </FormControl>
 
-          <CustomInput
-            fullWidth
-            label={'Validity'}
-            value={content.date}
-            InputProps={{
-              readOnly: true,
-            }}
-          />
+            <Controller
+              name="email"
+              control={control}
+              rules={{ required: true }}
+              render={({ field, fieldState: { invalid, error } }) => (
+                <TextField
+                  {...field}
+                  label={'Email / Card number'}
+                  placeholder={'test@test.com'}
+                  error={invalid}
+                  helperText={invalid ? error.message : ''}
+                  required
+                  color="secondary"
+                />
+              )}
+            />
 
-          <CustomInput
-            fullWidth
-            label={'Territory'}
-            value={content.teritory}
-            InputProps={{
-              readOnly: true,
-            }}
-          />
+            <Controller
+              name="name"
+              control={control}
+              rules={{ required: true }}
+              render={({ field, fieldState: { invalid, error } }) => (
+                <TextField
+                  label={'Name / Surname'}
+                  placeholder="John Doe"
+                  {...field}
+                  error={invalid}
+                  helperText={invalid ? error.message : ''}
+                />
+              )}
+            />
 
-          <CustomInput
-            fullWidth
-            label={'Ways to use'}
-            value={content.use}
-            InputProps={{
-              readOnly: true,
-            }}
-          />
+            <Controller
+              control={control}
+              name="idNumber"
+              rules={{ required: true }}
+              render={({ field, fieldState: { invalid, error } }) => (
+                <TextField
+                  {...field}
+                  label={'ID Number'}
+                  type={'number'}
+                  placeholder={'123-456-789'}
+                />
+              )}
+            />
 
-          <CustomInput
-            fullWidth
-            label={'Additional info'}
-            value={content.additional}
-            InputProps={{
-              readOnly: true,
-            }}
-          />
+            <Controller
+              control={control}
+              name="amount"
+              rules={{ required: true }}
+              render={({ field }) => (
+                <CustomInput
+                  {...field}
+                  label={'Amount'}
+                  type={'number'}
+                  placeholder={'$2000'}
+                />
+              )}
+            />
 
-          <CustomInput
-            fullWidth
-            label={'Price'}
-            value={content.price}
-            InputProps={{
-              readOnly: true,
-            }}
-          />
-          <CustomButton
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{
-              mt: 3,
-              mb: 2,
-              fontSize: '15px',
-              fontWeight: '500',
-              width: '100%',
-            }}
-          >
-            COPY LINK
-          </CustomButton>
-        </Stack>
-      </Box>
-    </Stack>
+            <CustomButton
+              type="submit"
+              variant="contained"
+              disabled={!isValid}
+              sx={{ mt: 3, mb: 2, fontSize: '15px', fontWeight: '500' }}
+            >
+              SEND A REQUEST
+            </CustomButton>
+          </Stack>
+        </Box>
+      </Stack>
+    </>
   );
 }
-
 export default Withdraw;

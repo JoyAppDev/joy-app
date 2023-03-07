@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import LayoutDashboard from '../../components/layout-dashboard';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import InsertPhotoOutlinedIcon from '@mui/icons-material/InsertPhotoOutlined';
 
 import initialData from './../../utils/data.json';
 import addLicenceImage from './../../assets/add_licence_image.png';
@@ -14,8 +15,9 @@ import CopyLink from '../../components/copy-link';
 import BasicCard from '../../components/basic-card';
 import ButtonCopyLicenseCard from '../../components/button-copy-license-card';
 import ButtonCreateLicenseCard from '../../components/button-create-license-card';
-import PopupError from "../../components/popup-error";
+import PopupError from '../../components/popup-error';
 import Withdraw from '../../components/withdraw';
+import { MAIN_TEXT_CREATE_DEAL } from '../../utils/constants';
 
 function Dashboard({ logOut }) {
   const [files, setFiles] = React.useState(null);
@@ -39,9 +41,9 @@ function Dashboard({ logOut }) {
 
   const handleOpenMessage = () => setOpenMessage(true);
   const handleCloseMessage = () => {
-      setOpenMessage(false);
-      setOpenErrorMessage(false);
-  }
+    setOpenMessage(false);
+    setOpenErrorMessage(false);
+  };
 
   const navigate = useNavigate();
 
@@ -58,8 +60,8 @@ function Dashboard({ logOut }) {
   };
 
   const addLicence = e => {
-      setFiles(e.target.files);
-      handleOpenCreateDeal();
+    setFiles(e.target.files);
+    handleOpenCreateDeal();
   };
 
   function handleCopyLicenseClick(card) {
@@ -106,6 +108,15 @@ function Dashboard({ logOut }) {
             setOpenErrorMessage={setOpenErrorMessage}
           />
         }
+        imageContent={
+          <InsertPhotoOutlinedIcon
+            sx={{
+              height: '48px',
+              width: '48px',
+              color: 'grey',
+            }}
+          />
+        }
       />
       <Modal
         openForm={openCopyLinkModal}
@@ -114,6 +125,15 @@ function Dashboard({ logOut }) {
         setOpenMessage={setOpenMessage}
         children={
           <CopyLink content={selectedCard} setOpenForm={setIsCopyLinkModal} />
+        }
+        imageContent={
+          <InsertPhotoOutlinedIcon
+            sx={{
+              height: '48px',
+              width: '48px',
+              color: 'grey',
+            }}
+          />
         }
       />
 
@@ -132,12 +152,14 @@ function Dashboard({ logOut }) {
       <PopupSuccess
         openMessage={openMessage}
         handleCloseMessage={handleCloseMessage}
+        mainText={MAIN_TEXT_CREATE_DEAL}
+        mainTextTitle={'Congrats!'}
+        buttonText="COPY LINK"
       />
       <PopupError
         openErrorMessage={openErrorMessage}
         handleCloseMessage={handleCloseMessage}
       />
-
     </>
   );
 }
