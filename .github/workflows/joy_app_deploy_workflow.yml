@@ -42,10 +42,9 @@ jobs:
         script: |
           sudo docker pull andrianovaei/joy_app_backend:latest
           sudo docker compose stop
-          sudo docker compose rm joy_app
+          sudo docker compose rm joy_app_backend
           rm .env
           touch .env
-          echo SECRET_KEY=${{ secrets.SECRET_KEY }} >> .env
           echo APIKEY=${{ secrets.APIKEY }} >> .env
           echo AUTHDOMAIN=${{ secrets.AUTHDOMAIN }} >> .env
           echo PROJECTID=${{ secrets.PROJECTID }} >> .env
