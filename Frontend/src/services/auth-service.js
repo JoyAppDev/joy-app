@@ -1,9 +1,51 @@
 import axios from 'axios';
-
 import { API_URL } from '../utils/constants';
 
+export const createAPI = () => {
+  const api = axios.create({
+    baseURL: API_URL,
+  });
+
+  api.interceptors.request.use(
+    config => {
+      const userToken = localStorage.getItem('userToken')
+        ? localStorage.getItem('userToken')
+        : null;
+
+      if (userToken) {
+        config.headers['Authorization'] = `Token ${userToken}`;
+      }
+      return config;
+    },
+    error => {
+      return Promise.reject(error);
+    }
+  );
+
+  api.interceptors.response.use(
+    response => {
+      return response;
+    },
+    error => {
+      return Promise.reject(error);
+    }
+  );
+
+  return api;
+};
+
+export const api = createAPI();
+
 const register = async userData => {
-  const response = await axios.post(`${API_URL}/users/`, {
+  console.log(
+      {email: userData.email,
+        address: userData.address,
+        name_surname: userData.name,
+        id_number: userData.idNumber,
+        payment_info: 'credit',
+        password: userData.password}
+  )
+  const response = await api.post(`${API_URL}/api/users/`, {
     email: userData.email,
     address: userData.address,
     name_surname: userData.name,
@@ -12,34 +54,44 @@ const register = async userData => {
     password: userData.password,
   });
 
-  if (response.data) {
-    localStorage.setItem('user', JSON.stringify(response.data));
-  }
 
   return response.data;
 };
 
 const login = async userData => {
-  const response = await axios.post(`${API_URL}/auth/token/login/`, {
+  const response = await api.post(`${API_URL}/api/auth/token/login/`, {
     email: userData.email,
     password: userData.password,
   });
 
-  if (response.data) {
-    localStorage.setItem('user', JSON.stringify(response.data));
+  if (response.data.auth_token) {
+    localStorage.setItem('userToken', response.data.auth_token);
   }
 
   return response.data;
 };
 
-const logout = () => {
-  localStorage.removeItem('user');
+const getAuth = async () => {
+  try {
+    const response = await api.get(`${API_URL}/api/users/me/`);
+    return response.data;
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
+const logout = async () => {
+  const response = await api.post(`${API_URL}/api/auth/token/logout/`);
+  localStorage.removeItem('userToken');
+
+  return response;
 };
 
 const authService = {
   register,
   login,
   logout,
+  getAuth,
 };
 
 export default authService;
