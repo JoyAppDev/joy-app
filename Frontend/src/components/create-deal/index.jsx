@@ -52,7 +52,6 @@ function CreateDeal({ setOpenForm, setOpenMessage, files, setOpenErrorMessage })
     formData.append('price', newDeal.price);
     formData.append('additional_info', newDeal.addInfo);
     for (let file of files) { formData.append('content', file); }
-    console.log(formData);
     return formData;
   }
 
@@ -63,10 +62,8 @@ function CreateDeal({ setOpenForm, setOpenMessage, files, setOpenErrorMessage })
       setIsLoading(true);
       const res = await upload(token, newFormData);
       const data = await res.json();
-      console.log(JSON.stringify(data));
       setOpenMessage(true);
-      // с сервера возвращается превью загруженного видео для отображения в форме создания лицензии
-      //    setUploadedFilePreview(data.image);
+      //    setUploadedFilePreview(data.image); // с сервера возвращается превью загруженного видео для отображения в форме создания лицензии
     } catch (error) {
       setOpenErrorMessage(true);
       console.log(error);
@@ -77,7 +74,6 @@ function CreateDeal({ setOpenForm, setOpenMessage, files, setOpenErrorMessage })
   }
 
   const onSubmit = fields => {
-    console.log(files)
     createLicence(files, fields);
     reset();
     setOpenForm(false);
