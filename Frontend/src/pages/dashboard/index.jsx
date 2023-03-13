@@ -35,11 +35,8 @@ function Dashboard({ logOut }) {
 
   const handleCopyLinkModalOpen = () => setIsCopyLinkModal(true);
   const handleCopyLinkModalClose = () => setIsCopyLinkModal(false);
-
-  const handleWithDrawModalOpen = () => setIsOpenWithdrawModal(true);
   const handleWithDrawModalClose = () => setIsOpenWithdrawModal(false);
 
-  const handleOpenMessage = () => setOpenMessage(true);
   const handleCloseMessage = () => {
     setOpenMessage(false);
     setOpenErrorMessage(false);
@@ -64,7 +61,7 @@ function Dashboard({ logOut }) {
     }
   }, [content, user]);
 
-  console.log(content);
+  console.log({ content });
 
   const openLicence = () => {
     handleCopyLinkModalOpen();
