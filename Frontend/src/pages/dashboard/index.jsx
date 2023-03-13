@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import LayoutDashboard from '../../components/layout-dashboard';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
@@ -45,15 +45,26 @@ function Dashboard({ logOut }) {
     setOpenErrorMessage(false);
   };
 
+  const [creatives, setCreatives] = useState(null);
+
   const navigate = useNavigate();
 
   const { user, isSuccess } = useSelector(state => state.auth);
+  const content = useSelector(state => state.creatives);
 
   useEffect(() => {
     if (!user && isSuccess) {
       navigate('/');
     }
   }, [user, navigate, isSuccess]);
+
+  useEffect(() => {
+    if (user) {
+      setCreatives(content);
+    }
+  }, [content, user]);
+
+  console.log(content);
 
   const openLicence = () => {
     handleCopyLinkModalOpen();

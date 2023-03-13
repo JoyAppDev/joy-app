@@ -78,11 +78,17 @@ const logout = async () => {
   return response;
 };
 
+const getContent = async () => {
+  const response = await api.get(`${API_URL}api/creators/id/licenses/`);
+  return response;
+};
+
 const authService = {
   register,
   login,
   logout,
   getAuth,
+  getContent,
 };
 
 export default authService;
