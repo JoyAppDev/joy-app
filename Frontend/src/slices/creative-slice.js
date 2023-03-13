@@ -1,10 +1,10 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import authService from '../services/auth-service';
+import creativeService from '../services/creative-services';
 
 //getContents
 export const getCreatives = createAsyncThunk('creative/get', async thunkAPI => {
   try {
-    return await authService.getContent();
+    return await creativeService.getContent();
   } catch (error) {
     const message =
       (error.response && error.response.data && error.response.data.message) ||

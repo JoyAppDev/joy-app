@@ -55,13 +55,13 @@ function Dashboard({ logOut }) {
     }
   }, [user, navigate, isSuccess]);
 
-  useEffect(() => {
-    if (user) {
-      setCreatives(content);
-    }
-  }, [content, user]);
+  // useEffect(() => {
+  //   if (user) {
+  //     setCreatives(content);
+  //   }
+  // }, [content, user]);
 
-  console.log({ content });
+  // console.log({ content });
 
   const openLicence = () => {
     handleCopyLinkModalOpen();
