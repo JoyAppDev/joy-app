@@ -4,7 +4,7 @@ import creativesReducer from '../slices/creative-slice';
 
 const reducer = {
   auth: authReducer,
-  creatives: creativesReducer,
+  content: creativesReducer,
 };
 
 const store = configureStore({

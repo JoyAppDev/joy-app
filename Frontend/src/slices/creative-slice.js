@@ -1,26 +1,39 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import creativeService from '../services/creative-services';
+import creativeService from '../services/creative-service';
 
 //getContents
-export const getCreatives = createAsyncThunk('creative/get', async thunkAPI => {
-  try {
-    return await creativeService.getContent();
-  } catch (error) {
-    const message =
-      (error.response && error.response.data && error.response.data.message) ||
-      error.message ||
-      error.toString();
-    return thunkAPI.rejectWithValue(message);
+export const getCreatives = createAsyncThunk(
+  'creatives/get',
+  async thunkAPI => {
+    try {
+      const userId = thunkAPI.getState().auth.user.id;
+      return await creativeService.getContent(userId);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
   }
-});
+);
 
 const initialState = {
-  creative: null,
+  creatives: [],
+  isError: false,
+  isSuccess: false,
+  isLoading: false,
+  message: '',
 };
 
 export const creativeSlice = createSlice({
-  name: 'creative',
+  name: 'creatives',
   initialState,
+  reducers: {
+    resetData: state => initialState,
+  },
   extraReducers: builder => {
     builder
       .addCase(getCreatives.pending, state => {
@@ -29,15 +42,16 @@ export const creativeSlice = createSlice({
       .addCase(getCreatives.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
-        state.creative = action.payload;
+        state.creatives = action.payload;
       })
       .addCase(getCreatives.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
-        state.creative = null;
+        state.creatives = [];
       });
   },
 });
 
+export const { resetData } = creativeSlice.actions;
 export default creativeSlice.reducer;

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import LayoutDashboard from '../../components/layout-dashboard';
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import InsertPhotoOutlinedIcon from '@mui/icons-material/InsertPhotoOutlined';
 
 import initialData from './../../utils/data.json';
@@ -18,6 +18,7 @@ import ButtonCreateLicenseCard from '../../components/button-create-license-card
 import PopupError from '../../components/popup-error';
 import Withdraw from '../../components/withdraw';
 import { MAIN_TEXT_CREATE_DEAL } from '../../utils/constants';
+import { getCreatives, resetData } from '../../slices/creative-slice';
 
 function Dashboard({ logOut }) {
   const [files, setFiles] = React.useState(null);
@@ -42,26 +43,34 @@ function Dashboard({ logOut }) {
     setOpenErrorMessage(false);
   };
 
-  const [creatives, setCreatives] = useState(null);
-
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const { user, isSuccess } = useSelector(state => state.auth);
-  const content = useSelector(state => state.creatives);
+  const { creatives, isError, isLoading, message } = useSelector(
+    state => state.content
+  );
 
   useEffect(() => {
+    // if (isError) {
+    //   console.log(message);
+    // }
     if (!user && isSuccess) {
       navigate('/');
     }
-  }, [user, navigate, isSuccess]);
 
-  // useEffect(() => {
-  //   if (user) {
-  //     setCreatives(content);
-  //   }
-  // }, [content, user]);
+    dispatch(getCreatives());
 
-  // console.log({ content });
+    return () => {
+      dispatch(resetData());
+    };
+  }, [dispatch, isSuccess, navigate, user]);
+
+  // if (isLoading) {
+  //   return <p>Loading...</p>;
+  // }
+
+  console.log({ creatives });
 
   const openLicence = () => {
     handleCopyLinkModalOpen();
@@ -79,6 +88,7 @@ function Dashboard({ logOut }) {
   return (
     <>
       <LayoutDashboard logOut={logOut}>
+        {/* {creatives.length > 0 ? () : (<h3>No creatives created yet</h3>)} */}
         {initialData.map(obj => (
           <BasicCard
             key={obj.id}

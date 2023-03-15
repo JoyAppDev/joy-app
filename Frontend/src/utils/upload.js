@@ -8,7 +8,7 @@ function checkResponse(res) {
 }
 
 export const upload = (token, formData) => {
-  return fetch(`${API_URL}/api/api/licenses2/`, {
+  return fetch(`${API_URL}/api/api/licenses/`, {
     method: 'POST',
     headers: {
       Authorization: `Token ${token}`,
