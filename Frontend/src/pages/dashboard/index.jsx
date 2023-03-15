@@ -1,17 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import LayoutDashboard from '../../components/layout-dashboard';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+
+import Typography from '@mui/material/Typography';
 import InsertPhotoOutlinedIcon from '@mui/icons-material/InsertPhotoOutlined';
 
-import initialData from './../../utils/data.json';
+import LayoutDashboard from '../../components/layout-dashboard';
 import addLicenceImage from './../../assets/add_licence_image.png';
 import PopupSuccess from '../../components/popup-success';
-
 import Modal from '../../components/modal';
 import CreateDeal from '../../components/create-deal';
 import CopyLink from '../../components/copy-link';
-
 import BasicCard from '../../components/basic-card';
 import ButtonCopyLicenseCard from '../../components/button-copy-license-card';
 import ButtonCreateLicenseCard from '../../components/button-create-license-card';
@@ -19,6 +18,8 @@ import PopupError from '../../components/popup-error';
 import Withdraw from '../../components/withdraw';
 import { MAIN_TEXT_CREATE_DEAL } from '../../utils/constants';
 import { getCreatives, resetData } from '../../slices/creative-slice';
+import { theme } from '../../styles/theme';
+import Spinner from '../../components/spinner';
 
 function Dashboard({ logOut }) {
   const [files, setFiles] = React.useState(null);
@@ -52,25 +53,26 @@ function Dashboard({ logOut }) {
   );
 
   useEffect(() => {
-    // if (isError) {
-    //   console.log(message);
-    // }
+    if (isError) {
+      console.log(message);
+    }
+
     if (!user && isSuccess) {
       navigate('/');
     }
 
-    dispatch(getCreatives());
+    if (user) {
+      dispatch(getCreatives(user.id));
+    }
 
     return () => {
       dispatch(resetData());
     };
-  }, [dispatch, isSuccess, navigate, user]);
+  }, [dispatch, isError, isSuccess, message, navigate, user]);
 
   // if (isLoading) {
-  //   return <p>Loading...</p>;
+  //   return <Spinner />;
   // }
-
-  console.log({ creatives });
 
   const openLicence = () => {
     handleCopyLinkModalOpen();
@@ -88,23 +90,25 @@ function Dashboard({ logOut }) {
   return (
     <>
       <LayoutDashboard logOut={logOut}>
-        {/* {creatives.length > 0 ? () : (<h3>No creatives created yet</h3>)} */}
-        {initialData.map(obj => (
-          <BasicCard
-            key={obj.id}
-            author={obj.author}
-            date={obj.date}
-            heading={obj.media}
-            // image={uploadedFilePreview} // изображение превью приходит с сервера
-            children={
-              <ButtonCopyLicenseCard
-                card={obj}
-                onCopyLicense={handleCopyLicenseClick}
-                onOpen={openLicence}
-              />
-            }
-          />
-        ))}
+        {isLoading ? (
+          <Spinner />
+        ) : creatives.length > 0 ? (
+          creatives.map(creative => (
+            <BasicCard
+              key={creative.instance.id}
+              author={creative.instance.creator}
+              heading={creative.content}
+              // image={uploadedFilePreview} // изображение превью приходит с сервера
+              children={
+                <ButtonCopyLicenseCard
+                  card={creative}
+                  onCopyLicense={handleCopyLicenseClick}
+                  onOpen={openLicence}
+                />
+              }
+            />
+          ))
+        ) : null}
 
         <BasicCard
           heading="Create new license?"

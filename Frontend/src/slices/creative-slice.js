@@ -4,10 +4,9 @@ import creativeService from '../services/creative-service';
 //getContents
 export const getCreatives = createAsyncThunk(
   'creatives/get',
-  async thunkAPI => {
+  async (id, thunkAPI) => {
     try {
-      const userId = thunkAPI.getState().auth.user.id;
-      return await creativeService.getContent(userId);
+      return await creativeService.getContent(id);
     } catch (error) {
       const message =
         (error.response &&
