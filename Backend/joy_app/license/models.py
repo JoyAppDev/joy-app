@@ -101,6 +101,7 @@ class License(models.Model):
         Creator, verbose_name='creator',
         on_delete=models.CASCADE,
         related_name='licenses')
+    social_media = models.CharField(max_length=50, blank=True, null=True,)
     license_type = models.CharField(max_length=25, choices=CHOICES)
     validity = models.CharField(max_length=50,)
     territory = models.CharField(max_length=100)
