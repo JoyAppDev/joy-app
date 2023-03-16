@@ -49,7 +49,7 @@ function CopyLink({ setOpenForm, content }) {
           <CustomInput
             fullWidth
             label={'Social Media'}
-            value={content.media}
+            value={content.instance.new_deal}
             InputProps={{
               readOnly: true,
             }}
@@ -58,7 +58,7 @@ function CopyLink({ setOpenForm, content }) {
           <CustomInput
             fullWidth
             label={'License Type'}
-            value={content.license}
+            value={content.instance.license_type}
             InputProps={{
               readOnly: true,
             }}
@@ -67,7 +67,7 @@ function CopyLink({ setOpenForm, content }) {
           <CustomInput
             fullWidth
             label={'Validity'}
-            value={content.date}
+            value={content.instance.validity}
             InputProps={{
               readOnly: true,
             }}
@@ -76,7 +76,7 @@ function CopyLink({ setOpenForm, content }) {
           <CustomInput
             fullWidth
             label={'Territory'}
-            value={content.teritory}
+            value={content.instance.territory}
             InputProps={{
               readOnly: true,
             }}
@@ -85,7 +85,7 @@ function CopyLink({ setOpenForm, content }) {
           <CustomInput
             fullWidth
             label={'Ways to use'}
-            value={content.use}
+            value={content.instance.ways_to_use}
             InputProps={{
               readOnly: true,
             }}
@@ -94,7 +94,7 @@ function CopyLink({ setOpenForm, content }) {
           <CustomInput
             fullWidth
             label={'Additional info'}
-            value={content.additional}
+            value={content.instance.additional_info}
             InputProps={{
               readOnly: true,
             }}
@@ -103,7 +103,7 @@ function CopyLink({ setOpenForm, content }) {
           <CustomInput
             fullWidth
             label={'Price'}
-            value={content.price}
+            value={content.instance.price}
             InputProps={{
               readOnly: true,
             }}

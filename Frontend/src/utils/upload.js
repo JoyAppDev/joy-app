@@ -1,10 +1,10 @@
-import {API_URL} from "./constants";
+import { API_URL } from './constants';
 
 function checkResponse(res) {
-    if (res.ok) {
-        return res;
-    }
-    return Promise.reject(`Ошибка: ${res.status}`);
+  if (res.ok) {
+    return res;
+  }
+  return Promise.reject(`Ошибка: ${res.status}`);
 }
 
 export const upload = (token, formData) => {

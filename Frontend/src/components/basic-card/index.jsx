@@ -31,9 +31,9 @@ export default function BasicCard({ children, author, date, image, heading }) {
             color: '#9D9D9D',
           }}
         >
-          {author} • {date}
+          {author}
         </Typography>
-        <Typography variant="h6" color={theme.palette.custom.greyDark}>
+        <Typography variant="h6" color={theme.palette.custom.greyDark} noWrap>
           {heading}
         </Typography>
       </CardContent>
