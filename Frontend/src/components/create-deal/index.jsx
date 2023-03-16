@@ -76,8 +76,6 @@ function CreateDeal({
       const data = await res.json();
       console.log(JSON.stringify(data));
 
-      console.log(data);
-
       dispatch(updateCreatives(data));
 
       setOpenMessage(true);
@@ -92,9 +90,7 @@ function CreateDeal({
   }
 
   const onSubmit = fields => {
-    console.log(files);
     createLicence(files, fields);
-
     reset();
     setOpenForm(false);
   };

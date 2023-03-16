@@ -70,10 +70,6 @@ function Dashboard({ logOut }) {
     };
   }, [dispatch, isError, isSuccess, message, navigate, user]);
 
-  // if (isLoading) {
-  //   return <Spinner />;
-  // }
-
   const openLicence = () => {
     handleCopyLinkModalOpen();
   };
