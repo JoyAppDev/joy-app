@@ -15,9 +15,8 @@ function LayoutDashboard({ children }) {
             display="grid"
             gridTemplateColumns="repeat(4, 1fr)"
             gap={5}
-            sx={{ pt: 9 }}
+            sx={{ pt: 9, position: 'relative' }}
             width="100%"
-            // height="100vh"
           >
             {children}
           </Box>

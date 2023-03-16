@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -13,10 +14,18 @@ import { useForm, Controller } from 'react-hook-form';
 import { CustomInput } from '../input/index';
 import { CustomButton } from '../button';
 import { upload } from '../../utils/upload';
-import { WAYS_TO_USE } from "../../utils/constants";
+import { WAYS_TO_USE } from '../../utils/constants';
+import { updateCreatives } from '../../slices/creative-slice';
 
-function CreateDeal({ setOpenForm, setOpenMessage, files, setOpenErrorMessage }) {
+function CreateDeal({
+  setOpenForm,
+  setOpenMessage,
+  files,
+  setOpenErrorMessage,
+}) {
   const [isLoading, setIsLoading] = React.useState(false);
+  const dispatch = useDispatch();
+
   const {
     handleSubmit,
     control,
@@ -51,9 +60,11 @@ function CreateDeal({ setOpenForm, setOpenMessage, files, setOpenErrorMessage })
     formData.append('ways_to_use', newDeal.waysToUse);
     formData.append('price', newDeal.price);
     formData.append('additional_info', newDeal.addInfo);
-    for (let file of files) { formData.append('content', file); }
+    for (let file of files) {
+      formData.append('content', file);
+    }
     return formData;
-  }
+  };
 
   async function createLicence(files, newDeal) {
     const token = localStorage.getItem('userToken');
@@ -62,13 +73,16 @@ function CreateDeal({ setOpenForm, setOpenMessage, files, setOpenErrorMessage })
       setIsLoading(true);
       const res = await upload(token, newFormData);
       const data = await res.json();
+      console.log(JSON.stringify(data));
+
+      dispatch(updateCreatives(data));
+
       setOpenMessage(true);
       //    setUploadedFilePreview(data.image); // с сервера возвращается превью загруженного видео для отображения в форме создания лицензии
     } catch (error) {
       setOpenErrorMessage(true);
       console.log(error);
-    }
-    finally {
+    } finally {
       setIsLoading(false);
     }
   }
@@ -89,54 +103,54 @@ function CreateDeal({ setOpenForm, setOpenMessage, files, setOpenErrorMessage })
         <Box component="form" noValidate onSubmit={handleSubmit(onSubmit)}>
           <Stack sx={{ my: 2 }}>
             <Controller
-                control={control}
-                defaultValue={'New Deal_1'}
-                name="deal"
-                fullWidth
-                rules={{ required: true }}
-                render={({ field: { onChange, value } }) => (
-                    <CustomInput
-                        label={'New Deal'}
-                        type={'text'}
-                        onChange={onChange}
-                        value={value || ''}
-                        placeholder={'Your text'}
-                    />
-                )}
+              control={control}
+              defaultValue={'New Deal_1'}
+              name="deal"
+              fullWidth
+              rules={{ required: true }}
+              render={({ field: { onChange, value } }) => (
+                <CustomInput
+                  label={'New Deal'}
+                  type={'text'}
+                  onChange={onChange}
+                  value={value || ''}
+                  placeholder={'Your text'}
+                />
+              )}
             />
           </Stack>
 
           <Controller
-              control={control}
-              defaultValue={'exclusive'}
-              name="license"
-              fullWidth
-              render={({ field: { onChange } }) => (
-                  <CustomInput
-                      label={'License Type'}
-                      type={'text'}
-                      onChange={onChange}
-                      value={'Exclusive License'}
-                      readOnly
-                  />
-              )}
+            control={control}
+            defaultValue={'exclusive'}
+            name="license"
+            fullWidth
+            render={({ field: { onChange } }) => (
+              <CustomInput
+                label={'License Type'}
+                type={'text'}
+                onChange={onChange}
+                value={'Exclusive License'}
+                readOnly
+              />
+            )}
           />
 
           <Stack sx={{ my: 2 }}>
             <Controller
-                control={control}
-                defaultValue={'Without time limit (perpetual)'}
-                name="validityDate"
-                fullWidth
-                render={({ field: { onChange } }) => (
-                    <CustomInput
-                        label={'Validity'}
-                        type={'text'}
-                        onChange={onChange}
-                        value={'Without time limit (perpetual)'}
-                        readOnly
-                    />
-                )}
+              control={control}
+              defaultValue={'Without time limit (perpetual)'}
+              name="validityDate"
+              fullWidth
+              render={({ field: { onChange } }) => (
+                <CustomInput
+                  label={'Validity'}
+                  type={'text'}
+                  onChange={onChange}
+                  value={'Without time limit (perpetual)'}
+                  readOnly
+                />
+              )}
             />
           </Stack>
 
@@ -173,13 +187,13 @@ function CreateDeal({ setOpenForm, setOpenMessage, files, setOpenErrorMessage })
                   sx={{
                     textOverflow: 'ellipsis',
                     whiteSpace: 'nowrap',
-                    overflow: 'hidden'
+                    overflow: 'hidden',
                   }}
                 >
-                  {WAYS_TO_USE.map((item) => (
-                      <MenuItem value={item} label={item} key={item}>
-                        {item}
-                      </MenuItem>
+                  {WAYS_TO_USE.map(item => (
+                    <MenuItem value={item} label={item} key={item}>
+                      {item}
+                    </MenuItem>
                   ))}
                 </Select>
               )}
@@ -224,11 +238,7 @@ function CreateDeal({ setOpenForm, setOpenMessage, files, setOpenErrorMessage })
               disabled={!isValid}
               sx={{ mt: 3, mb: 2, fontSize: '15px', fontWeight: '500' }}
             >
-              {isLoading?
-                'LOADING...'
-                :
-                'CREATE A NEW DEAL'
-              }
+              {isLoading ? 'LOADING...' : 'CREATE A NEW DEAL'}
             </CustomButton>
           </Stack>
         </Box>
