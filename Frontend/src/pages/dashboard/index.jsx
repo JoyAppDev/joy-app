@@ -1,5 +1,6 @@
-import React from 'react';
-import LayoutDashboard from '../../components/layout-dashboard';
+import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 
 import InsertPhotoOutlinedIcon from '@mui/icons-material/InsertPhotoOutlined';
 
@@ -16,7 +17,6 @@ import PopupError from '../../components/popup-error';
 import Withdraw from '../../components/withdraw';
 import { MAIN_TEXT_CREATE_DEAL } from '../../utils/constants';
 import { getCreatives, resetData } from '../../slices/creative-slice';
-import { theme } from '../../styles/theme';
 import Spinner from '../../components/spinner';
 
 function Dashboard({ logOut }) {
@@ -35,13 +35,38 @@ function Dashboard({ logOut }) {
 
   const handleCopyLinkModalOpen = () => setIsCopyLinkModal(true);
   const handleCopyLinkModalClose = () => setIsCopyLinkModal(false);
-
   const handleWithDrawModalClose = () => setIsOpenWithdrawModal(false);
 
   const handleCloseMessage = () => {
     setOpenMessage(false);
     setOpenErrorMessage(false);
   };
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const { user, isSuccess } = useSelector(state => state.auth);
+  const { creatives, isError, isLoading, message } = useSelector(
+    state => state.content
+  );
+
+  useEffect(() => {
+    if (isError) {
+      console.log(message);
+    }
+
+    if (!user && isSuccess) {
+      navigate('/');
+    }
+
+    if (user) {
+      dispatch(getCreatives(user.id));
+    }
+
+    return () => {
+      dispatch(resetData());
+    };
+  }, [dispatch, isError, isSuccess, message, navigate, user]);
 
   const openLicence = () => {
     handleCopyLinkModalOpen();
@@ -55,8 +80,6 @@ function Dashboard({ logOut }) {
   function handleCopyLicenseClick(card) {
     setSelectedCard(card);
   }
-
-  console.log(creatives);
 
   return (
     <>
