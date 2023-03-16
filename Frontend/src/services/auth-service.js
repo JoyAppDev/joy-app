@@ -11,7 +11,9 @@ const register = async userData => {
     password: userData.password,
   });
 
-  return response.data;
+  // return response.data;
+
+  return response;
 };
 
 const login = async userData => {
