@@ -87,6 +87,8 @@ function Dashboard({ logOut }) {
     setSelectedCard(card);
   }
 
+  console.log(creatives);
+
   return (
     <>
       <LayoutDashboard logOut={logOut}>
@@ -97,7 +99,7 @@ function Dashboard({ logOut }) {
             <BasicCard
               key={creative.instance.id}
               author={creative.instance.creator}
-              heading={creative.content}
+              heading={creative.instance.new_deal}
               // image={uploadedFilePreview} // изображение превью приходит с сервера
               children={
                 <ButtonCopyLicenseCard
