@@ -3,20 +3,21 @@ import LayoutDashboard from '../../components/layout-dashboard';
 
 import InsertPhotoOutlinedIcon from '@mui/icons-material/InsertPhotoOutlined';
 
-import initialData from './../../utils/data.json';
+import LayoutDashboard from '../../components/layout-dashboard';
 import addLicenceImage from './../../assets/add_licence_image.png';
 import PopupSuccess from '../../components/popup-success';
-
 import Modal from '../../components/modal';
 import CreateDeal from '../../components/create-deal';
 import CopyLink from '../../components/copy-link';
-
 import BasicCard from '../../components/basic-card';
 import ButtonCopyLicenseCard from '../../components/button-copy-license-card';
 import ButtonCreateLicenseCard from '../../components/button-create-license-card';
 import PopupError from '../../components/popup-error';
 import Withdraw from '../../components/withdraw';
 import { MAIN_TEXT_CREATE_DEAL } from '../../utils/constants';
+import { getCreatives, resetData } from '../../slices/creative-slice';
+import { theme } from '../../styles/theme';
+import Spinner from '../../components/spinner';
 
 function Dashboard({ logOut }) {
   const [files, setFiles] = React.useState(null);
@@ -55,25 +56,30 @@ function Dashboard({ logOut }) {
     setSelectedCard(card);
   }
 
+  console.log(creatives);
+
   return (
     <>
       <LayoutDashboard logOut={logOut}>
-        {initialData.map(obj => (
-          <BasicCard
-            key={obj.id}
-            author={obj.author}
-            date={obj.date}
-            heading={obj.media}
-            // image={uploadedFilePreview} // изображение превью приходит с сервера
-            children={
-              <ButtonCopyLicenseCard
-                card={obj}
-                onCopyLicense={handleCopyLicenseClick}
-                onOpen={openLicence}
-              />
-            }
-          />
-        ))}
+        {isLoading ? (
+          <Spinner />
+        ) : creatives.length > 0 ? (
+          creatives.map(creative => (
+            <BasicCard
+              key={creative.instance.id}
+              author={creative.instance.creator}
+              heading={creative.instance.new_deal}
+              // image={uploadedFilePreview} // изображение превью приходит с сервера
+              children={
+                <ButtonCopyLicenseCard
+                  card={creative}
+                  onCopyLicense={handleCopyLicenseClick}
+                  onOpen={openLicence}
+                />
+              }
+            />
+          ))
+        ) : null}
 
         <BasicCard
           heading="Create new license?"
