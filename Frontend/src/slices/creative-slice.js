@@ -32,6 +32,9 @@ export const creativeSlice = createSlice({
   initialState,
   reducers: {
     resetData: state => initialState,
+    updateCreatives({ creatives }, action) {
+      creatives.push(action.payload);
+    },
   },
   extraReducers: builder => {
     builder
@@ -52,5 +55,5 @@ export const creativeSlice = createSlice({
   },
 });
 
-export const { resetData } = creativeSlice.actions;
+export const { resetData, updateCreatives } = creativeSlice.actions;
 export default creativeSlice.reducer;

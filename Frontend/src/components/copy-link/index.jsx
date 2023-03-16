@@ -49,7 +49,7 @@ function CopyLink({ setOpenForm, content }) {
           <CustomInput
             fullWidth
             label={'Social Media'}
-            value={content.instance.new_deal}
+            value={content.instance.social_media}
             InputProps={{
               readOnly: true,
             }}
