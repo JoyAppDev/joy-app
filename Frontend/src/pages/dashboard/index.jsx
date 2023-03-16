@@ -1,7 +1,6 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import LayoutDashboard from '../../components/layout-dashboard';
-import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+
 import InsertPhotoOutlinedIcon from '@mui/icons-material/InsertPhotoOutlined';
 
 import initialData from './../../utils/data.json';
@@ -36,24 +35,12 @@ function Dashboard({ logOut }) {
   const handleCopyLinkModalOpen = () => setIsCopyLinkModal(true);
   const handleCopyLinkModalClose = () => setIsCopyLinkModal(false);
 
-  const handleWithDrawModalOpen = () => setIsOpenWithdrawModal(true);
   const handleWithDrawModalClose = () => setIsOpenWithdrawModal(false);
 
-  const handleOpenMessage = () => setOpenMessage(true);
   const handleCloseMessage = () => {
     setOpenMessage(false);
     setOpenErrorMessage(false);
   };
-
-  const navigate = useNavigate();
-
-  const { user, isSuccess } = useSelector(state => state.auth);
-
-  useEffect(() => {
-    if (!user && isSuccess) {
-      navigate('/');
-    }
-  }, [user, navigate, isSuccess]);
 
   const openLicence = () => {
     handleCopyLinkModalOpen();
