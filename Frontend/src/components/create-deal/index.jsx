@@ -63,7 +63,6 @@ function CreateDeal({
     for (let file of files) {
       formData.append('content', file);
     }
-    console.log(formData);
     return formData;
   };
 
@@ -79,8 +78,7 @@ function CreateDeal({
       dispatch(updateCreatives(data));
 
       setOpenMessage(true);
-      // с сервера возвращается превью загруженного видео для отображения в форме создания лицензии
-      //    setUploadedFilePreview(data.image);
+      //    setUploadedFilePreview(data.image); // с сервера возвращается превью загруженного видео для отображения в форме создания лицензии
     } catch (error) {
       setOpenErrorMessage(true);
       console.log(error);

@@ -32,6 +32,7 @@ const getAuth = async () => {
     const response = await api.get(`${API_URL}/api/users/me/`);
     return response.data;
   } catch (error) {
+    localStorage.removeItem('userToken');
     console.log(error.message);
   }
 };
