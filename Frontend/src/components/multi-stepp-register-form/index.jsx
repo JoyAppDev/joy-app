@@ -122,7 +122,7 @@ export default function MultiStepRegisterForm() {
     }
 
     if (isSuccess) {
-      navigate('/');
+      navigate('/dashboard');
     }
 
     dispatch(resetData());

@@ -8,15 +8,14 @@ function checkResponse(res) {
 }
 
 export const upload = (token, formData) => {
-    return fetch(`${API_URL}/api/api/licenses/`, {
-        method: 'POST',
-        headers: {
-            "Authorization": `Token ${token}`
-        },
-        body: formData,
-    })
-        .then((res) => {
-            console.log(res);
-            return checkResponse(res);
-        });
+  return fetch(`${API_URL}/api/api/licenses/`, {
+    method: 'POST',
+    headers: {
+      Authorization: `Token ${token}`,
+    },
+    body: formData,
+  }).then(res => {
+    console.log(res);
+    return checkResponse(res);
+  });
 };

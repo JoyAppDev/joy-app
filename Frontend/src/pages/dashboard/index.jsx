@@ -69,10 +69,6 @@ function Dashboard({ logOut }) {
     };
   }, [dispatch, isError, isSuccess, message, navigate, user]);
 
-  // if (isLoading) {
-  //   return <Spinner />;
-  // }
-
   const openLicence = () => {
     handleCopyLinkModalOpen();
   };
@@ -85,8 +81,6 @@ function Dashboard({ logOut }) {
   function handleCopyLicenseClick(card) {
     setSelectedCard(card);
   }
-
-  console.log(creatives);
 
   return (
     <>

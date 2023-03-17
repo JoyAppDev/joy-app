@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import authService from '../services/auth-service';
+import { useDispatch } from 'react-redux';
 
 //get user from local storage
 const userToken = localStorage.getItem('userToken')
@@ -11,7 +12,10 @@ export const register = createAsyncThunk(
   'auth/register',
   async (user, thunkAPI) => {
     try {
-      return await authService.register(user);
+      const { dispatch } = thunkAPI;
+
+      await authService.register(user);
+      await dispatch(login({ email: user.email, password: user.password }));
     } catch (error) {
       const message =
         (error.response &&
@@ -105,6 +109,7 @@ export const authSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(login.fulfilled, (state, { payload }) => {
+        console.log({ payload });
         state.isLoading = false;
         state.isSuccess = true;
         state.user = payload.user;
