@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
-import Typography from '@mui/material/Typography';
 import InsertPhotoOutlinedIcon from '@mui/icons-material/InsertPhotoOutlined';
 
 import LayoutDashboard from '../../components/layout-dashboard';
@@ -18,7 +17,6 @@ import PopupError from '../../components/popup-error';
 import Withdraw from '../../components/withdraw';
 import { MAIN_TEXT_CREATE_DEAL } from '../../utils/constants';
 import { getCreatives, resetData } from '../../slices/creative-slice';
-import { theme } from '../../styles/theme';
 import Spinner from '../../components/spinner';
 
 function Dashboard({ logOut }) {
@@ -31,6 +29,7 @@ function Dashboard({ logOut }) {
 
   const [openMessage, setOpenMessage] = React.useState(false);
   const [openErrorMessage, setOpenErrorMessage] = React.useState(false);
+  const [isLoadingContent, setIsLoadingContent] = React.useState(false);
 
   const handleOpenCreateDeal = () => setIsOpenCreateDealModal(true);
   const handleCloseCreateDeal = () => setIsOpenCreateDealModal(false);
@@ -92,7 +91,7 @@ function Dashboard({ logOut }) {
   return (
     <>
       <LayoutDashboard logOut={logOut}>
-        {isLoading ? (
+        {isLoading || isLoadingContent ? (
           <Spinner />
         ) : creatives.length > 0 ? (
           creatives.map(creative => (
@@ -130,6 +129,7 @@ function Dashboard({ logOut }) {
             setOpenMessage={setOpenMessage}
             files={files}
             setOpenErrorMessage={setOpenErrorMessage}
+            setIsLoadingContent={setIsLoadingContent}
           />
         }
         imageContent={

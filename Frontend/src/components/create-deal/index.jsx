@@ -1,4 +1,5 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -21,8 +22,8 @@ function CreateDeal({
   setOpenMessage,
   files,
   setOpenErrorMessage,
+  setIsLoadingContent
 }) {
-  const [isLoading, setIsLoading] = React.useState(false);
   const dispatch = useDispatch();
 
   const {
@@ -70,22 +71,18 @@ function CreateDeal({
     const token = localStorage.getItem('userToken');
     const newFormData = createFormData(files, newDeal);
     try {
-      setIsLoading(true);
+      setIsLoadingContent(true);
       const res = await upload(token, newFormData);
       const data = await res.json();
-      console.log(JSON.stringify(data));
-
-      console.log(data);
 
       dispatch(updateCreatives(data));
 
       setOpenMessage(true);
-      //    setUploadedFilePreview(data.image); // с сервера возвращается превью загруженного видео для отображения в форме создания лицензии
     } catch (error) {
       setOpenErrorMessage(true);
       console.log(error);
     } finally {
-      setIsLoading(false);
+      setIsLoadingContent(false);
     }
   }
 
@@ -241,7 +238,7 @@ function CreateDeal({
               disabled={!isValid}
               sx={{ mt: 3, mb: 2, fontSize: '15px', fontWeight: '500' }}
             >
-              {isLoading ? 'LOADING...' : 'CREATE A NEW DEAL'}
+              CREATE A NEW DEAL
             </CustomButton>
           </Stack>
         </Box>
