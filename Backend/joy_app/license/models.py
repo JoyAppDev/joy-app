@@ -16,13 +16,14 @@ class CustomUserManager(BaseUserManager):
         Creates and saves a User with the given email, first name,
         last name and password.
         """
+        print(extra_fields)
         if not email:
             raise ValueError("Users must have an email address")
         if not password:
             raise ValueError("Users must have a password")
         user = self.model(
             email=self.normalize_email(email),
-            **extra_fields,
+            **extra_fields
         )
 
         user.set_password(password)
@@ -43,6 +44,7 @@ class CustomUserManager(BaseUserManager):
         user.is_superuser = True
         user.save(using=self._db)
         return user
+
 
 class Creator(AbstractUser):
     username = models.CharField(
@@ -75,10 +77,10 @@ class Creator(AbstractUser):
 
     USERNAME_FIELD = 'email'
 
-    REQUIRED_FIELDS = ['address',
-                       'id_number', 'payment_info']
+    REQUIRED_FIELDS = ['address', 'id_number', 'name_surname', 'payment_info']
 
-    FIELDS_TO_UPDATE = ['email', 'address', 'id_number', 'payment_info']
+    # FIELDS_TO_UPDATE = ['email', 'address', 'id_number', 'payment_info',
+    #                     'name_surname', 'payment_type']
 
     class Meta:
         verbose_name = 'Creator'

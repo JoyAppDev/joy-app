@@ -76,10 +76,9 @@ class CustomUserViewSet(viewsets.ModelViewSet):
     Creators
     """
 
-    permission_classes = (IsAdminUser)
     queryset = Creator.objects.all()
     serializer_class = CreatorSerializer
-    permission_classes = (UserOrReadOnly,)
+    permission_classes = (AllowAny,)
     filter_backends = (DjangoFilterBackend, filters.SearchFilter,
                        filters.OrderingFilter)
     filterset_fields = ('name_surname', 'id_number')
