@@ -152,15 +152,15 @@ class LicenseSerializer(serializers.ModelSerializer):
         fields = ('id', 'new_deal', 'creator', 'brand',
                   'license_type', 'validity',
                   'territory', 'ways_to_use',
-                  'price',
+                  'price', 'social_media',
                   'additional_info', 'content'
                   )
-        validators = [
-            UniqueTogetherValidator(
-                queryset=License.objects.all(),
-                fields=('new_deal', 'creator')
-            )
-        ]
+        # validators = [
+        #     UniqueTogetherValidator(
+        #         queryset=License.objects.all(),
+        #         fields=('new_deal', 'creator')
+        #     )
+        # ]
 
     def create(self, validated_data):
         content = validated_data.pop('content')
@@ -191,11 +191,11 @@ class CreatorSerializer(serializers.ModelSerializer):
     """
     Сериализатор для получения креаторов.
     """
-    licenses = serializers.StringRelatedField(many=True, read_only=True)
+    # licenses = serializers.StringRelatedField(many=True, read_only=True)
 
     class Meta:
         model = Creator
-        fields = ('id', 'name_surname',
+        fields = ('id', 'email', 'name_surname',
                   'address', 'id_number',
-                  'payment_info', 'licenses',
+                  'payment_info', 
                   )
