@@ -42,7 +42,7 @@ jobs:
         script: |
           sudo docker pull andrianovaei/joy_app_backend:latest
           sudo docker compose stop
-          sudo docker compose rm andrianovaei/joy_app_backend
+          sudo docker compose rm backend
           rm .env
           touch .env
           echo APIKEY=${{ secrets.APIKEY }} >> .env
