@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 
 from django.core.files.storage import default_storage
 from django.forms.models import model_to_dict
+from djoser.serializers import UserSerializer
 from rest_framework import serializers
 from rest_framework.validators import UniqueTogetherValidator
 
@@ -187,7 +188,7 @@ class LicenseSerializer(serializers.ModelSerializer):
 
 
 
-class CreatorSerializer(serializers.ModelSerializer):
+class CreatorSerializer(UserSerializer):
     """
     Сериализатор для получения креаторов.
     """
