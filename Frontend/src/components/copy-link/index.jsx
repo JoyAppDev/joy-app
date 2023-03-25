@@ -40,16 +40,16 @@ function CopyLink({ setOpenForm, content }) {
 
   return (
     <Stack spacing={2} sx={{ width: '100%' }}>
-      <Typography component="h1" variant="h5" mb={2}>
+      <Typography component='h1' variant='h5' mb={2}>
         Copying a link
       </Typography>
 
-      <Box component="form" noValidate onSubmit={handleSubmit(onSubmit)}>
+      <Box component='form' noValidate onSubmit={handleSubmit(onSubmit)}>
         <Stack spacing={2}>
           <CustomInput
             fullWidth
             label={'Social Media'}
-            value={content.instance.social_media}
+            value={undefined}
             InputProps={{
               readOnly: true,
             }}
@@ -109,9 +109,9 @@ function CopyLink({ setOpenForm, content }) {
             }}
           />
           <CustomButton
-            type="submit"
+            type='submit'
             fullWidth
-            variant="contained"
+            variant='contained'
             sx={{
               mt: 3,
               mb: 2,

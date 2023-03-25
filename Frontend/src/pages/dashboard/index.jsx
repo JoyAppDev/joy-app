@@ -45,9 +45,9 @@ function Dashboard({ logOut }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const { user, isSuccess } = useSelector(state => state.auth);
+  const { user, isSuccess } = useSelector((state) => state.auth);
   const { creatives, isError, isLoading, message } = useSelector(
-    state => state.content
+    (state) => state.content
   );
 
   useEffect(() => {
@@ -72,7 +72,7 @@ function Dashboard({ logOut }) {
     handleCopyLinkModalOpen();
   };
 
-  const addLicence = e => {
+  const addLicence = (e) => {
     setFiles(e.target.files);
     handleOpenCreateDeal();
   };
@@ -87,10 +87,10 @@ function Dashboard({ logOut }) {
         {isLoading ? (
           <Spinner />
         ) : creatives.length > 0 ? (
-          creatives.map(creative => (
+          creatives.map((creative) => (
             <BasicCard
               key={creative.instance.id}
-              author={creative.instance.creator}
+              author={user.name_surname}
               heading={creative.instance.new_deal}
               // image={uploadedFilePreview} // изображение превью приходит с сервера
               children={
@@ -105,9 +105,9 @@ function Dashboard({ logOut }) {
         ) : null}
 
         <BasicCard
-          heading="Create new license?"
-          author="John Doe"
-          date="Now"
+          heading='Create new license?'
+          author='John Doe'
+          date='Now'
           image={addLicenceImage}
           children={<ButtonCreateLicenseCard addLicence={addLicence} />}
         />
@@ -170,7 +170,7 @@ function Dashboard({ logOut }) {
         handleCloseMessage={handleCloseMessage}
         mainText={MAIN_TEXT_CREATE_DEAL}
         mainTextTitle={'Congrats!'}
-        buttonText="COPY LINK"
+        buttonText='COPY LINK'
       />
       <PopupError
         openErrorMessage={openErrorMessage}

@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import authService from '../services/auth-service';
-import { useDispatch } from 'react-redux';
 
 //get user from local storage
 const userToken = localStorage.getItem('userToken')
@@ -15,7 +14,7 @@ export const register = createAsyncThunk(
       const { dispatch } = thunkAPI;
 
       await authService.register(user);
-      await dispatch(login({ email: user.email, password: user.password }));
+      dispatch(login({ email: user.email, password: user.password }));
     } catch (error) {
       const message =
         (error.response &&
@@ -35,10 +34,11 @@ export const login = createAsyncThunk(
     try {
       const { auth_token } = await authService.login(userData);
       let user = null;
-
+      console.log(auth_token);
       if (auth_token) {
         user = await authService.getAuth();
       }
+
       return { auth_token, user };
     } catch (error) {
       const message =
@@ -56,7 +56,7 @@ export const logout = createAsyncThunk('auth/logout', async () => {
   await authService.logout();
 });
 
-export const getUser = createAsyncThunk('auth/getUser', async thunkAPI => {
+export const getUser = createAsyncThunk('auth/getUser', async (thunkAPI) => {
   try {
     return await authService.getAuth();
   } catch (error) {
@@ -82,16 +82,16 @@ export const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    resetData: state => {
+    resetData: (state) => {
       state.isLoading = false;
       state.isError = false;
       state.isSuccess = false;
       state.message = '';
     },
   },
-  extraReducers: builder => {
+  extraReducers: (builder) => {
     builder
-      .addCase(register.pending, state => {
+      .addCase(register.pending, (state) => {
         state.isLoading = true;
       })
       .addCase(register.fulfilled, (state, action) => {
@@ -105,11 +105,10 @@ export const authSlice = createSlice({
         state.message = action.payload;
         state.user = null;
       })
-      .addCase(login.pending, state => {
+      .addCase(login.pending, (state) => {
         state.isLoading = true;
       })
       .addCase(login.fulfilled, (state, { payload }) => {
-        console.log({ payload });
         state.isLoading = false;
         state.isSuccess = true;
         state.user = payload.user;
@@ -121,11 +120,11 @@ export const authSlice = createSlice({
         state.message = action.payload;
         state.user = null;
       })
-      .addCase(logout.fulfilled, state => {
+      .addCase(logout.fulfilled, (state) => {
         state.user = null;
         state.userToken = null;
       })
-      .addCase(getUser.pending, state => {
+      .addCase(getUser.pending, (state) => {
         state.isLoading = true;
       })
       .addCase(getUser.fulfilled, (state, { payload }) => {

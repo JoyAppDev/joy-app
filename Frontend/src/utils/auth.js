@@ -22,8 +22,7 @@ export const register = ({ email, address, idNumber, name, password }) => {
       payment_info: 'credit',
       password: password,
     }),
-  }).then(res => {
-    console.log(res);
+  }).then((res) => {
     return checkResponse(res);
   });
 };
@@ -39,13 +38,13 @@ export const authorize = (email, password) => {
       email: email,
       password: password,
     }),
-  }).then(res => {
+  }).then((res) => {
     console.log(res);
     return checkResponse(res);
   });
 };
 
-export const checkToken = token => {
+export const checkToken = (token) => {
   return fetch(`${API_URL}/users/me`, {
     //credentials: 'include',
     method: 'GET',
@@ -55,12 +54,12 @@ export const checkToken = token => {
       Authorization: `Token ${token}`,
     },
   })
-    .then(res => {
+    .then((res) => {
       if (res.ok) {
         return res.json();
       } else {
         console.log(`Ошибка: ${res.status}`);
       }
     })
-    .then(data => data);
+    .then((data) => data);
 };

@@ -1,7 +1,7 @@
 import { API_URL } from '../utils/constants';
 import { api } from '../utils/api-requests';
 
-const register = async userData => {
+const register = async (userData) => {
   const response = await api.post(`${API_URL}/api/users/`, {
     email: userData.email,
     address: userData.address,
@@ -11,12 +11,10 @@ const register = async userData => {
     password: userData.password,
   });
 
-  // return response.data;
-
   return response;
 };
 
-const login = async userData => {
+const login = async (userData) => {
   const response = await api.post(`${API_URL}/api/auth/token/login/`, {
     email: userData.email,
     password: userData.password,
