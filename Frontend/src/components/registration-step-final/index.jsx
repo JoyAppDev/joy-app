@@ -7,7 +7,7 @@ import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import { TextField } from '@mui/material';
+import TextField from '@mui/material/TextField';
 
 function RegistrationStepFinal() {
   const { control, defaultValue, watch } = useFormContext();
