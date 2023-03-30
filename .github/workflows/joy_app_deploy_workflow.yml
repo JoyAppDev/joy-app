@@ -23,12 +23,12 @@ jobs:
           context: ./Backend/joy_app
           push: true
           tags: andrianovaei/joy_app_backend
-      # - name: Push to Docker Hub frontend
-      #   uses: docker/build-push-action@v2 
-      #   with:
-      #     context: ./frontend
-      #     push: true
-      #     tags: thisispetrovich/foodgram_frontend
+      - name: Push to Docker Hub frontend
+        uses: docker/build-push-action@v2 
+        with:
+          context: ./Frontend
+          push: true
+          tags: andrianovaei/joy_app_frontend
   deploy:
     runs-on: ubuntu-latest
     needs: build_and_push_to_docker_hub
@@ -43,6 +43,7 @@ jobs:
           sudo docker pull andrianovaei/joy_app_backend:latest
           sudo docker compose stop
           sudo docker compose rm backend
+          sudo docker compose rm frontend
           rm .env
           touch .env
           echo APIKEY=${{ secrets.APIKEY }} >> .env
