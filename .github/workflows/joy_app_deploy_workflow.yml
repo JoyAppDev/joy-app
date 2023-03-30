@@ -41,6 +41,7 @@ jobs:
         key: ${{ secrets.SSH_KEY }}
         script: |
           sudo docker pull andrianovaei/joy_app_backend:latest
+          sudo docker pull andrianovaei/joy_app_frontend:latest
           sudo docker compose stop
           sudo docker compose rm backend
           sudo docker compose rm frontend
