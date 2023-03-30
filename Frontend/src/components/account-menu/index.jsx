@@ -16,7 +16,6 @@ import Logout from '@mui/icons-material/Logout';
 import { Button } from '@mui/material';
 
 import avatar from './../../assets/avatar.svg';
-import Modal from '../modal';
 
 export default function AccountMenu({ onOpenWithdraw, onCloseWithdraw }) {
   const navigate = useNavigate();

@@ -19,7 +19,7 @@ function Withdraw({ setOpenForm, setOpenMessage }) {
     handleSubmit,
     watch,
     control,
-    formState: { errors, isValid },
+    formState: { isValid },
     reset,
   } = useForm({
     mode: 'onBlur',
@@ -36,7 +36,6 @@ function Withdraw({ setOpenForm, setOpenMessage }) {
 
   const onSubmit = (fields, e) => {
     e.preventDefault();
-    console.log(JSON.stringify(fields));
     reset();
     setOpenForm(false);
     setOpenMessage(true);
@@ -140,7 +139,7 @@ function Withdraw({ setOpenForm, setOpenMessage }) {
               control={control}
               name="idNumber"
               rules={{ required: true }}
-              render={({ field, fieldState: { invalid, error } }) => (
+              render={({ field }) => (
                 <TextField
                   {...field}
                   label={'ID Number'}

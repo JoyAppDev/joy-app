@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React from 'react';
+import { useDispatch } from 'react-redux';
 
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -16,7 +16,6 @@ import { CustomButton } from '../button';
 import { upload } from '../../utils/upload';
 import { WAYS_TO_USE } from '../../utils/constants';
 import { updateCreatives } from '../../slices/creative-slice';
-
 function CreateDeal({
   setOpenForm,
   setOpenMessage,
@@ -73,7 +72,6 @@ function CreateDeal({
       setIsLoading(true);
       const res = await upload(token, newFormData);
       const data = await res.json();
-      console.log(JSON.stringify(data));
 
       dispatch(updateCreatives(data));
 

@@ -1,4 +1,3 @@
-import Box from '@mui/material/Box';
 import './styles.css';
 
 function Spinner() {
