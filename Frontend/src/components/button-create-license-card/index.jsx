@@ -36,7 +36,6 @@ function ButtonCreateLicenseCard({ addLicence }) {
         Create licence
         <input
           hidden
-          //accept="video/*"
           multiple
           type="file"
           onChange={addLicence}
