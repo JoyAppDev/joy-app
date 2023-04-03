@@ -9,6 +9,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
 
 import { CustomButton } from '../../components/button';
 import { CustomInput } from '../../components/input';
@@ -16,13 +17,14 @@ import Layout from '../../components/layout';
 import { passwordValidator } from './../../utils/validator';
 import Spinner from '../../components/spinner';
 import { login, resetData } from '../../slices/auth-slice';
+import CustomLink from '../../components/link';
 
 function Login() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const { user, isLoading, isError, isSuccess, message } = useSelector(
-    state => state.auth
+    (state) => state.auth
   );
 
   React.useEffect(() => {
@@ -45,7 +47,7 @@ function Login() {
     mode: 'onBlur',
   });
 
-  const onSubmit = data => {
+  const onSubmit = (data) => {
     dispatch(login(data));
   };
 
@@ -56,10 +58,10 @@ function Login() {
   return (
     <Layout>
       <Box
-        component="form"
+        component='form'
         onSubmit={handleSubmit(onSubmit)}
         noValidate
-        autoComplete="off"
+        autoComplete='off'
         sx={{
           mt: 4.4,
           maxWidth: '458px',
@@ -69,63 +71,52 @@ function Login() {
         <Stack spacing={2}>
           <Controller
             control={control}
-            name="email"
+            name='email'
             rules={{ required: true }}
             render={({ field: { onChange, value } }) => (
               <CustomInput
                 label={'Email address'}
                 type={'text'}
-                onChange={e => {
+                onChange={(e) => {
                   onChange(e);
                 }}
                 value={value || ''}
                 error={!!errors.email?.message}
                 helperText={errors.email?.message}
                 placeholder={'yourname@gmail.com'}
-                autoComplete="off"
+                autoComplete='off'
               />
             )}
           />
           <Controller
             control={control}
-            name="password"
+            name='password'
             rules={passwordValidator}
             render={({ field: { onChange, value } }) => (
               <CustomInput
                 label={'Password'}
                 type={'password'}
-                onChange={e => {
+                onChange={(e) => {
                   onChange(e);
                 }}
                 value={value || ''}
                 error={!!errors.password?.message}
                 helperText={errors.password?.message}
                 placeholder={''}
-                autoComplete="off"
+                autoComplete='off'
               />
             )}
           />
         </Stack>
 
         <Stack spacing={2} mt={4}>
-          <CustomButton type="submit" disabled={!isValid}>
+          <CustomButton type='submit' disabled={!isValid}>
             LOG IN
           </CustomButton>
 
           <Typography>
             If you have no account, you can
-            <Link
-              sx={{
-                textDecorationColor: 'rgba(55, 103, 226, 1)',
-                color: 'rgba(55, 103, 226, 1)',
-                marginLeft: '4px',
-                cursor: 'pointer',
-              }}
-              component={RouterLink}
-              to="/register"
-            >
-              SIGN UP.
-            </Link>
+            <CustomLink to='/register'>SIGN UP.</CustomLink>
           </Typography>
         </Stack>
       </Box>

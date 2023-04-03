@@ -15,6 +15,7 @@ import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
 
 import { CustomButton } from '../button';
+import CustomLink from '../../components/link';
 import RegistrationStepFirst from '../registration-step-first';
 import RegistrationStepFinal from '../registration-step-final';
 import { theme } from '../../styles/theme';
@@ -42,7 +43,7 @@ export default function MultiStepRegisterForm() {
   const dispatch = useDispatch();
 
   const { user, isLoading, isError, isSuccess, message } = useSelector(
-    state => state.auth
+    (state) => state.auth
   );
 
   const validationSchema = [
@@ -69,7 +70,7 @@ export default function MultiStepRegisterForm() {
       idNumber: yup.string().trim().required(),
       paymentInfo: yup.string().oneOf(['paypal', 'credit']),
       paypal: yup.string().when('paymentInfo', {
-        is: val => val === 'paypal',
+        is: (val) => val === 'paypal',
         then: yup.string().required(),
       }),
     }),
@@ -91,7 +92,7 @@ export default function MultiStepRegisterForm() {
     reset,
   } = methods;
 
-  const onSubmit = data => {
+  const onSubmit = (data) => {
     const { email, password, name, address, idNumber, paymentInfo, paypal } =
       data;
 
@@ -112,7 +113,7 @@ export default function MultiStepRegisterForm() {
   const handleNext = async () => {
     const isStepValid = await trigger();
     if (isStepValid) {
-      setActiveStep(prevActiveStep => prevActiveStep + 1);
+      setActiveStep((prevActiveStep) => prevActiveStep + 1);
     }
   };
 
@@ -145,8 +146,8 @@ export default function MultiStepRegisterForm() {
 
   return (
     <Box
-      component="main"
-      maxWidth="sm"
+      component='main'
+      maxWidth='sm'
       sx={{
         mb: 4,
         ml: 0,
@@ -163,7 +164,7 @@ export default function MultiStepRegisterForm() {
           maxWidth: '252px',
         }}
       >
-        {steps.map(label => (
+        {steps.map((label) => (
           <Step
             key={label}
             sx={{
@@ -182,7 +183,7 @@ export default function MultiStepRegisterForm() {
 
       {activeStep === steps.length ? (
         <React.Fragment>
-          <Typography variant="h5" gutterBottom>
+          <Typography variant='h5' gutterBottom>
             Thank you for your registration.
           </Typography>
         </React.Fragment>
@@ -195,7 +196,7 @@ export default function MultiStepRegisterForm() {
               <Stack spacing={2} mt={4}>
                 {activeStep === steps.length - 1 ? (
                   <CustomButton
-                    variant="contained"
+                    variant='contained'
                     onClick={handleSubmit(onSubmit)}
                     disabled={!isValid}
                   >
@@ -203,8 +204,8 @@ export default function MultiStepRegisterForm() {
                   </CustomButton>
                 ) : (
                   <CustomButton
-                    variant="contained"
-                    color="primary"
+                    variant='contained'
+                    color='primary'
                     onClick={handleNext}
                     disabled={!isValid}
                   >
@@ -214,17 +215,7 @@ export default function MultiStepRegisterForm() {
 
                 <Typography>
                   If you already have an account, you can
-                  <Link
-                    sx={{
-                      textDecorationColor: 'rgba(55, 103, 226, 1)',
-                      color: 'rgba(55, 103, 226, 1)',
-                      marginLeft: '4px',
-                    }}
-                    component={RouterLink}
-                    to="/"
-                  >
-                    LOG IN.
-                  </Link>
+                  <CustomLink to='/'>LOG IN.</CustomLink>
                 </Typography>
               </Stack>
             </form>
