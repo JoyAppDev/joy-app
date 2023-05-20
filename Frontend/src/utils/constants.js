@@ -1,7 +1,7 @@
 export const REQUIRED_FIELD = 'Required field';
 export const PASSWORD_LENGTH_ERROR =
   'Password must be longer than 3 characters';
-export const API_URL = 'http://34.133.81.64';
+export const API_URL = 'http://34.173.164.154/';
 
 export const WAYS_TO_USE = [
   'Reproduction of Content',
